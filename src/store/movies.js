@@ -180,9 +180,18 @@ export const resetSearch = () => async (dispatch) => {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 export const pageViewInc = (id) => async (dispatch) => {
-  const { data, error } = await supabase.rpc('increment', { id });
+  // const { data, error } = await supabase.rpc('increment', { id });
+  let { data, error } = await supabase
+    .from('movies')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  await supabase
+    .from('movies')
+    .update({ views: data.views + 1 })
+    .eq('id', id);
 
   if (error) errPageView(error);
   else await dispatch(sucPageView(data));
-  // TODO: update is not allowed in a non-volatile function
 };

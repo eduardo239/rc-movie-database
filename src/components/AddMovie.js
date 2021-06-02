@@ -7,6 +7,10 @@ import AddMovieList from './AddMovieList';
 import Message from './Message';
 
 import { helperFunction, arrayToString, stringToArray } from '../helper';
+import AddTvList from './AddTvList';
+import Input from './Input';
+import TextArea from './TextArea';
+import Radio from './Radio';
 
 const AddMovie = () => {
   const dispatch = useDispatch();
@@ -17,55 +21,62 @@ const AddMovie = () => {
     type: '',
   });
 
+  const [movieCheck, setMovieCheck] = useState(true);
+  const [tvCheck, setTvCheck] = useState(false);
+
+  // eslint-disable-next-line
   const [file, setFile] = useState('');
+  const [tab1, setTab1] = useState(true);
+  const [tab2, setTab2] = useState(false);
 
   const IdRef = useRef();
-  const movieNameRef = useRef();
-  const movieYearRef = useRef();
-  const movieDirectorRef = useRef();
-  const moviePosterRef = useRef();
-  const movieImageRef = useRef();
-  const movieRatingRef = useRef();
-  const movieTrailerRef = useRef();
-  const movieCastRef = useRef();
-  const movieTagsRef = useRef();
-  const movieStorylineRef = useRef();
+  const nameRef = useRef();
+  const yearRef = useRef();
+  const directorRef = useRef();
+  const posterRef = useRef();
+  const imageRef = useRef();
+  const ratingRef = useRef();
+  const trailerRef = useRef();
+  const castRef = useRef();
+  const tagsRef = useRef();
+  const storylineRef = useRef();
 
   const movieRadioRef = useRef();
   const tvRadioRef = useRef();
+
+  const movieListRef = useRef();
+  const tvListRef = useRef();
 
   const handlerAddMovie = async () => {
     const movieRadio = movieRadioRef.current.checked;
     const tvRadio = tvRadioRef.current.checked;
 
     const body = {
-      name: movieNameRef.current.value,
-      year: movieYearRef.current.value,
-      director: movieDirectorRef.current.value,
-      poster: moviePosterRef.current.value,
+      name: nameRef.current.value,
+      year: yearRef.current.value,
+      director: directorRef.current.value,
+      poster: posterRef.current.value,
       image: file,
-      rating: movieRatingRef.current.value || 0.0,
-      trailer: movieTrailerRef.current.value,
-      tags: stringToArray(movieTagsRef.current.value),
-      cast: stringToArray(movieCastRef.current.value),
-      storyline: movieStorylineRef.current.value,
+      rating: ratingRef.current.value || 0.0,
+      trailer: trailerRef.current.value,
+      tags: stringToArray(tagsRef.current.value),
+      cast: stringToArray(castRef.current.value),
+      storyline: storylineRef.current.value,
     };
 
-    console.log(body);
+    // const formData = new FormData();
+    // formData.append('image', file);
 
-    const formData = new FormData();
-    formData.append('image', file);
-
-    (async function () {
-      const response = await fetch('https://api.imgur.com/3/image/', {
-        method: 'post',
-        headers: {
-          Authorization: 'Client-ID 7fd98e30ccbeb65',
-        },
-        body: formData,
-      });
-      console.log(response);
-    })();
+    // (async function () {
+    //   const response = await fetch('https://api.imgur.com/3/image/', {
+    //     method: 'post',
+    //     headers: {
+    //       Authorization: 'Client-ID 7fd98e30ccbeb65',
+    //     },
+    //     body: formData,
+    //   });
+    //   console.log(response);
+    // })();
 
     if (body.name === '' || body.year === '') {
       helperFunction(
@@ -92,7 +103,7 @@ const AddMovie = () => {
     }
 
     if (movieRadio) {
-      const { data, error } = await supabase.from('movies').insert([body]);
+      const { error } = await supabase.from('movies').insert([body]);
       if (error) {
         helperFunction(
           {
@@ -116,7 +127,7 @@ const AddMovie = () => {
     }
 
     if (tvRadio) {
-      const { data, error } = await supabase.from('tv').insert([body]);
+      const { error } = await supabase.from('tv').insert([body]);
       if (error) {
         helperFunction(
           {
@@ -140,36 +151,40 @@ const AddMovie = () => {
     }
   };
 
-  const loadMovie = (body) => {
+  const loadMovie = (body, type) => {
     IdRef.current.value = body.id;
-    movieNameRef.current.value = body.name;
-    movieYearRef.current.value = body.year;
-    movieDirectorRef.current.value = body.director;
-    moviePosterRef.current.value = body.poster;
-    movieImageRef.current.value = body.image || '';
-    movieRatingRef.current.value = body.rating || 0.0;
-    movieTrailerRef.current.value = body.trailer;
-    movieTagsRef.current.value = arrayToString(body.tags);
-    movieCastRef.current.value = arrayToString(body.cast);
-    movieStorylineRef.current.value = body.storyline;
+    nameRef.current.value = body.name;
+    yearRef.current.value = body.year;
+    directorRef.current.value = body.director;
+    posterRef.current.value = body.poster;
+    // imageRef.current.value = body.image;
+    ratingRef.current.value = body.rating || 0.0;
+    trailerRef.current.value = body.trailer;
+    tagsRef.current.value = arrayToString(body.tags);
+    castRef.current.value = arrayToString(body.cast);
+    storylineRef.current.value = body.storyline;
 
-    window.scrollTo(0, 150);
+    if (type === 'tv') {
+      setTvCheck(true);
+      setMovieCheck(false);
+    } else if (type === 'movie') {
+      setMovieCheck(true);
+      setTvCheck(false);
+    }
   };
 
   const handlerUpdateMovie = async () => {
     let id = IdRef.current.value;
-    let name = movieNameRef.current.value;
-    let year = movieYearRef.current.value;
-    let director = movieDirectorRef.current.value;
-    let poster = moviePosterRef.current.value;
-    let image = movieImageRef.current.target.value;
-    let rating = movieRatingRef.current.value || 0.0;
-    let trailer = movieTrailerRef.current.value;
-    let tags = stringToArray(movieTagsRef.current.value);
-    let cast = stringToArray(movieCastRef.current.value);
-    let storyline = movieStorylineRef.current.value;
-
-    console.log(image);
+    let name = nameRef.current.value;
+    let year = yearRef.current.value;
+    let director = directorRef.current.value;
+    let poster = posterRef.current.value;
+    // let image = imageRef.current.target.value;
+    let rating = ratingRef.current.value || 0.0;
+    let trailer = trailerRef.current.value;
+    let tags = stringToArray(tagsRef.current.value);
+    let cast = stringToArray(castRef.current.value);
+    let storyline = storylineRef.current.value;
 
     const body = {
       id,
@@ -177,7 +192,7 @@ const AddMovie = () => {
       year,
       director,
       poster,
-      image,
+      // image,
       rating,
       trailer,
       tags,
@@ -200,10 +215,7 @@ const AddMovie = () => {
     }
 
     if (movieRadio) {
-      const { data, error } = await supabase
-        .from('movies')
-        .update(body)
-        .eq('id', id);
+      const { error } = await supabase.from('movies').update(body).eq('id', id);
 
       if (error) {
         helperFunction(
@@ -218,7 +230,7 @@ const AddMovie = () => {
         helperFunction(
           {
             error: false,
-            text: 'Movie successfully  updated.',
+            text: 'Movie successfully updated.',
             type: 'alert-success',
           },
           setHelperText
@@ -229,10 +241,7 @@ const AddMovie = () => {
     }
 
     if (tvRadio) {
-      const { data, error } = await supabase
-        .from('tv')
-        .update(body)
-        .eq('id', id);
+      const { error } = await supabase.from('tv').update(body).eq('id', id);
 
       if (error) {
         helperFunction(
@@ -247,7 +256,7 @@ const AddMovie = () => {
         helperFunction(
           {
             error: false,
-            text: 'Tv successfully  updated.',
+            text: 'Tv successfully updated.',
             type: 'alert-success',
           },
           setHelperText
@@ -258,164 +267,143 @@ const AddMovie = () => {
     }
   };
 
-  const handlerClear = () => {
+  const handleClear = () => {
     IdRef.current.value = '';
-    movieNameRef.current.value = '';
-    movieYearRef.current.value = '';
-    movieDirectorRef.current.value = '';
-    moviePosterRef.current.value = '';
-    movieImageRef.current.value = '';
-    movieRatingRef.current.value = '';
-    movieTrailerRef.current.value = '';
-    movieTagsRef.current.value = '';
-    movieCastRef.current.value = '';
-    movieCastRef.current.value = '';
-    movieStorylineRef.current.value = '';
+    nameRef.current.value = '';
+    yearRef.current.value = '';
+    directorRef.current.value = '';
+    posterRef.current.value = '';
+    // imageRef.current.value = '';
+    ratingRef.current.value = '';
+    trailerRef.current.value = '';
+    tagsRef.current.value = '';
+    castRef.current.value = '';
+    castRef.current.value = '';
+    storylineRef.current.value = '';
+  };
+
+  const tabMovie = () => {
+    tvListRef.current.style.display = 'none';
+    movieListRef.current.style.display = 'block';
+    if (!tab1) setTab1(!tab1);
+    if (tab2) setTab2(!tab2);
+  };
+
+  const tabTv = () => {
+    tvListRef.current.style.display = 'block';
+    movieListRef.current.style.display = 'none';
+    if (tab1) setTab2(!tab2);
+    if (!tab2) setTab1(!tab1);
+  };
+
+  const handleRadioChange = () => {
+    setMovieCheck(!movieCheck);
+    setTvCheck(!tvCheck);
   };
 
   return (
     <div>
       <div className='row g-3'>
-        <h2>Add Content</h2>
+        <h2 id='content'>Add Content</h2>
 
-        <div className='mb-3 col-md-6'>
-          <label htmlFor='movie-name' className='form-label'>
-            Name
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='movie-name'
-            aria-describedby='movieName'
-            ref={movieNameRef}
-          />
+        <div className='mb-3 col-md-4'>
+          <Input label='name' type='text' id='movie-name' refs={nameRef} />
         </div>
 
-        <div className='mb-3 col-md-6'>
-          <label htmlFor='movie-year' className='form-label'>
-            Year
-          </label>
-          <input
+        <div className='mb-3 col-md-4'>
+          <Input label='year' type='text' id='movie-year' refs={yearRef} />
+        </div>
+
+        <div className='mb-3 col-md-4'>
+          <Input
+            label='rating'
             type='text'
-            className='form-control'
-            id='movie-year'
-            aria-describedby='movieYear'
-            ref={movieYearRef}
+            id='movie-rating'
+            refs={ratingRef}
           />
         </div>
       </div>
 
       <div className='row g-3'>
         <div className='mb-3 col-md-4'>
-          <label htmlFor='movie-director' className='form-label'>
-            Director
-          </label>
-          <input
+          <Input
+            label='director'
             type='text'
-            className='form-control'
             id='movie-director'
-            aria-describedby='movieDirector'
-            ref={movieDirectorRef}
+            refs={directorRef}
           />
         </div>
 
         <div className='mb-3 col-md-4'>
-          <label htmlFor='movie-poster' className='form-label'>
-            Poster URL
-          </label>
-          <input
+          <Input
+            label='poster'
             type='text'
-            className='form-control'
             id='movie-poster'
-            aria-describedby='moviePoster'
-            ref={moviePosterRef}
+            refs={posterRef}
           />
         </div>
 
         <div className='mb-3 col-md-4'>
-          <label htmlFor='movie-poster' className='form-label'>
-            Image
-          </label>
-          <input
+          <Input
+            label='image'
+            type='file'
+            id='movie-image'
+            refs={imageRef}
+            disabled
+          />
+          {/* <input
             type='file'
             className='form-control'
             id='movie-image'
             aria-describedby='movieImage'
-            ref={movieImageRef}
+            ref={imageRef}
             onChange={(e) => setFile(e.target.files[0])}
-          />
+            
+          /> */}
         </div>
       </div>
 
       <div className='row g-3'>
-        <div className='mb-3 col-md-6'>
-          <label htmlFor='movie-rating' className='form-label'>
-            Rating
-          </label>
-          <input
+        <div className='mb-3 col-md-4'>
+          <Input
+            label='trailer URL'
             type='text'
-            className='form-control'
-            id='movie-rating'
-            aria-describedby='movieRating'
-            ref={movieRatingRef}
-          />
-        </div>
-
-        <div className='mb-3 col-md-6'>
-          <label htmlFor='movie-trailer' className='form-label'>
-            Trailer
-          </label>
-          <input
-            type='text'
-            className='form-control'
             id='movie-trailer'
-            aria-describedby='movieTrailer'
-            ref={movieTrailerRef}
-          />
-        </div>
-      </div>
-
-      <div className='row g-3'>
-        <div className='mb-3 col-md-6'>
-          <label htmlFor='movie-cast' className='form-label'>
-            Cast
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='movie-cast'
-            aria-describedby='movieCast'
-            ref={movieCastRef}
+            refs={trailerRef}
           />
         </div>
 
-        <div className='mb-3 col-md-6'>
-          <label htmlFor='movie-tags' className='form-label'>
-            Tags
-          </label>
-          <input
-            type='text'
-            className='form-control'
-            id='movie-tags'
-            aria-describedby='tags'
-            ref={movieTagsRef}
-          />
+        <div className='mb-3 col-md-4'>
+          <Input label='cast' type='text' id='movie-cast' refs={castRef} />
+        </div>
+
+        <div className='mb-3 col-md-4'>
+          <Input label='tags' type='text' id='movie-tags' refs={tagsRef} />
         </div>
       </div>
 
       <div className='form-group'>
-        <label htmlFor='exampleFormControlTextarea1'>Storyline</label>
-        <textarea
-          className='form-control'
-          id='exampleFormControlTextarea1'
-          rows='3'
-          ref={movieStorylineRef}
-        ></textarea>
+        <TextArea
+          label='storyline'
+          type='file'
+          id='movie-storyline'
+          refs={storylineRef}
+        />
       </div>
 
       <div className='form-group flex align-center'>
         <div className='field-radio'>
-          <input
+          <Radio
+            type='radio'
+            id='type-1'
+            name='inlineRadioOptions'
+            value='movie'
+            refs={movieRadioRef}
+            checked={movieCheck}
+            onChange={handleRadioChange}
+          />
+
+          {/* <input
             className='form-check-input'
             type='radio'
             name='inlineRadioOptions'
@@ -425,38 +413,36 @@ const AddMovie = () => {
           />
           <label className='form-check-label' htmlFor='inlineRadio1'>
             Movie
-          </label>
+          </label> */}
         </div>
         <div className='field-radio'>
-          <input
-            className='form-check-input'
+          <Radio
             type='radio'
+            id='type-2'
             name='inlineRadioOptions'
-            id='inlineRadio2'
             value='tv'
-            ref={tvRadioRef}
+            refs={tvRadioRef}
+            checked={tvCheck}
+            onChange={handleRadioChange}
           />
-          <label className='form-check-label' htmlFor='inlineRadio2'>
-            TV
-          </label>
         </div>
 
         <div
           className='form-group'
           style={{
             display: 'inline-block',
-            width: '30%',
+            minWidth: '350px',
+            width: 'auto',
             marginLeft: 'auto',
             marginTop: '0.5rem',
             float: 'right',
           }}
         >
-          <label>ID</label>
-          <input type='text' ref={IdRef} disabled />
+          <Input label='ID' type='text' id='movie-id' refs={IdRef} disabled />
         </div>
       </div>
 
-      <div className='flex mt-3'>
+      <div className='flex mt-3' id='buttons'>
         <button className='btn-inline btn-success' onClick={handlerAddMovie}>
           Add New Content
         </button>
@@ -465,7 +451,7 @@ const AddMovie = () => {
           Update Content
         </button>
 
-        <button className='btn-inline btn-error' onClick={handlerClear}>
+        <button className='btn-inline btn-error' onClick={handleClear}>
           Clear Fields
         </button>
       </div>
@@ -474,8 +460,29 @@ const AddMovie = () => {
       )}
 
       {/* tab */}
-
-      <AddMovieList loadMovie={loadMovie} />
+      <section>
+        <h2>Select</h2>
+        <div>
+          <button
+            className={`btn-inline ${tab1 ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={tabMovie}
+          >
+            movie
+          </button>
+          <button
+            className={`btn-inline ${tab2 ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={tabTv}
+          >
+            tv
+          </button>
+        </div>
+        <div ref={movieListRef}>
+          <AddMovieList loadMovie={loadMovie} />
+        </div>
+        <div ref={tvListRef} style={{ display: 'none' }}>
+          <AddTvList loadMovie={loadMovie} />
+        </div>
+      </section>
     </div>
   );
 };

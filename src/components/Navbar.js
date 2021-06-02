@@ -25,13 +25,12 @@ const Navbar = () => {
       <Logo />
       <Search />
 
-      <div className='App-menu' onClick={handleOpenMenu}>
+      <div className='App-menu svg-hover' onClick={handleOpenMenu}>
         <svg
           style={{ cursor: 'pointer' }}
           width='24'
           height='24'
           viewBox='0 0 24 24'
-          fill='none'
           xmlns='http://www.w3.org/2000/svg'
         >
           <path

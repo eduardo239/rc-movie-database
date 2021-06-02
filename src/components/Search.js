@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { resetSearch, searchMovie } from '../store/movies';
 import { useSelector } from 'react-redux';
+// eslint-disable-next-line
 import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
 import { useHistory } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 const Search = () => {
   const [term, setTerm] = useState('');
   const dispatch = useDispatch();
+  // eslint-disable-next-line
   const { data, loading } = useSelector((state) => state.movies.search);
   const history = useHistory();
   // let path = history.location.pathname.replace(/\w/gi, '')

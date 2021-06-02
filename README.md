@@ -7,6 +7,9 @@ cast
 rating
 trailer
 poster
-reviews
+image
 storyline
 views
+runtime
+created_at
+updated_at

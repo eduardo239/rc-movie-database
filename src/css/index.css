@@ -9,6 +9,7 @@
 html {
   font-size: 100%;
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -51,12 +52,19 @@ h1 {
 }
 
 h2 {
+  background: var(--primary);
+  color: var(--black);
   font-size: 2.441rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  width: 100%;
 }
 
-h2::before {
+h3 {
+  font-size: 1.953rem;
+}
+.before::before {
   content: '';
   display: inline-block;
   background-color: var(--primary);
@@ -64,11 +72,6 @@ h2::before {
   width: 36px;
   margin-right: 23px;
 }
-
-h3 {
-  font-size: 1.953rem;
-}
-
 h4 {
   font-size: 1.563rem;
 }
@@ -167,7 +170,8 @@ textarea {
   resize: vertical;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   border-bottom: 2px solid var(--primary);
 }
 
@@ -198,7 +202,14 @@ th,
 td {
   border-right: 1px solid rgba(0, 0, 0, 0.15);
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 0 0.5rem;
+  vertical-align: middle;
+  padding: 2px 5px;
+}
+.table-content {
+  overflow-y: auto;
+  max-height: 30rem;
+  display: block;
+  width: 100%;
 }
 
 .btn {
@@ -224,6 +235,11 @@ td {
   font-weight: 600;
   white-space: pre;
 }
+.btn-a {
+  padding: 0.3rem;
+  border-radius: var(--border);
+}
+
 .btn-primary {
   background-color: var(--primary);
   color: var(--black);
@@ -349,4 +365,13 @@ td {
   font-size: 20px;
   background: #efefef;
   text-align: center;
+}
+
+.poster {
+  height: 300px;
+  max-width: 200px;
+}
+.svg-hover:hover svg path {
+  padding: 0.65rem 0.75rem;
+  fill: var(--primary);
 }

@@ -5,6 +5,7 @@ import './css/bootstrap-grid.min.css';
 import './css/index.css';
 import './css/App.css';
 import './css/spinner.css';
+import './css/video.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';

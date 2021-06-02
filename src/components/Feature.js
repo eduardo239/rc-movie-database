@@ -10,8 +10,8 @@ const Feature = () => {
     <div>
       {loading ? (
         <Loading />
-      ) : data ? (
-        <Slide data={data.slice(1, 4)} />
+      ) : data && data.length > 3 ? (
+        <Slide data={data && data.slice(1, 4)} />
       ) : (
         <p>Movies not found</p>
       )}

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { deleteMovie, getMovies } from '../store/movies';
+import { deleteTv, getTvs } from '../store/tvs';
 import { useDispatch, useSelector } from 'react-redux';
 import { helperFunction } from '../helper';
 import Loading from './Loading';
 import Message from './Message';
-import { Link } from 'react-router-dom';
 
-const AddMovieList = ({ loadMovie }) => {
+const AddTvList = ({ loadMovie }) => {
   const dispatch = useDispatch();
 
   const [helperText, setHelperText] = useState({
@@ -15,15 +14,15 @@ const AddMovieList = ({ loadMovie }) => {
     type: '',
   });
 
-  const { data: movies, loading } = useSelector((state) => state.movies.movies);
+  const { data: tvs, loading } = useSelector((state) => state.tvs.tvs);
 
   const handleDelete = async (id, type) => {
     try {
-      await dispatch(deleteMovie(id));
+      await dispatch(deleteTv(id));
       helperFunction(
         {
           error: false,
-          text: 'Movie successfully deleted.',
+          text: 'Tv Show successfully deleted.',
           type: 'alert-success',
         },
         setHelperText
@@ -38,19 +37,19 @@ const AddMovieList = ({ loadMovie }) => {
         setHelperText
       );
     } finally {
-      await dispatch(getMovies());
+      await dispatch(getTvs());
     }
   };
 
   useEffect(() => {
     (async function () {
-      await dispatch(getMovies());
+      await dispatch(getTvs());
     })();
   }, [dispatch]);
 
   return (
     <div className='mt-4'>
-      <h2>Movie List</h2>
+      <h2>Tv List</h2>
 
       {!!helperText.text && (
         <Message data={helperText.text} type={helperText.type} />
@@ -65,15 +64,15 @@ const AddMovieList = ({ loadMovie }) => {
             <th>name</th>
             <th>year</th>
             <th>storyline</th>
-            <th>cast</th>
             <th>tags</th>
+            <th>cast</th>
             <th>image</th>
             <th>poster</th>
             <th>options</th>
           </tr>
         </thead>
-        {movies ? (
-          movies
+        {tvs ? (
+          tvs
             .map((i) => (
               <tbody key={i.id}>
                 <tr>
@@ -81,12 +80,12 @@ const AddMovieList = ({ loadMovie }) => {
                   <td>{i.name}</td>
                   <td>{i.year}</td>
                   <td>{i.storyline ? i.storyline.slice(0, 50) + '...' : ''}</td>
-                  <td>{i.cast && i.cast.join(',')}</td>
                   <td>{i.tags}</td>
+                  <td>{i.cast}</td>
                   <td>
                     {i.image ? (
                       <a target='_blank' rel='noreferrer' href={`${i.image}`}>
-                        URL
+                        url
                       </a>
                     ) : (
                       'null'
@@ -95,7 +94,7 @@ const AddMovieList = ({ loadMovie }) => {
                   <td>
                     {i.poster ? (
                       <a target='_blank' rel='noreferrer' href={`${i.poster}`}>
-                        URL
+                        url
                       </a>
                     ) : (
                       'null'
@@ -133,7 +132,7 @@ const AddMovieList = ({ loadMovie }) => {
                       <a
                         href='#content'
                         className='btn-a btn-warning'
-                        onClick={() => loadMovie(i, 'movie')}
+                        onClick={() => loadMovie(i, 'tv')}
                       >
                         <svg
                           width='24'
@@ -157,7 +156,7 @@ const AddMovieList = ({ loadMovie }) => {
                           />
                         </svg>
                       </a>
-                      <Link to={`movies/${i.id}`} className='btn-a btn-info'>
+                      <a href='#void' className='btn-a btn-info'>
                         <svg
                           width='24'
                           height='24'
@@ -170,7 +169,7 @@ const AddMovieList = ({ loadMovie }) => {
                             fill='#1B1B1B'
                           />
                         </svg>
-                      </Link>
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -189,4 +188,4 @@ const AddMovieList = ({ loadMovie }) => {
   );
 };
 
-export default AddMovieList;
+export default AddTvList;

@@ -16,6 +16,7 @@ const Auth = () => {
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
 
+    // eslint-disable-next-line
     const { user, error } =
       type === 'LOGIN'
         ? await supabase.auth.signIn({ email, password })
@@ -43,6 +44,7 @@ const Auth = () => {
     if (error) console.log('Error: ', error.message);
   };
 
+  // eslint-disable-next-line
   const forgotPassword = async (e) => {
     // Read more on https://supabase.io/docs/reference/javascript/reset-password-email#notes
     e.preventDefault();

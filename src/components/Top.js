@@ -14,7 +14,8 @@ const Top = () => {
       const { data, error } = await supabase
         .from('movies')
         .select('*')
-        .limit(5);
+        .limit(5)
+        .order('views', { ascending: false });
       if (error) console.error(error);
       else setData(data);
       setLoading(false);
@@ -36,7 +37,7 @@ const Top = () => {
               className='App-card-container'
             >
               <div className='App-card'>
-                <img src={data.poster || poster} alt={i.name} />
+                <img className='poster' src={i.poster || poster} alt={i.name} />
                 <div className='p-2'>
                   <h5>{i.name}</h5>
                   <p className='App-card--p text-small mt-2'>
