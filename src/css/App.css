@@ -1,0 +1,100 @@
+:root {
+  --primary: #bb86fc;
+  --white: #f7f0f5;
+  --black: #292929;
+  --success: #06d6a0;
+  --warning: #fdca40;
+  --error: #e5625e;
+  --info: #6f4bf1;
+  --light-white: #f7f7f9;
+  --gray: #363636;
+
+  --border: 4px;
+
+  --font: 'Open Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.App-menu-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.App-menu-content {
+  width: 30vw;
+}
+
+.App-menu-content li a {
+  font-size: 1.5rem;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.App-menu-button--close {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  z-index: 1001;
+  margin: 0.5rem;
+}
+
+/* card */
+.App-card-container {
+  width: 200px;
+  background-color: var(--white);
+  box-shadow: var(--shadow-2);
+}
+.App-card-container:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-4);
+}
+.App-card {
+  color: var(--black);
+}
+.App-card--p {
+  display: inline-block;
+  line-height: 1.6;
+}
+
+/* slide */
+.App-slide-container {
+  display: grid;
+  grid-template-columns: minmax(400px, 800px) 1fr;
+}
+.App-slide {
+}
+.App-slide-side {
+}
+
+/* search */
+.App-search-container {
+  position: relative;
+}
+.App-search {
+  display: block;
+  width: 100%;
+  margin: 2px 0;
+  border-bottom: 1px solid var(--primary);
+  box-shadow: var(--shadow-2);
+}
+.App-poster-mini {
+  width: 50px;
+}
+.App-search--p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-transform: initial;
+  margin-top: 0.25rem;
+}
