@@ -1,24 +1,32 @@
-export const helperFunction = (body, setHelperText) => {
-  setHelperText({
-    error: body.error,
-    text: body.text,
-    type: body.type,
+/**
+ *
+ * @param {boolean} error
+ * @param {String} text
+ * @param {String} type
+ * @param {Function} f
+ * @param {Number} time
+ */
+export const helperFunction = (error, text, type, f, time) => {
+  f({
+    error: error,
+    text: text,
+    type: type,
   });
-  setTimeout(() => setHelperText({ error: false, text: '', type: '' }), 3000);
+  setTimeout(() => f({ error: false, text: '', type: '' }), time);
 };
 
 export const stringToArray = (x) => {
   if (x === null || x === undefined) {
     return '';
   }
-  return x.split(',');
+  return x.split(',').map((y) => y.trim().toLowerCase());
 };
 
 export const arrayToString = (x) => {
   if (x === null || x === undefined) {
     return '';
   }
-  return x.join(', ');
+  return x.map((y) => y.trim().charAt(0).toUpperCase() + y.slice(1)).join(', ');
 };
 
 export const dateConvert = (x) => {

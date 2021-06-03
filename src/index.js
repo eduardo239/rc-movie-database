@@ -6,6 +6,7 @@ import './css/index.css';
 import './css/App.css';
 import './css/spinner.css';
 import './css/video.css';
+import './css/radio.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';

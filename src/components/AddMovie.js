@@ -6,7 +6,9 @@ import { getTvs } from '../store/tvs';
 import AddMovieList from './AddMovieList';
 import Message from './Message';
 import InputButton from './InputButton';
-
+import { ReactComponent as MovieIcon } from '../assets/icons2/mdi_movie-open-outline.svg';
+import { ReactComponent as TvIcon } from '../assets/icons2/mdi_television-classic.svg';
+import { ReactComponent as YtIcon } from '../assets/icons2/mdi_youtube.svg';
 import {
   helperFunction,
   arrayToString,
@@ -57,21 +59,21 @@ const AddMovie = () => {
   const movieListRef = useRef();
   const tvListRef = useRef();
 
-  const handlerAddMovie = async () => {
+  const handleAddMovie = async () => {
     const movieRadio = movieRadioRef.current.checked;
     const tvRadio = tvRadioRef.current.checked;
 
     const body = {
-      name: nameRef.current.value,
-      year: yearRef.current.value,
-      director: directorRef.current.value,
-      poster: posterRef.current.value,
-      image: imageRef.current.value,
+      name: nameRef.current.value.trim(),
+      year: yearRef.current.value.trim(),
+      director: directorRef.current.value.trim(),
+      poster: posterRef.current.value.trim(),
+      image: imageRef.current.value.trim(),
       rating: ratingRef.current.value || 0.0,
-      trailer: trailerRef.current.value,
+      trailer: trailerRef.current.value.trim(),
       tags: stringToArray(tagsRef.current.value),
       cast: stringToArray(castRef.current.value),
-      storyline: storylineRef.current.value,
+      storyline: storylineRef.current.value.trim(),
     };
 
     // const formData = new FormData();
@@ -90,24 +92,22 @@ const AddMovie = () => {
 
     if (body.name === '' || body.year === '') {
       helperFunction(
-        {
-          error: true,
-          text: 'Please enter a name and/or year.',
-          type: 'alert-warning',
-        },
-        setHelperText
+        true,
+        'Please enter a number and/or year.',
+        'alert-warning',
+        setHelperText,
+        3000
       );
       return;
     }
 
     if (!movieRadio && !tvRadio) {
       helperFunction(
-        {
-          error: true,
-          text: 'Please select Movie or Tv',
-          type: 'alert-warning',
-        },
-        setHelperText
+        true,
+        'Please select Movie or Tv.',
+        'alert-warning',
+        setHelperText,
+        3000
       );
       return;
     }
@@ -115,22 +115,14 @@ const AddMovie = () => {
     if (movieRadio) {
       const { error } = await supabase.from('movies').insert([body]);
       if (error) {
-        helperFunction(
-          {
-            error: true,
-            text: error.message,
-            type: 'alert-error',
-          },
-          setHelperText
-        );
+        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
       } else {
         helperFunction(
-          {
-            error: false,
-            text: 'Movie successfully added.',
-            type: 'alert-success',
-          },
-          setHelperText
+          false,
+          'Movie successfully added.',
+          'alert-success',
+          setHelperText,
+          3000
         );
       }
       await dispatch(getMovies());
@@ -139,22 +131,14 @@ const AddMovie = () => {
     if (tvRadio) {
       const { error } = await supabase.from('tv').insert([body]);
       if (error) {
-        helperFunction(
-          {
-            error: true,
-            text: error.message,
-            type: 'alert-error',
-          },
-          setHelperText
-        );
+        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
       } else {
         helperFunction(
-          {
-            error: false,
-            text: 'Movie successfully added.',
-            type: 'alert-success',
-          },
-          setHelperText
+          false,
+          'Movie successfully added.',
+          'alert-success',
+          setHelperText,
+          3000
         );
       }
       await dispatch(getTvs());
@@ -195,6 +179,7 @@ const AddMovie = () => {
     let tags = stringToArray(tagsRef.current.value);
     let cast = stringToArray(castRef.current.value);
     let storyline = storylineRef.current.value;
+    let updated_at = new Date();
 
     const body = {
       id,
@@ -208,6 +193,7 @@ const AddMovie = () => {
       tags,
       cast,
       storyline,
+      updated_at,
     };
 
     const movieRadio = movieRadioRef.current.checked;
@@ -215,12 +201,11 @@ const AddMovie = () => {
 
     if (!movieRadio && !tvRadio) {
       helperFunction(
-        {
-          error: true,
-          text: 'Please select Movie or Tv',
-          type: 'alert-info',
-        },
-        setHelperText
+        true,
+        'Please select Movie or Tv.',
+        'alert-warning',
+        setHelperText,
+        3000
       );
     }
 
@@ -228,22 +213,14 @@ const AddMovie = () => {
       const { error } = await supabase.from('movies').update(body).eq('id', id);
 
       if (error) {
-        helperFunction(
-          {
-            error: true,
-            text: error.message,
-            type: 'alert-error',
-          },
-          setHelperText
-        );
+        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
       } else {
         helperFunction(
-          {
-            error: false,
-            text: 'Movie successfully updated.',
-            type: 'alert-success',
-          },
-          setHelperText
+          false,
+          'Movie successfully updated.',
+          'alert-success',
+          setHelperText,
+          3000
         );
 
         await dispatch(getMovies());
@@ -254,22 +231,14 @@ const AddMovie = () => {
       const { error } = await supabase.from('tv').update(body).eq('id', id);
 
       if (error) {
-        helperFunction(
-          {
-            error: true,
-            text: error.message,
-            type: 'alert-error',
-          },
-          setHelperText
-        );
+        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
       } else {
         helperFunction(
-          {
-            error: false,
-            text: 'Tv successfully updated.',
-            type: 'alert-success',
-          },
-          setHelperText
+          false,
+          'Tv successfully updated.',
+          'alert-success',
+          setHelperText,
+          3000
         );
 
         await dispatch(getTvs());
@@ -322,7 +291,7 @@ const AddMovie = () => {
       const json = await response.json();
       setApiMaze(json);
     } catch (error) {
-      alert(error);
+      helperFunction(true, error.message, 'alert-error', setHelperText, 5000);
     }
     setApiLoading(false);
   };
@@ -361,10 +330,19 @@ const AddMovie = () => {
                 />
               </p>
               <p>{item.show.name}</p>
+              <div className='flex justify-center align-center'>
+                <a
+                  target='_blank'
+                  href={`https://www.google.com/search?client=firefox-b-d&q=${item.show.name}+trailer`}
+                  rel='noreferrer'
+                >
+                  <YtIcon />
+                </a>
+              </div>
               <p>{compactString(item.show.summary, 70)}</p>
               <p>{arrayToString(item.show.genres)}</p>
               <p>{item.show.premiered}</p>
-              <div>
+              <div className='flex justify-center align-center'>
                 <button
                   style={{ width: 'auto', height: 'auto' }}
                   className='btn-inline btn-primary'
@@ -471,41 +449,33 @@ const AddMovie = () => {
         />
       </div>
 
-      <div className='form-group flex align-center'>
-        <div className='field-radio'>
-          <Radio
+      {/*  */}
+      <div className='form-group flex flex-align-end mt-3'>
+        <label className='radio-container  me-3' htmlFor='tv-radio'>
+          Movie
+          <input
+            id='tv-radio'
             type='radio'
-            id='type-1'
-            name='inlineRadioOptions'
-            value='movie'
-            refs={movieRadioRef}
+            name='radio'
+            ref={movieRadioRef}
             checked={movieCheck}
             onChange={handleRadioChange}
           />
+          <span className='checkmark'></span>
+        </label>
 
-          {/* <input
-            className='form-check-input'
+        <label className='radio-container' htmlFor='movie-radio'>
+          Tv
+          <input
+            id='movie-radio'
             type='radio'
-            name='inlineRadioOptions'
-            id='inlineRadio1'
-            value='movie'
-            ref={movieRadioRef}
-          />
-          <label className='form-check-label' htmlFor='inlineRadio1'>
-            Movie
-          </label> */}
-        </div>
-        <div className='field-radio'>
-          <Radio
-            type='radio'
-            id='type-2'
-            name='inlineRadioOptions'
-            value='tv'
-            refs={tvRadioRef}
+            name='radio'
+            ref={tvRadioRef}
             checked={tvCheck}
             onChange={handleRadioChange}
           />
-        </div>
+          <span className='checkmark'></span>
+        </label>
 
         <div
           className='form-group'
@@ -523,7 +493,7 @@ const AddMovie = () => {
       </div>
 
       <div className='flex mt-3' id='buttons'>
-        <button className='btn-inline btn-success' onClick={handlerAddMovie}>
+        <button className='btn-inline btn-success' onClick={handleAddMovie}>
           Add New Content
         </button>
 
@@ -542,18 +512,18 @@ const AddMovie = () => {
       {/* tab */}
       <section>
         <h2>Select</h2>
-        <div>
+        <div className='flex align-center'>
           <button
             className={`btn-inline ${tab1 ? 'btn-primary' : 'btn-secondary'}`}
             onClick={tabMovie}
           >
-            movie
+            <MovieIcon /> movie
           </button>
           <button
             className={`btn-inline ${tab2 ? 'btn-primary' : 'btn-secondary'}`}
             onClick={tabTv}
           >
-            tv
+            <TvIcon /> tv
           </button>
         </div>
         <div ref={movieListRef}>

@@ -137,16 +137,19 @@
 }
 
 .App-maze-list {
-  margin-top: 0.1rem !important;
-  display: grid;
-  grid-template-columns: auto 2fr 4fr 2fr 1fr auto;
-  gap: 1rem;
   border: 1px solid var(--border-color);
+  display: grid;
   font-size: 0.9rem;
+  gap: 1rem;
+  grid-template-columns: auto 2fr auto 4fr 2fr 1fr auto;
+  margin-top: 0.1rem !important;
 }
 .App-maze-list p {
-  margin-bottom: 0;
+  align-items: center;
   border-right: 1px solid var(--border-color);
+  display: flex;
+  line-height: 1.2;
+  margin-bottom: 0;
 }
 
 .App-maze-list:nth-child(odd) {
@@ -158,12 +161,27 @@
   padding: 0.25rem;
 }
 .App-footer--links a {
+  display: inline-block;
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
-  display: inline-block;
   padding: 0.25rem;
+  text-transform: uppercase;
 }
 .App-footer--links a:hover {
   color: var(--white);
+}
+
+.App-tags {
+  display: flex;
+  gap: 0.5rem;
+}
+.App-tags span {
+  background: var(--border-color);
+  border-radius: 4rem;
+  color: var(--white);
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.03rem;
+  padding: 0.2rem 1.2rem;
+  box-shadow: var(--shadow-1);
 }

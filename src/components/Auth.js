@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { helperFunction } from '../helper';
 import { supabase } from '../lib/api';
 import Logo from './Logo';
 import Message from './Message';
@@ -23,17 +24,15 @@ const Auth = () => {
         : await supabase.auth.signUp({ email, password });
 
     if (error) {
-      setHelperText({
-        error: true,
-        text: error.message,
-        type: 'alert-error',
-      });
-    } else if (!error) {
-      setHelperText({
-        error: false,
-        text: 'An email has been sent to you for verification!',
-        type: 'alert-info',
-      });
+      helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
+    } else {
+      helperFunction(
+        false,
+        'An email has been sent to you for verification!',
+        'alert-info',
+        setHelperText,
+        9000
+      );
     }
   };
 
@@ -51,16 +50,25 @@ const Auth = () => {
     const email = prompt('Please enter your email:');
 
     if (email === null || email === '') {
-      setHelperText({ error: true, text: 'You must enter your email.' });
+      helperFunction(
+        true,
+        'You must enter your email.',
+        'alert-info',
+        setHelperText,
+        9000
+      );
     } else {
       let { error } = await supabase.auth.api.resetPasswordForEmail(email);
       if (error) {
         console.error('Error: ', error.message);
       } else {
-        setHelperText({
-          error: false,
-          text: 'Password recovery email has been sent.',
-        });
+        helperFunction(
+          false,
+          'Password recovery email has been sent.',
+          'alert-info',
+          setHelperText,
+          9000
+        );
       }
     }
   };

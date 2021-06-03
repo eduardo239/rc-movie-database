@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMovie, pageViewInc } from '../store/movies';
 import { dateConvert, extractVideoId } from '../helper';
 import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
+import { ReactComponent as Back } from '../assets/icons2/mdi_arrow-left.svg';
 
 const MoviePage = () => {
   let { id } = useParams();
@@ -30,7 +31,7 @@ const MoviePage = () => {
         data && (
           <div>
             <button className='btn-inline' onClick={back}>
-              back
+              <Back /> Back
             </button>
 
             <h2>{data.name}</h2>
@@ -58,6 +59,14 @@ const MoviePage = () => {
                   ></iframe>
                 </div>
               </div>
+            </div>
+            <div className='App-tags'>
+              {data.tags &&
+                data.tags.map((x, i) => (
+                  <Link to={`../genre/${x.trim()}`} key={i}>
+                    <span>{x}</span>
+                  </Link>
+                ))}
             </div>
             <h3 className='mt-4 pb-3 before'>Storyline</h3>
 

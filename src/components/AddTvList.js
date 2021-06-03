@@ -22,22 +22,14 @@ const AddTvList = ({ loadMovie }) => {
     try {
       await dispatch(deleteTv(id));
       helperFunction(
-        {
-          error: false,
-          text: 'Tv Show successfully deleted.',
-          type: 'alert-success',
-        },
-        setHelperText
+        false,
+        'Tv Show successfully deleted.',
+        'alert-success',
+        setHelperText,
+        3000
       );
     } catch (error) {
-      helperFunction(
-        {
-          error: true,
-          text: error.message,
-          type: 'alert-error',
-        },
-        setHelperText
-      );
+      helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
     } finally {
       await dispatch(getTvs());
     }

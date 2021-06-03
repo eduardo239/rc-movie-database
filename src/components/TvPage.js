@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTv, pageViewInc } from '../store/tvs'; // TODO: pageView
 import { dateConvert, extractVideoId } from '../helper';
@@ -58,6 +58,14 @@ const TvPage = () => {
                   ></iframe>
                 </div>
               </div>
+            </div>
+            <div className='App-tags'>
+              {data.tags &&
+                data.tags.map((x, i) => (
+                  <Link to={`../genre/${x.trim()}`} key={i}>
+                    <span>{x}</span>
+                  </Link>
+                ))}
             </div>
             <h3 className='mt-4 pb-3 before'>Storyline</h3>
 

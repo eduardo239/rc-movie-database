@@ -23,22 +23,14 @@ const AddMovieList = ({ loadMovie }) => {
     try {
       await dispatch(deleteMovie(id));
       helperFunction(
-        {
-          error: false,
-          text: 'Movie successfully deleted.',
-          type: 'alert-success',
-        },
-        setHelperText
+        false,
+        'Movie successfully deleted.',
+        'alert-success',
+        setHelperText,
+        3000
       );
     } catch (error) {
-      helperFunction(
-        {
-          error: true,
-          text: error.message,
-          type: 'alert-error',
-        },
-        setHelperText
-      );
+      helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
     } finally {
       await dispatch(getMovies());
     }
