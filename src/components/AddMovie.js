@@ -5,12 +5,19 @@ import { getMovies } from '../store/movies';
 import { getTvs } from '../store/tvs';
 import AddMovieList from './AddMovieList';
 import Message from './Message';
+import InputButton from './InputButton';
 
-import { helperFunction, arrayToString, stringToArray } from '../helper';
+import {
+  helperFunction,
+  arrayToString,
+  stringToArray,
+  compactString,
+} from '../helper';
 import AddTvList from './AddTvList';
 import Input from './Input';
 import TextArea from './TextArea';
 import Radio from './Radio';
+import Loading from './Loading';
 
 const AddMovie = () => {
   const dispatch = useDispatch();
@@ -23,11 +30,14 @@ const AddMovie = () => {
 
   const [movieCheck, setMovieCheck] = useState(true);
   const [tvCheck, setTvCheck] = useState(false);
+  const [apiLoading, setApiLoading] = useState(false);
 
   // eslint-disable-next-line
   const [file, setFile] = useState('');
   const [tab1, setTab1] = useState(true);
   const [tab2, setTab2] = useState(false);
+
+  const [apiMaze, setApiMaze] = useState(null);
 
   const IdRef = useRef();
   const nameRef = useRef();
@@ -301,14 +311,84 @@ const AddMovie = () => {
     setTvCheck(!tvCheck);
   };
 
+  const searchTvMaze = async () => {
+    setApiLoading(true);
+    const term = nameRef.current.value;
+
+    try {
+      const response = await fetch(
+        `http://api.tvmaze.com/search/shows?q=${term}`
+      );
+      const json = await response.json();
+      setApiMaze(json);
+    } catch (error) {
+      alert(error);
+    }
+    setApiLoading(false);
+  };
+
+  const loadMovieFromApi = (x) => {
+    // IdRef.current.value = x.show.id;
+    nameRef.current.value = x.show.name;
+    yearRef.current.value = x.show.premiered
+      ? x.show.premiered.split('-')[0]
+      : 'undefined';
+    // directorRef.current.value = x.show.director;
+    posterRef.current.value = x.show.image ? x.show.image.medium : 'undefined';
+    // imageRef.current.value = x.show.image.medium || x.show.image.original;
+    ratingRef.current.value = x.show.rating.average || 0.0;
+    // trailerRef.current.value = x.show.trailer;
+    tagsRef.current.value = arrayToString(x.show.genres) || 'undefined';
+    // castRef.current.value = arrayToString(x.show.cast);
+    storylineRef.current.value = x.show.summary || 'undefined';
+  };
+
   return (
     <div>
       <div className='row g-3'>
-        <h2 id='content'>Add Content</h2>
+        <h2 id='content' className='px-4'>
+          Add Content
+        </h2>
 
-        <div className='mb-3 col-md-4'>
-          <Input label='name' type='text' id='movie-name' refs={nameRef} />
-        </div>
+        {apiLoading ? (
+          <Loading />
+        ) : (
+          <div className='mb-3 col-md-4 field-input-button'>
+            <InputButton
+              label='name'
+              type='text'
+              id='movie-name'
+              refs={nameRef}
+              searchTvMaze={searchTvMaze}
+            />
+          </div>
+        )}
+
+        {apiMaze &&
+          apiMaze.map((item) => (
+            <div className='App-maze-list' key={item.show.id}>
+              <p style={{ position: 'relative' }}>
+                <img
+                  className='poster-small'
+                  src={item.show.image ? item.show.image.medium : 'undefined'}
+                  alt='poster'
+                />
+              </p>
+              <p>{item.show.name}</p>
+              <p>{compactString(item.show.summary, 70)}</p>
+              <p>{arrayToString(item.show.genres)}</p>
+              <p>{item.show.premiered}</p>
+              <div>
+                <button
+                  style={{ width: 'auto', height: 'auto' }}
+                  className='btn-inline btn-primary'
+                  onClick={() => loadMovieFromApi(item)}
+                >
+                  load
+                </button>
+              </div>
+            </div>
+          ))}
 
         <div className='mb-3 col-md-4'>
           <Input label='year' type='text' id='movie-year' refs={yearRef} />

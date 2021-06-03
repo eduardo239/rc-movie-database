@@ -16,15 +16,18 @@ const TV = () => {
   }, [dispatch]);
 
   return (
-    <div className='App-flex wrap'>
-      {loading ? (
-        <Loading />
-      ) : data ? (
-        data.map((m) => <TvItem key={m.id} data={m} />).reverse()
-      ) : (
-        <p>tv show not found</p>
-      )}
-    </div>
+    <>
+      <h2>TV Show</h2>
+      <div className='flex wrap gap-1 justify-center'>
+        {loading ? (
+          <Loading />
+        ) : data ? (
+          data.map((m) => <TvItem key={m.id} data={m} />).reverse()
+        ) : (
+          <p>tv show not found</p>
+        )}
+      </div>
+    </>
   );
 };
 

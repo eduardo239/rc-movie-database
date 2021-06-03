@@ -2,11 +2,10 @@ import React from 'react';
 import { Slide as SlideShow } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import posterWide from '../assets/images/posterWide.jpg';
-// import posterWide1 from '../assets/images/posterWide1.jpg';
+import posterWide1 from '../assets/images/posterWide1.jpg';
 // import posterWide2 from '../assets/images/posterWide2.jpg';
 
 const Slide = ({ data }) => {
-  console.log(data);
   return (
     <div div className='App-slide-container'>
       <div className='App-slide'>
@@ -15,21 +14,23 @@ const Slide = ({ data }) => {
             <div
               style={{ backgroundImage: `url(${data[0].image || posterWide})` }}
             >
-              <span>Slide 1</span>
+              <span>{data[0].name}</span>
             </div>
           </div>
           <div className='each-slide'>
             <div
-              style={{ backgroundImage: `url(${data[1].image || posterWide})` }}
+              style={{
+                backgroundImage: `url(${data[1].image || posterWide1})`,
+              }}
             >
-              <span>Slide 2</span>
+              <span>{data[1].name}</span>
             </div>
           </div>
           <div className='each-slide'>
             <div
               style={{ backgroundImage: `url(${data[2].image || posterWide})` }}
             >
-              <span>Slide 3</span>
+              <span>{data[2].name}</span>
             </div>
           </div>
         </SlideShow>

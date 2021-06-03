@@ -38,9 +38,15 @@
 }
 
 .App-menu-content li a {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   display: block;
+  padding: 1rem;
   margin: 0.5rem 0;
+  background-color: var(--black);
+}
+.App-menu-content li a:hover {
+  background-color: var(--border-color);
+  color: var(--white);
 }
 
 .App-menu-button--close {
@@ -86,8 +92,12 @@
   border-bottom: 1px solid var(--primary);
   box-shadow: var(--shadow-2);
 }
+.App-search:hover {
+  border-right: 5px solid var(--primary);
+}
 .App-poster-mini {
   width: 50px;
+  height: 65px;
 }
 .App-search--p {
   font-size: 0.8rem;
@@ -99,7 +109,34 @@
 .App-details p {
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--border-color);
+  margin: 0;
 }
 .App-details p:first-child {
   border-top: 1px solid var(--border-color);
+}
+.App-details b {
+  font-weight: 700;
+  margin-right: 0.75rem;
+}
+
+.App-maze-list {
+  margin-top: 0.1rem !important;
+  display: grid;
+  grid-template-columns: auto 2fr 4fr 2fr 1fr auto;
+  gap: 1rem;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+.App-maze-list p {
+  margin-bottom: 0;
+  border-right: 1px solid var(--border-color);
+}
+
+.App-maze-list:nth-child(odd) {
+  background-color: var(--border-color);
+}
+
+.App-footer-icon {
+  width: 2.5rem;
+  padding: 0.25rem;
 }

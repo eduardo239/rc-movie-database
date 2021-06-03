@@ -65,7 +65,11 @@ const Search = () => {
               key={Math.random()}
             >
               <div className='flex gap-1'>
-                <img className='App-poster-mini' src={poster} alt={i.name} />
+                <img
+                  className='App-poster-mini'
+                  src={i.poster || poster}
+                  alt={i.name}
+                />
                 <div className='text-left'>
                   <h6>{i.name}</h6>
                   <p className='App-search--p'>

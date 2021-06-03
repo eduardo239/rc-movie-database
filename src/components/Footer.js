@@ -9,13 +9,21 @@ const Footer = () => {
     <footer>
       <div className='text-center'>
         <h3 className='my-3'> Logo</h3>
-        <div className='flex gap-2 justify-center'>
-          <img src={fbIcon} alt='Facebook' />
-          <img src={inIcon} alt='Instagram' />
-          <img src={ttIcon} alt='Twitter' />
-          <img src={twIcon} alt='Twitch' />
+        <div className='flex gap-2 mt-4 justify-center'>
+          <a href='#facebook'>
+            <img className='App-footer-icon' src={fbIcon} alt='Facebook' />
+          </a>
+          <a href='#instagram'>
+            <img className='App-footer-icon' src={inIcon} alt='Instagram' />
+          </a>
+          <a href='#twitter'>
+            <img className='App-footer-icon' src={ttIcon} alt='Twitter' />
+          </a>
+          <a href='#twitch'>
+            <img className='App-footer-icon' src={twIcon} alt='Twitch' />
+          </a>
         </div>
-        <div className='flex gap-2 mt-2 justify-center'>
+        <div className='flex gap-2 mt-4 justify-center'>
           <Link to='/'>Home</Link>
           <Link to='/movies'>Movies</Link>
           <Link to='/tv'>Tv</Link>

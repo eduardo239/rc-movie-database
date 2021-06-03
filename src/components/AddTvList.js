@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { helperFunction } from '../helper';
 import Loading from './Loading';
 import Message from './Message';
+import { Link } from 'react-router-dom';
 
 const AddTvList = ({ loadMovie }) => {
   const dispatch = useDispatch();
@@ -156,7 +157,7 @@ const AddTvList = ({ loadMovie }) => {
                           />
                         </svg>
                       </a>
-                      <a href='#void' className='btn-a btn-info'>
+                      <Link to={`tv/${i.id}`} className='btn-a btn-info'>
                         <svg
                           width='24'
                           height='24'
@@ -169,7 +170,7 @@ const AddTvList = ({ loadMovie }) => {
                             fill='#1B1B1B'
                           />
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </td>
                 </tr>

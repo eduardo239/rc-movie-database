@@ -24,8 +24,8 @@ const Top = () => {
 
   return (
     <>
-      <h2>Top 10</h2>
-      <div className='flex wrap gap-1'>
+      <h2>Top 10 - Movies</h2>
+      <div className='flex wrap gap-1 justify-center'>
         {loading ? (
           <Loading />
         ) : (

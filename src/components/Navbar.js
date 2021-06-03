@@ -72,7 +72,7 @@ const Navbar = () => {
             <h2>Menu</h2>
             <div className='flex' style={{ gap: '1rem' }}>
               <ul className='App-menu-content mt-3'>
-                <h3>Movies</h3>
+                <h3 className='mb-4'>Movies</h3>
                 <li>
                   <Link to='/' onClick={handleCloseMenu}>
                     Home
@@ -96,7 +96,7 @@ const Navbar = () => {
               </ul>
               {/*  */}
               <ul className='App-menu-content mt-3'>
-                <h3>Tv</h3>
+                <h3 className='mb-4'>Tv</h3>
                 <li>
                   <Link to='/' onClick={handleCloseMenu}>
                     Home

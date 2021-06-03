@@ -35,7 +35,7 @@ const MoviePage = () => {
 
             <h2>{data.name}</h2>
             <p className='text-small'>
-              Year: {data.year} - views: {data.views || 0} -{' '}
+              Year: {data.year} - Views: {data.views || 0} -{' '}
               {dateConvert(data.created_at)}
             </p>
             <div className='flex'>
@@ -69,17 +69,17 @@ const MoviePage = () => {
 
             <div className='App-details'>
               <p>
-                <b>Director</b>
+                <b>Director:</b>
                 {data.director}
               </p>
 
               <p>
-                <b>Stars</b>
+                <b>Stars:</b>
                 {data.cast}
               </p>
 
               <p>
-                <b>Year</b>
+                <b>Year:</b>
                 {data.year}
               </p>
             </div>

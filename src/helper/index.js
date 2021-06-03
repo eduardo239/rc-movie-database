@@ -38,3 +38,13 @@ export const extractVideoId = (x) => {
     return `https://www.youtube.com/embed/${id}`;
   }
 };
+
+export const compactString = (x, len) => {
+  if (x === null) {
+    return;
+  }
+  if (x.length > 10) {
+    return x.slice(0, len) + '...';
+  }
+  return x;
+};

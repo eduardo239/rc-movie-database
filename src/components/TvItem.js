@@ -3,18 +3,19 @@ import { Link } from 'react-router-dom';
 import poster from '../assets/images/poster.jpg';
 
 const TvItem = ({ data }) => {
+  console.log(data);
   return (
-    <div>
-      <Link to={`tv/${data.id}`}>
-        <div className='App-card'>
-          <img src={poster} alt='' />
-          <div className='App-card--body'>
-            <p>{data.name}</p>
-            <small>{data.year}</small>
-          </div>
+    <Link to={`tv/${data.id}`} className='App-card-container'>
+      <div className='App-card'>
+        <img className='poster' src={data.poster || poster} alt={data.name} />
+        <div className='p-2'>
+          <h5>{data.name}</h5>
+          <p className='App-card--p text-small mt-2'>
+            {data.storyline.slice(0, 60) + '...' || 'No storyline'}
+          </p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 

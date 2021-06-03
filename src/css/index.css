@@ -95,6 +95,7 @@ small,
 label {
   display: block;
   font-size: 0.8rem;
+  color: var(--white);
 }
 
 input,
@@ -285,12 +286,33 @@ td {
   color: var(--gray-mid);
 }
 
+.field-input-button {
+  display: flex;
+}
+
+.field-input-button div label {
+  display: block;
+}
+
+.field-input-button div button {
+  border-bottom: 2px solid var(--white);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.field-input-button div button:hover {
+  border-bottom: 2px solid var(--primary);
+}
 /* flex */
 .flex {
   display: flex;
 }
 .flex-1 {
   flex: 1;
+}
+
+.flex-align-end {
+  align-items: flex-end;
 }
 
 .align-center {
@@ -312,6 +334,9 @@ td {
   flex-wrap: wrap;
 }
 
+.w-100 {
+  width: 100%;
+}
 /* align */
 .text-center {
   text-align: center;
@@ -354,7 +379,7 @@ td {
 /* slide */
 .each-slide > div {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   background-size: cover;
   height: 350px;
@@ -363,7 +388,7 @@ td {
 .each-slide span {
   padding: 20px;
   font-size: 20px;
-  background: #efefef;
+  background: rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
@@ -371,6 +396,20 @@ td {
   height: 300px;
   max-width: 200px;
 }
+.poster-small {
+  height: 3rem;
+  transition: 0.1s ease-in-out;
+}
+
+.poster-small:hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 300px;
+  z-index: 500;
+  cursor: pointer;
+}
+
 .svg-hover:hover svg path {
   padding: 0.65rem 0.75rem;
   fill: var(--primary);
