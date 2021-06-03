@@ -70,17 +70,34 @@
 .App-card {
   color: var(--black);
 }
+
+.App-card h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
 .App-card--p {
   display: inline-block;
-  line-height: 1.6;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 0.8rem;
 }
 
 /* slide */
-.App-slide-container {
-  display: grid;
-  grid-template-columns: minmax(400px, 800px) 1fr;
-}
 
+.App-slide {
+  width: 800px;
+}
+.App-slide-side {
+  display: flex;
+  flex-direction: column;
+  max-height: 350px;
+  overflow: hidden;
+}
+.App-slide--img {
+  height: 120px;
+}
 /* search */
 .App-search-container {
   position: relative;
@@ -139,4 +156,14 @@
 .App-footer-icon {
   width: 2.5rem;
   padding: 0.25rem;
+}
+.App-footer--links a {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 0.25rem;
+}
+.App-footer--links a:hover {
+  color: var(--white);
 }

@@ -5,7 +5,7 @@ import logo from '../assets/images/logo.svg';
 const Logo = () => {
   return (
     <Link to='/'>
-      <div className='App-logo'>
+      <div className='justify-center flex'>
         <img src={logo} alt='movie database' />
       </div>
     </Link>

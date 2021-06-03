@@ -3,9 +3,11 @@ import { supabase } from '../lib/api';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 import Logo from './Logo';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
+  const { data } = useSelector((state) => state.user.login);
 
   const handleLogout = async () => {
     setModal(false);
@@ -24,6 +26,8 @@ const Navbar = () => {
     <div className='flex align-center my-3 gap-2'>
       <Logo />
       <Search />
+
+      {data && <div>{data.email} </div>}
 
       <div className='App-menu svg-hover' onClick={handleOpenMenu}>
         <svg

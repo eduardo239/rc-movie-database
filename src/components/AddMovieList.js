@@ -5,6 +5,8 @@ import { helperFunction } from '../helper';
 import Loading from './Loading';
 import Message from './Message';
 import { Link } from 'react-router-dom';
+import { ReactComponent as OkIcon } from '../assets/icons2/mdi_check-circle-outline.svg';
+import { ReactComponent as OkIcon2 } from '../assets/icons2/mdi_check-circle-outline-gray.svg';
 
 const AddMovieList = ({ loadMovie }) => {
   const dispatch = useDispatch();
@@ -67,6 +69,7 @@ const AddMovieList = ({ loadMovie }) => {
             <th>storyline</th>
             <th>cast</th>
             <th>tags</th>
+            <th>trailer</th>
             <th>image</th>
             <th>poster</th>
             <th>options</th>
@@ -83,6 +86,11 @@ const AddMovieList = ({ loadMovie }) => {
                   <td>{i.storyline ? i.storyline.slice(0, 50) + '...' : ''}</td>
                   <td>{i.cast && i.cast.join(',')}</td>
                   <td>{i.tags}</td>
+                  <td>
+                    <div className='flex justify-center'>
+                      {i.trailer.length > 0 ? <OkIcon /> : <OkIcon2 />}
+                    </div>
+                  </td>
                   <td>
                     {i.image ? (
                       <a target='_blank' rel='noreferrer' href={`${i.image}`}>

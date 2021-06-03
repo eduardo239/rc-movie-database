@@ -18,7 +18,7 @@ const TvPage = () => {
   useEffect(() => {
     (async function () {
       await dispatch(getTv(id));
-      // await dispatch(pageViewInc(id));
+      await dispatch(pageViewInc(id));
     })();
   }, [dispatch, id]);
 

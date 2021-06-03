@@ -4,7 +4,7 @@ import { supabase } from '../lib/api';
 import poster from '../assets/images/poster.jpg';
 import Loading from './Loading';
 
-const News = () => {
+const NewTv = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState();
 
@@ -12,7 +12,7 @@ const News = () => {
     (async function () {
       setLoading(true);
       const { data, error } = await supabase
-        .from('movies')
+        .from('tv')
         .select('*')
         .limit(5)
         .order('created_at', { ascending: false });
@@ -24,18 +24,14 @@ const News = () => {
 
   return (
     <>
-      <h2>New - Movies</h2>
+      <h2>New - Tv</h2>
       <div className='flex wrap gap-1 justify-center'>
         {loading ? (
           <Loading />
         ) : (
           data &&
           data.map((i) => (
-            <Link
-              to={`movies/${i.id}`}
-              key={i.id}
-              className='App-card-container'
-            >
+            <Link to={`tv/${i.id}`} key={i.id} className='App-card-container'>
               <div className='App-card'>
                 <img className='poster' src={i.poster || poster} alt={i.name} />
                 <div className='p-2'>
@@ -53,4 +49,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default NewTv;

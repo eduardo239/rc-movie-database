@@ -11,6 +11,7 @@ import Init from './Init';
 import Add from './Add';
 import MoviePage from './MoviePage';
 import TvPage from './TvPage';
+import Footer from './Footer';
 // import RecoverPassword from "./RecoverPassword";
 
 const Home = () => {
@@ -25,18 +26,21 @@ const Home = () => {
   };
 
   return (
-    <div className='container'>
-      <Navbar />
+    <>
+      <div className='container'>
+        <Navbar />
 
-      <Switch>
-        <PrivateRoute exact path='/' component={Init} />
-        <PrivateRoute exact path='/add' component={Add} />
-        <Route exact path='/movies' component={Movie} />
-        <Route exact path='/movies/:id' component={MoviePage} />
-        <Route exact path='/tv' component={TV} />
-        <Route exact path='/tv/:id' component={TvPage} />
-      </Switch>
-    </div>
+        <Switch>
+          <PrivateRoute exact path='/' component={Init} />
+          <PrivateRoute exact path='/add' component={Add} />
+          <Route exact path='/movies' component={Movie} />
+          <Route exact path='/movies/:id' component={MoviePage} />
+          <Route exact path='/tv' component={TV} />
+          <Route exact path='/tv/:id' component={TvPage} />
+        </Switch>
+      </div>
+      <Footer />
+    </>
   );
 };
 

@@ -5,7 +5,8 @@ import { helperFunction } from '../helper';
 import Loading from './Loading';
 import Message from './Message';
 import { Link } from 'react-router-dom';
-
+import { ReactComponent as OkIcon } from '../assets/icons2/mdi_check-circle-outline.svg';
+import { ReactComponent as OkIcon2 } from '../assets/icons2/mdi_check-circle-outline-gray.svg';
 const AddTvList = ({ loadMovie }) => {
   const dispatch = useDispatch();
 
@@ -65,8 +66,9 @@ const AddTvList = ({ loadMovie }) => {
             <th>name</th>
             <th>year</th>
             <th>storyline</th>
-            <th>tags</th>
             <th>cast</th>
+            <th>tags</th>
+            <th>trailer</th>
             <th>image</th>
             <th>poster</th>
             <th>options</th>
@@ -81,8 +83,13 @@ const AddTvList = ({ loadMovie }) => {
                   <td>{i.name}</td>
                   <td>{i.year}</td>
                   <td>{i.storyline ? i.storyline.slice(0, 50) + '...' : ''}</td>
-                  <td>{i.tags}</td>
                   <td>{i.cast}</td>
+                  <td>{i.tags}</td>
+                  <td>
+                    <div className='flex justify-center'>
+                      {i.trailer.length > 0 ? <OkIcon /> : <OkIcon2 />}
+                    </div>
+                  </td>
                   <td>
                     {i.image ? (
                       <a target='_blank' rel='noreferrer' href={`${i.image}`}>

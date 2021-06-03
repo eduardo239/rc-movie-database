@@ -66,7 +66,7 @@ const AddMovie = () => {
       year: yearRef.current.value,
       director: directorRef.current.value,
       poster: posterRef.current.value,
-      image: file,
+      image: imageRef.current.value,
       rating: ratingRef.current.value || 0.0,
       trailer: trailerRef.current.value,
       tags: stringToArray(tagsRef.current.value),
@@ -167,7 +167,7 @@ const AddMovie = () => {
     yearRef.current.value = body.year;
     directorRef.current.value = body.director;
     posterRef.current.value = body.poster;
-    // imageRef.current.value = body.image;
+    imageRef.current.value = body.image;
     ratingRef.current.value = body.rating || 0.0;
     trailerRef.current.value = body.trailer;
     tagsRef.current.value = arrayToString(body.tags);
@@ -189,7 +189,7 @@ const AddMovie = () => {
     let year = yearRef.current.value;
     let director = directorRef.current.value;
     let poster = posterRef.current.value;
-    // let image = imageRef.current.target.value;
+    let image = imageRef.current.value;
     let rating = ratingRef.current.value || 0.0;
     let trailer = trailerRef.current.value;
     let tags = stringToArray(tagsRef.current.value);
@@ -202,7 +202,7 @@ const AddMovie = () => {
       year,
       director,
       poster,
-      // image,
+      image,
       rating,
       trailer,
       tags,
@@ -283,7 +283,7 @@ const AddMovie = () => {
     yearRef.current.value = '';
     directorRef.current.value = '';
     posterRef.current.value = '';
-    // imageRef.current.value = '';
+    imageRef.current.value = '';
     ratingRef.current.value = '';
     trailerRef.current.value = '';
     tagsRef.current.value = '';
@@ -350,20 +350,6 @@ const AddMovie = () => {
           Add Content
         </h2>
 
-        {apiLoading ? (
-          <Loading />
-        ) : (
-          <div className='mb-3 col-md-4 field-input-button'>
-            <InputButton
-              label='name'
-              type='text'
-              id='movie-name'
-              refs={nameRef}
-              searchTvMaze={searchTvMaze}
-            />
-          </div>
-        )}
-
         {apiMaze &&
           apiMaze.map((item) => (
             <div className='App-maze-list' key={item.show.id}>
@@ -389,6 +375,20 @@ const AddMovie = () => {
               </div>
             </div>
           ))}
+
+        {apiLoading ? (
+          <Loading />
+        ) : (
+          <div className='mb-3 col-md-4 field-input-button'>
+            <InputButton
+              label='name'
+              type='text'
+              id='movie-name'
+              refs={nameRef}
+              searchTvMaze={searchTvMaze}
+            />
+          </div>
+        )}
 
         <div className='mb-3 col-md-4'>
           <Input label='year' type='text' id='movie-year' refs={yearRef} />
@@ -423,7 +423,7 @@ const AddMovie = () => {
           />
         </div>
 
-        <div className='mb-3 col-md-4'>
+        {/* <div className='mb-3 col-md-4'>
           <Input
             label='image'
             type='file'
@@ -431,15 +431,15 @@ const AddMovie = () => {
             refs={imageRef}
             disabled
           />
-          {/* <input
-            type='file'
-            className='form-control'
-            id='movie-image'
-            aria-describedby='movieImage'
-            ref={imageRef}
-            onChange={(e) => setFile(e.target.files[0])}
-            
-          /> */}
+        </div> */}
+        <div className='mb-3 col-md-4'>
+          <Input
+            label='image-url'
+            type='text'
+            id='movie-image-url'
+            refs={imageRef}
+            onChange={(e) => setFile(e.target.value)}
+          />
         </div>
       </div>
 

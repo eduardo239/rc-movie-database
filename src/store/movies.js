@@ -180,7 +180,6 @@ export const resetSearch = () => async (dispatch) => {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 export const pageViewInc = (id) => async (dispatch) => {
-  // const { data, error } = await supabase.rpc('increment', { id });
   let { data, error } = await supabase
     .from('movies')
     .select('*')

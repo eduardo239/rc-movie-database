@@ -322,6 +322,9 @@ td {
 .justify-center {
   justify-content: center;
 }
+.flex-column {
+  flex-direction: column;
+}
 
 .gap-1 {
   gap: 0.5rem;

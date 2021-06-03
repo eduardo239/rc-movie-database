@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getMovies } from '../store/movies';
 import Feature from './Feature';
-import Top from './Top';
-import News from './News';
-import Footer from './Footer';
+import TopMovie from './TopMovie';
+import NewMovie from './NewMovie';
+import TopTv from './TopTv';
+import NewTv from './NewTv';
 
 const Init = () => {
   const dispatch = useDispatch();
@@ -15,12 +16,13 @@ const Init = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <>
       <Feature />
-      <Top />
-      <News />
-      <Footer />
-    </div>
+      <TopMovie />
+      <NewMovie />
+      <TopTv />
+      <NewTv />
+    </>
   );
 };
 

@@ -74,9 +74,33 @@ export const delTvSlice = createSlice({
   },
 });
 
+export const pageViewIncSlice = createSlice({
+  name: 'views',
+  initialState: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  reducers: {
+    reqPageView: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    sucPageView: (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+    },
+    errPageView: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
 const { reqGetTvs, sucGetTvs, errGetTvs } = getTvsSlice.actions;
 const { reqGetTv, sucGetTv, errGetTv } = getTvSlice.actions;
 const { reqDelTv, sucDelTv, errDelTv } = delTvSlice.actions;
+const { sucPageView, errPageView } = pageViewIncSlice.actions;
 
 export default reducer;
 
@@ -104,4 +128,20 @@ export const deleteTv = (id) => async (dispatch) => {
   const { error } = await supabase.from('tv').delete().eq('id', id);
   if (error) errDelTv(error);
   else dispatch(sucDelTv());
+};
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+export const pageViewInc = (id) => async (dispatch) => {
+  let { data, error } = await supabase
+    .from('tv')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  await supabase
+    .from('tv')
+    .update({ views: data.views + 1 })
+    .eq('id', id);
+
+  if (error) errPageView(error);
+  else await dispatch(sucPageView(data));
 };
