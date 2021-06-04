@@ -27,7 +27,11 @@ const Navbar = () => {
       <Logo />
       <Search />
 
-      {data && <div>{data.email} </div>}
+      {data && (
+        <div>
+          <Link to={`profile/${data.id}`}>{data.email}</Link>
+        </div>
+      )}
 
       <div className='App-menu svg-hover' onClick={handleOpenMenu}>
         <svg

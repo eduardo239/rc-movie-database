@@ -26,6 +26,14 @@ const Auth = () => {
     if (error) {
       helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
     } else {
+      if (type === 'REGISTER') {
+        const { data: profileData, error: profileError } = await supabase
+          .from('profile')
+          .insert({ user_id: user.id, name: 'User' });
+        if (profileError) console.log(profileError);
+        else console.log(profileData);
+      }
+
       helperFunction(
         false,
         'An email has been sent to you for verification!',
