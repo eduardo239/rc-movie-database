@@ -52,23 +52,25 @@ const AddMovieList = ({ loadMovie }) => {
 
       {loading && <Loading />}
 
-      <table className='table-content'>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>year</th>
-            <th>storyline</th>
-            <th>cast</th>
-            <th>tags</th>
-            <th>trailer</th>
-            <th>image</th>
-            <th>poster</th>
-            <th>options</th>
-          </tr>
-        </thead>
-        {movies ? (
-          movies
+      {movies?.length > 0 ? (
+        <table className='table-content'>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>name</th>
+              <th>year</th>
+              <th>storyline</th>
+              <th>cast</th>
+              <th>tags</th>
+              <th>trailer</th>
+              <th>image</th>
+              <th>poster</th>
+              <th>type</th>
+              <th>options</th>
+            </tr>
+          </thead>
+
+          {movies
             .map((i) => (
               <tbody key={i.id}>
                 <tr>
@@ -101,6 +103,7 @@ const AddMovieList = ({ loadMovie }) => {
                       'null'
                     )}
                   </td>
+                  <td>{i.type}</td>
                   <td>
                     <div className='flex'>
                       <a
@@ -176,15 +179,11 @@ const AddMovieList = ({ loadMovie }) => {
                 </tr>
               </tbody>
             ))
-            .reverse()
-        ) : (
-          <tbody>
-            <tr>
-              <td>Movies not found</td>
-            </tr>
-          </tbody>
-        )}
-      </table>
+            .reverse()}
+        </table>
+      ) : (
+        <Message data='Movies not found' type='alert-info' />
+      )}
     </div>
   );
 };

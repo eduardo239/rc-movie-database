@@ -14,7 +14,7 @@ const Feature = () => {
       ) : data && data.length > 3 ? (
         <Slide data={data && data.slice(1, 4)} />
       ) : (
-        <Message data='Movies Not Found' />
+        <Message data='Slide not found.' type='alert-info' />
       )}
     </>
   );

@@ -7,8 +7,6 @@ import Message from './Message';
 
 const Profile = () => {
   const watchlistRef = useRef();
-
-  // TODO: get user info by id
   const [profile, setProfile] = useState(null);
   const [watchlist, setWatchlist] = useState(null);
   const [message, setMessage] = useState(null);
@@ -24,7 +22,7 @@ const Profile = () => {
     }
 
     if (data) {
-      const { data: watchlistData, error: watchlistError } = await supabase
+      const { error: watchlistError } = await supabase
         .from('watchlist')
         .insert({ name, user_id: profile.user_id });
       if (watchlistError) console.log(watchlistError);
@@ -33,11 +31,11 @@ const Profile = () => {
   };
 
   const deleteWatchlist = async (id) => {
-    const { data, error } = await supabase
+    const { error: deleteError } = await supabase
       .from('watchlist')
       .delete()
       .eq('id', id);
-    if (error) console.log(error);
+    if (deleteError) console.log(deleteError);
     else setMessage('Watchlist successfully deleted.');
   };
 
@@ -53,10 +51,11 @@ const Profile = () => {
       return;
     }
 
-    const { data, error } = await supabase
+    const { error: editError } = await supabase
       .from('watchlist')
       .update({ name, updated_at: new Date() })
       .eq('id', id);
+    if (editError) console.log(editError);
   };
 
   const selectWatchlist = () => {

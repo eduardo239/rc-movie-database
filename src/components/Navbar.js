@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/api';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ReactComponent as EmailIcon } from '../assets/icons2/mdi_arrow-left.svg';
+import { ReactComponent as AtIcon } from '../assets/icons2/mdi_at.svg';
+
 import Search from './Search';
 import Logo from './Logo';
-import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
@@ -29,7 +32,9 @@ const Navbar = () => {
 
       {data && (
         <div>
-          <Link to={`profile/${data.id}`}>{data.email}</Link>
+          <Link to={`profile/${data.id}`}>
+            <AtIcon />
+          </Link>
         </div>
       )}
 
@@ -48,8 +53,8 @@ const Navbar = () => {
         </svg>
       </div>
       <div>
-        <button className='btn btn-secondary' onClick={handleLogout}>
-          Logout
+        <button className='btn-icon btn-secondary' onClick={handleLogout}>
+          <EmailIcon />
         </button>
       </div>
       {/* --- */}

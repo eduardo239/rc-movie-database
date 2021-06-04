@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import poster from '../assets/images/poster.jpg';
 
 const TvItem = ({ data }) => {
-  console.log(data);
   return (
     <Link to={`tv/${data.id}`} className='App-card-container'>
       <div className='App-card'>

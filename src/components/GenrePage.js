@@ -10,7 +10,6 @@ const GenrePage = () => {
   let history = useHistory();
 
   const [movies, setMovies] = useState();
-  const [tvs, setTvs] = useState();
 
   const back = () => history.goBack();
 
@@ -22,13 +21,6 @@ const GenrePage = () => {
         .cs('tags', [term]);
 
       await setMovies(movies);
-
-      let { data: tvs } = await supabase
-        .from('tv')
-        .select('*')
-        .cs('tags', [term]);
-
-      await setTvs(tvs);
     })();
   }, [term]);
 
@@ -46,27 +38,6 @@ const GenrePage = () => {
           movies.map((i) => (
             <Link
               to={`../movies/${i.id}`}
-              key={i.id}
-              className='App-card-container'
-            >
-              <div className='App-card'>
-                <img className='poster' src={i.poster || poster} alt={i.name} />
-                <div className='p-2'>
-                  <h5>{i.name}</h5>
-                  <p className='App-card--p text-small mt-2'>
-                    {i.storyline.slice(0, 60) + '...' || 'No storyline'}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
-      </div>
-      <h2>Tv</h2>
-      <div className='flex wrap gap-1 justify-center'>
-        {tvs &&
-          tvs.map((i) => (
-            <Link
-              to={`../tv/${i.id}`}
               key={i.id}
               className='App-card-container'
             >

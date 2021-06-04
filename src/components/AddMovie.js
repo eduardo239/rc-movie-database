@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { supabase } from '../lib/api';
 import { getMovies } from '../store/movies';
-import { getTvs } from '../store/tvs';
 import AddMovieList from './AddMovieList';
 import Message from './Message';
 import InputButton from './InputButton';
@@ -15,10 +14,9 @@ import {
   stringToArray,
   compactString,
 } from '../helper';
-import AddTvList from './AddTvList';
 import Input from './Input';
 import TextArea from './TextArea';
-import Radio from './Radio';
+// import Radio from './Radio';
 import Loading from './Loading';
 
 const AddMovie = () => {
@@ -53,15 +51,15 @@ const AddMovie = () => {
   const tagsRef = useRef();
   const storylineRef = useRef();
 
-  const movieRadioRef = useRef();
-  const tvRadioRef = useRef();
-
   const movieListRef = useRef();
   const tvListRef = useRef();
 
+  const movieCheckRef = useRef();
+  const tvCheckRef = useRef();
+
   const handleAddMovie = async () => {
-    const movieRadio = movieRadioRef.current.checked;
-    const tvRadio = tvRadioRef.current.checked;
+    const movieChecked = movieCheckRef.current.checked;
+    const tvChecked = tvCheckRef.current.checked;
 
     const body = {
       name: nameRef.current.value.trim(),
@@ -74,6 +72,7 @@ const AddMovie = () => {
       tags: stringToArray(tagsRef.current.value),
       cast: stringToArray(castRef.current.value),
       storyline: storylineRef.current.value.trim(),
+      type: movieChecked ? 'movie' : 'tv',
     };
 
     // const formData = new FormData();
@@ -89,6 +88,15 @@ const AddMovie = () => {
     //   });
     //   console.log(response);
     // })();
+    if (!movieChecked && !tvChecked) {
+      helperFunction(
+        true,
+        'Please select movie or tv.',
+        'alert-warning',
+        setHelperText,
+        5000
+      );
+    }
 
     if (body.name === '' || body.year === '') {
       helperFunction(
@@ -101,51 +109,23 @@ const AddMovie = () => {
       return;
     }
 
-    if (!movieRadio && !tvRadio) {
+    const { error } = await supabase.from('movies').insert([body]);
+    if (error) {
+      helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
+    } else {
       helperFunction(
-        true,
-        'Please select Movie or Tv.',
-        'alert-warning',
+        false,
+        'Movie successfully added.',
+        'alert-success',
         setHelperText,
         3000
       );
-      return;
     }
-
-    if (movieRadio) {
-      const { error } = await supabase.from('movies').insert([body]);
-      if (error) {
-        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
-      } else {
-        helperFunction(
-          false,
-          'Movie successfully added.',
-          'alert-success',
-          setHelperText,
-          3000
-        );
-      }
-      await dispatch(getMovies());
-    }
-
-    if (tvRadio) {
-      const { error } = await supabase.from('tv').insert([body]);
-      if (error) {
-        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
-      } else {
-        helperFunction(
-          false,
-          'Movie successfully added.',
-          'alert-success',
-          setHelperText,
-          3000
-        );
-      }
-      await dispatch(getTvs());
-    }
+    await dispatch(getMovies());
   };
 
   const loadMovie = (body, type) => {
+    console.log(body);
     IdRef.current.value = body.id;
     nameRef.current.value = body.name;
     yearRef.current.value = body.year;
@@ -157,14 +137,7 @@ const AddMovie = () => {
     tagsRef.current.value = arrayToString(body.tags);
     castRef.current.value = arrayToString(body.cast);
     storylineRef.current.value = body.storyline;
-
-    if (type === 'tv') {
-      setTvCheck(true);
-      setMovieCheck(false);
-    } else if (type === 'movie') {
-      setMovieCheck(true);
-      setTvCheck(false);
-    }
+    setMovieCheck(body.type === 'movie' ? true : false);
   };
 
   const handlerUpdateMovie = async () => {
@@ -180,6 +153,7 @@ const AddMovie = () => {
     let cast = stringToArray(castRef.current.value);
     let storyline = storylineRef.current.value;
     let updated_at = new Date();
+    let type = movieCheckRef.current.checked ? 'movie' : 'tv';
 
     const body = {
       id,
@@ -194,55 +168,36 @@ const AddMovie = () => {
       cast,
       storyline,
       updated_at,
+      type,
     };
 
-    const movieRadio = movieRadioRef.current.checked;
-    const tvRadio = tvRadioRef.current.checked;
+    // const movieRadio = movieRadioRef.current.checked;
+    // const tvRadio = tvRadioRef.current.checked;
 
-    if (!movieRadio && !tvRadio) {
+    // if (!movieRadio && !tvRadio) {
+    //   helperFunction(
+    //     true,
+    //     'Please select Movie or Tv.',
+    //     'alert-warning',
+    //     setHelperText,
+    //     3000
+    //   );
+    // }
+
+    const { error } = await supabase.from('movies').update(body).eq('id', id);
+
+    if (error) {
+      helperFunction(true, error.message, 'alert-error', setHelperText, 9000);
+    } else {
       helperFunction(
-        true,
-        'Please select Movie or Tv.',
-        'alert-warning',
+        false,
+        'Movie successfully updated.',
+        'alert-success',
         setHelperText,
         3000
       );
-    }
 
-    if (movieRadio) {
-      const { error } = await supabase.from('movies').update(body).eq('id', id);
-
-      if (error) {
-        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
-      } else {
-        helperFunction(
-          false,
-          'Movie successfully updated.',
-          'alert-success',
-          setHelperText,
-          3000
-        );
-
-        await dispatch(getMovies());
-      }
-    }
-
-    if (tvRadio) {
-      const { error } = await supabase.from('tv').update(body).eq('id', id);
-
-      if (error) {
-        helperFunction(true, error.message, 'alert-error', setHelperText, 3000);
-      } else {
-        helperFunction(
-          false,
-          'Tv successfully updated.',
-          'alert-success',
-          setHelperText,
-          3000
-        );
-
-        await dispatch(getTvs());
-      }
+      await dispatch(getMovies());
     }
   };
 
@@ -401,15 +356,6 @@ const AddMovie = () => {
           />
         </div>
 
-        {/* <div className='mb-3 col-md-4'>
-          <Input
-            label='image'
-            type='file'
-            id='movie-image'
-            refs={imageRef}
-            disabled
-          />
-        </div> */}
         <div className='mb-3 col-md-4'>
           <Input
             label='image-url'
@@ -450,68 +396,79 @@ const AddMovie = () => {
       </div>
 
       {/*  */}
-      <div className='form-group flex flex-align-end mt-3'>
-        <label className='radio-container  me-3' htmlFor='tv-radio'>
-          Movie
-          <input
-            id='tv-radio'
-            type='radio'
-            name='radio'
-            ref={movieRadioRef}
-            checked={movieCheck}
-            onChange={handleRadioChange}
-          />
-          <span className='checkmark'></span>
-        </label>
+      <div className='row g-3'>
+        <div className='mb-3 col-md-6'>
+          <div className='form-group'>
+            <Input label='ID' type='text' id='movie-id' refs={IdRef} disabled />
+          </div>
+        </div>
 
-        <label className='radio-container' htmlFor='movie-radio'>
-          Tv
-          <input
-            id='movie-radio'
-            type='radio'
-            name='radio'
-            ref={tvRadioRef}
-            checked={tvCheck}
-            onChange={handleRadioChange}
-          />
-          <span className='checkmark'></span>
-        </label>
+        {/* 
+          <p>
+    <input type="radio" id="test1" name="radio-group" checked>
+    <label for="test1">Apple</label>
+  </p>
+  <p>
+    <input type="radio" id="test2" name="radio-group">
+    <label for="test2">Peach</label>
+  </p>
+  <p>
+    <input type="radio" id="test3" name="radio-group">
+    <label for="test3">Orange</label>
+  </p>
+   */}
 
-        <div
-          className='form-group'
-          style={{
-            display: 'inline-block',
-            minWidth: '350px',
-            width: 'auto',
-            marginLeft: 'auto',
-            marginTop: '0.5rem',
-            float: 'right',
-          }}
-        >
-          <Input label='ID' type='text' id='movie-id' refs={IdRef} disabled />
+        <div className='mb-3 col-md-6 flex'>
+          <div className='form-check'>
+            <input
+              type='radio'
+              name='radio-group'
+              id='radio-movie'
+              checked={movieCheck}
+              ref={movieCheckRef}
+              onChange={handleRadioChange}
+            />
+            <label htmlFor='radio-tv'>Movie</label>
+          </div>
+
+          <div className='form-check'>
+            <input
+              type='radio'
+              name='radio-group'
+              id='radio-tv'
+              checked={tvCheck}
+              ref={tvCheckRef}
+              onChange={handleRadioChange}
+            />
+            <label htmlFor='radio-tv'>TV</label>
+          </div>
         </div>
       </div>
 
-      <div className='flex mt-3' id='buttons'>
-        <button className='btn-inline btn-success' onClick={handleAddMovie}>
-          Add New Content
-        </button>
+      <div className='mb-3 col-12'>
+        <div className='flex mt-3' id='buttons'>
+          <button className='btn-inline btn-success' onClick={handleAddMovie}>
+            Add New Content
+          </button>
 
-        <button className='btn-inline btn-warning' onClick={handlerUpdateMovie}>
-          Update Content
-        </button>
+          <button
+            className='btn-inline btn-warning'
+            onClick={handlerUpdateMovie}
+          >
+            Update Content
+          </button>
 
-        <button className='btn-inline btn-error' onClick={handleClear}>
-          Clear Fields
-        </button>
+          <button className='btn-inline btn-error' onClick={handleClear}>
+            Clear Fields
+          </button>
+        </div>
       </div>
       {!!helperText.text && (
         <Message data={helperText.text} type={helperText.type} />
       )}
 
       {/* tab */}
-      <section>
-        <h2>Select</h2>
+      <section className='mt-5'>
         <div className='flex align-center'>
           <button
             className={`btn-inline ${tab1 ? 'btn-primary' : 'btn-secondary'}`}
@@ -530,7 +487,7 @@ const AddMovie = () => {
           <AddMovieList loadMovie={loadMovie} />
         </div>
         <div ref={tvListRef} style={{ display: 'none' }}>
-          <AddTvList loadMovie={loadMovie} />
+          2
         </div>
       </section>
     </div>

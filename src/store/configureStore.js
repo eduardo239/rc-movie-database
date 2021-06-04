@@ -6,10 +6,9 @@ import {
 
 import user from './user';
 import movies from './movies';
-import tvs from './tvs';
 
 const middleware = [...getDefaultMiddleware()];
-const reducer = combineReducers({ user, movies, tvs });
+const reducer = combineReducers({ user, movies });
 const store = configureStore({ reducer, middleware });
 
 export default store;

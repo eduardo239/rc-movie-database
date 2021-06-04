@@ -17,8 +17,6 @@ const Movie = () => {
 
   return (
     <>
-      <h2>TV Show</h2>
-
       <div className='flex wrap gap-1 justify-center'>
         {loading ? (
           <Loading />

@@ -1,27 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMovie, pageViewInc } from '../store/movies';
 import { dateConvert, extractVideoId } from '../helper';
+import { ReactComponent as Back } from '../assets/icons2/mdi_arrow-left.svg';
+import { loadWatchlist, addToWatchlist } from '../store/user';
 import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
-import { ReactComponent as Back } from '../assets/icons2/mdi_arrow-left.svg';
 
 const MoviePage = () => {
   let { id } = useParams();
   let history = useHistory();
   const dispatch = useDispatch();
 
+  const [showWatchlists, setShowWatchlists] = useState(false);
+
   const { data, loading } = useSelector((state) => state.movies.movie);
+  const { data: loginData } = useSelector((state) => state.user.login);
+  const { data: watchlistData } = useSelector((state) => state.user.watchlist);
 
   const back = () => history.goBack();
 
+  const handleAddWatchlist = (watchlist_id) => {
+    dispatch(addToWatchlist(loginData.id, data.id, watchlist_id));
+    return;
+  };
+
+  const handleShowWatchlist = () => {
+    setShowWatchlists(!showWatchlists);
+  };
+
   useEffect(() => {
     (async function () {
-      await dispatch(getMovie(id));
-      await dispatch(pageViewInc(id));
+      if (id) {
+        await dispatch(getMovie(id));
+        await dispatch(pageViewInc(id));
+      }
+      if (loginData) {
+        await dispatch(loadWatchlist(loginData.id));
+      }
     })();
-  }, [dispatch, id]);
+  }, [dispatch, id, loginData]);
 
   return (
     <div>
@@ -40,22 +59,14 @@ const MoviePage = () => {
               {dateConvert(data.created_at)}
             </p>
             <div className='flex'>
-              <div className='relative'>
-                <div>
-                  <img
-                    className='poster'
-                    src={data.poster || poster}
-                    alt={data.name}
-                  />
-                  <div className='App-card-watchlist'>
-                    <button className='btn btn-success'>watched</button>
-                    <button className='btn btn-info'>will</button>
-                    <button className='btn btn-warning'>favorite</button>
-                    <button className='btn btn-error'>add to watchlist</button>
-                  </div>
-                </div>
+              <div>
+                <img
+                  className='poster'
+                  src={data.poster || poster}
+                  alt={data.name}
+                />
               </div>
-              <div className='videoContainer'>
+              <div style={{ display: 'none' }} className='videoContainer'>
                 <div className='videoWrapper'>
                   <iframe
                     title='YouTube video player'
@@ -65,6 +76,32 @@ const MoviePage = () => {
                     height='349'
                     src={extractVideoId(data.trailer || '')}
                   ></iframe>
+                </div>
+              </div>
+              <div className='flex-0'>
+                <div className='relative'>
+                  <button
+                    className='btn btn-inline m-1'
+                    onClick={handleShowWatchlist}
+                  >
+                    Add to watchlist
+                  </button>
+                  {showWatchlists &&
+                    watchlistData &&
+                    watchlistData.map((w) => (
+                      <button
+                        className='btn btn-inline btn-warning m-1'
+                        key={w.id}
+                        onClick={() => handleAddWatchlist(w.id)}
+                      >
+                        {w.name}
+                      </button>
+                    ))}
+                  <button className='btn btn-inline m-1'>Will watch</button>
+                  <button className='btn btn-inline m-1'>Watched</button>
+                  <button className='btn btn-inline m-1'>
+                    Add to favorite
+                  </button>
                 </div>
               </div>
             </div>

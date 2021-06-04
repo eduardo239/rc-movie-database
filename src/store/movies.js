@@ -162,11 +162,11 @@ export const deleteMovie = (id) => async (dispatch) => {
   else dispatch(sucDelMovie());
 };
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export const searchMovie = (term) => async (dispatch) => {
+export const searchMovie = (term, movieCheck) => async (dispatch) => {
   await dispatch(reqSearchMovie());
 
   let { data, error } = await supabase
-    .from('movies')
+    .from('tv')
     .select('*')
     .ilike('name', `%${term}%`);
 
@@ -186,10 +186,12 @@ export const pageViewInc = (id) => async (dispatch) => {
     .eq('id', id)
     .single();
 
-  await supabase
-    .from('movies')
-    .update({ views: data.views + 1 })
-    .eq('id', id);
+  if (data) {
+    await supabase
+      .from('movies')
+      .update({ views: data.views + 1 })
+      .eq('id', id);
+  }
 
   if (error) errPageView(error);
   else await dispatch(sucPageView(data));

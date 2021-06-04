@@ -24,7 +24,7 @@ const NewMovie = () => {
 
   return (
     <>
-      <h2>New - Movies</h2>
+      <h2 className='mt-5'>News</h2>
       <div className='flex wrap gap-1 justify-center'>
         {loading ? (
           <Loading />
