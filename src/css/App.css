@@ -191,3 +191,10 @@
   background-color: var(--primary);
   color: var(--black);
 }
+
+/* App-card-watchlist */
+.App-card-watchlist {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

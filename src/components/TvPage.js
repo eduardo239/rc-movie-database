@@ -59,7 +59,7 @@ const TvPage = () => {
                 </div>
               </div>
             </div>
-            <div className='App-tags'>
+            <div className='App-tags mt-3'>
               {data.tags &&
                 data.tags.map((x, i) => (
                   <Link to={`../genre/${x.trim()}`} key={i}>

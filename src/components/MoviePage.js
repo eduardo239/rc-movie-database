@@ -40,12 +40,20 @@ const MoviePage = () => {
               {dateConvert(data.created_at)}
             </p>
             <div className='flex'>
-              <div>
-                <img
-                  className='poster'
-                  src={data.poster || poster}
-                  alt={data.name}
-                />
+              <div className='relative'>
+                <div>
+                  <img
+                    className='poster'
+                    src={data.poster || poster}
+                    alt={data.name}
+                  />
+                  <div className='App-card-watchlist'>
+                    <button className='btn btn-success'>watched</button>
+                    <button className='btn btn-info'>will</button>
+                    <button className='btn btn-warning'>favorite</button>
+                    <button className='btn btn-error'>add to watchlist</button>
+                  </div>
+                </div>
               </div>
               <div className='videoContainer'>
                 <div className='videoWrapper'>
@@ -60,7 +68,7 @@ const MoviePage = () => {
                 </div>
               </div>
             </div>
-            <div className='App-tags'>
+            <div className='App-tags mt-3'>
               {data.tags &&
                 data.tags.map((x, i) => (
                   <Link to={`../genre/${x.trim()}`} key={i}>
