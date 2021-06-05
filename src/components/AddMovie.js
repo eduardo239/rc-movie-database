@@ -126,7 +126,6 @@ const AddMovie = () => {
   };
 
   const loadMovie = (body, type) => {
-    console.log(body);
     IdRef.current.value = body.id;
     nameRef.current.value = body.name;
     yearRef.current.value = body.year;
@@ -323,7 +322,7 @@ const AddMovie = () => {
             type='text'
             id='movie-name'
             refs={nameRef}
-            searchTvMaze={searchTvMaze}
+            fn={searchTvMaze}
             button='Api Maze'
           />
         </div>

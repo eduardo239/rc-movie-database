@@ -163,6 +163,11 @@ textarea:disabled {
 textarea {
   resize: vertical;
 }
+
+.field {
+  background-color: var(--color-neutral-70);
+  border-radius: var(--border-radius);
+}
 .field-button {
   display: flex;
   align-items: flex-end;

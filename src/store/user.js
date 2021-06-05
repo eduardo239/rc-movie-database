@@ -42,7 +42,7 @@ export const watchlistSlice = createSlice({
 });
 
 export const addWatchlistSlice = createSlice({
-  name: 'watchlist',
+  name: 'watchlist-add',
   initialState: {
     loading: false,
     data: null,
@@ -82,7 +82,7 @@ export const userLogin = (user) => async (dispatch) => {
   await dispatch(sucLoginUser(user));
 };
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export const loadWatchlist = (user_id, item_id) => async (dispatch) => {
+export const loadWatchlist = (user_id) => async (dispatch) => {
   await dispatch(reqWatchlist());
   let { data: watchlist, error } = await supabase
     .from('watchlist')
@@ -92,24 +92,42 @@ export const loadWatchlist = (user_id, item_id) => async (dispatch) => {
   else dispatch(sucWatchlist(watchlist));
 };
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export const addToWatchlist =
-  (user_id, item_id, watchlist_id) => async (dispatch) => {
-    await dispatch(reqAddWatchlist());
+/**
+ *
+ * @param {String} item_id
+ * @param {String} watchlist_id
+ * @returns
+ */
+export const addToWatchlist = (item_id, watchlist_id) => async (dispatch) => {
+  await dispatch(reqAddWatchlist());
 
-    let { data: watchlist } = await supabase
-      .from('watchlist')
-      .select('*')
-      .eq('id', watchlist_id)
-      .single();
+  let { data: watchlist } = await supabase
+    .from('watchlist')
+    .select('*')
+    .eq('id', watchlist_id)
+    .single();
 
-    const array_items = watchlist.items || [];
-    console.log(array_items);
+  let array_items = watchlist.items;
 
-    // add new to list
-    await supabase
-      .from('watchlist')
-      .upsert({ id: watchlist_id, items: { item_id: `"${item_id}"` } });
+  if (array_items === null) {
+    array_items = [];
+  }
 
-    console.log(watchlist);
-  };
+  if (array_items.includes(item_id)) {
+    return { message: 'The item is already on your watchlist.' };
+  }
+
+  array_items.push(item_id);
+
+  const { data, error } = await supabase
+    .from('watchlist')
+    .update([{ items: array_items }], { upsert: true })
+    .eq('id', watchlist_id);
+  // WORKS
+
+  if (error) return error;
+  else console.log(data);
+};
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

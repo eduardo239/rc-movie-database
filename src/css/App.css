@@ -1,10 +1,10 @@
 :root {
   --primary: #bb86fc;
   --secondary: #f1e6fe;
-  --success: #06d6a0;
-  --warning: #fdca40;
-  --error: #e5625e;
-  --info: #6f4bf1;
+  --success: rgba(169, 201, 77, 1);
+  --warning: rgba(237, 197, 77, 1);
+  --error: rgba(255, 75, 51, 1);
+  --info: rgba(77, 185, 235, 1);
   --gray: #cdcdcd;
 
   --border: 4px;
@@ -32,6 +32,7 @@
   --xsm: 0.8rem;
 
   --opacity-15: rgba(0, 0, 0, 0.15);
+  --opacity-50: rgba(0, 0, 0, 0.5);
   --opacity-90: rgba(0, 0, 0, 0.9);
 
   --border-radius: 4px;
@@ -60,7 +61,9 @@
   display: block;
   padding: 1rem;
   margin: 0.5rem 0;
-  background-color: var(--color-neutral-80);
+  background-color: var(--opacity-15);
+  border: 1px solid var(--color-neutral-80);
+  color: var(--secondary);
 }
 
 .App-menu-button--close {
@@ -98,6 +101,28 @@
   font-size: 0.75rem;
 }
 
+/*------------------- app card 2 -------------------*/
+.App-card-2 {
+  width: 200px;
+  border-radius: var(--border-radius);
+  color: var(--secondary);
+  border: 1px solid var(--opacity-50);
+}
+
+.App-card-2 section {
+  padding: 0.5rem;
+}
+.App-card-2 h4 {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.App-card-2 p {
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-neutral-20);
+}
 /* slide */
 
 .App-slide {
@@ -108,6 +133,11 @@
   flex-direction: column;
   max-height: 350px;
   overflow: hidden;
+}
+@media (max-width: 1200px) {
+  .App-slide-side {
+    flex-direction: row;
+  }
 }
 .App-slide--img {
   height: 120px;
@@ -230,4 +260,32 @@ footer {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
+}
+
+/*------------------- app animation -------------------*/
+.App-fadeIn li:nth-child(1) {
+  animation: fadeIn 0.1s ease-in-out;
+}
+.App-fadeIn li:nth-child(2) {
+  animation: fadeIn 0.2s ease-in-out;
+}
+.App-fadeIn li:nth-child(3) {
+  animation: fadeIn 0.3s ease-in-out;
+}
+.App-fadeIn li:nth-child(4) {
+  animation: fadeIn 0.4s ease-in-out;
+}
+.App-fadeIn li:nth-child(5) {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateY(-1rem);
+    opacity: 0;
+  }
+  100% {
+    transform: initial;
+    opacity: 1;
+  }
 }

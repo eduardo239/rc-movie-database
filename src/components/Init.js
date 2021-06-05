@@ -4,8 +4,7 @@ import { getMovies } from '../store/movies';
 import Feature from './Feature';
 import TopMovie from './TopMovie';
 import NewMovie from './NewMovie';
-// import TopTv from './TopTv';
-// import NewTv from './NewTv';
+import Card from './Card';
 
 const Init = () => {
   const dispatch = useDispatch();
@@ -20,8 +19,6 @@ const Init = () => {
       <Feature />
       <TopMovie />
       <NewMovie />
-      {/* <TopTv /> */}
-      {/* <NewTv /> */}
     </>
   );
 };

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../lib/api';
 import poster from '../assets/images/poster.jpg';
 import Loading from './Loading';
+import Card from './Card';
 
 const NewMovie = () => {
   const [data, setData] = useState();
@@ -31,20 +32,13 @@ const NewMovie = () => {
         ) : (
           data &&
           data.map((i) => (
-            <Link
-              to={`movies/${i.id}`}
-              key={i.id}
-              className='App-card-container'
-            >
-              <div className='App-card'>
-                <img className='poster' src={i.poster || poster} alt={i.name} />
-                <div className='p-2'>
-                  <h5>{i.name}</h5>
-                  <p className='App-card--p text-small mt-2'>
-                    {i.storyline.slice(0, 60) + '...' || 'No storyline'}
-                  </p>
-                </div>
-              </div>
+            <Link to={`movies/${i.id}`} key={i.id} className='flex'>
+              <Card
+                name={i.name}
+                storyline={i.storyline}
+                date={i.year}
+                poster={i.poster}
+              />
             </Link>
           ))
         )}

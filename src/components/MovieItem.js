@@ -10,7 +10,9 @@ const MovieItem = ({ data }) => {
         <div className='p-2'>
           <h5>{data.name}</h5>
           <p className='App-card--p text-small mt-2'>
-            {data.storyline.slice(0, 60) + '...' || 'No storyline'}
+            {data?.storyline
+              ? data.storyline.slice(0, 60) + '...'
+              : 'No storyline'}
           </p>
         </div>
       </div>

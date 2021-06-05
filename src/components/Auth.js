@@ -87,14 +87,14 @@ const Auth = () => {
         <Logo />
         <div className='col-md-6 col-12 my-5'>
           <h2>Login</h2>
-          <div className='mb-4'>
+          <div className='mb-4 field'>
             <label htmlFor={'email'}>
               <span>*</span>Email:
             </label>
             <input type={'email'} name={'email'} ref={emailRef} required />
           </div>
           {/*  */}
-          <div className='mb-4'>
+          <div className='mb-4 field'>
             <label htmlFor={'password'}>
               <span>*</span>
               Password:

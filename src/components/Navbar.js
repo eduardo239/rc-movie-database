@@ -64,7 +64,7 @@ const Navbar = () => {
       </div>
       {/* --- */}
       {modal && (
-        <div className='App-menu-modal'>
+        <div className='App-menu-modal '>
           <div className='App-menu-button--close'>
             <button className='btn' onClick={handleCloseMenu}>
               <svg width='24' height='24' fill='none' viewBox='0 0 24 24'>
@@ -88,7 +88,7 @@ const Navbar = () => {
           {/*  */}
           <div>
             <h2>Menu</h2>
-            <ul className='App-menu-content mt-3'>
+            <ul className='App-menu-content App-fadeIn mt-3'>
               <li>
                 <Link to='/' onClick={handleCloseMenu}>
                   Home

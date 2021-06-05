@@ -1,17 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../lib/api';
-import Input from './Input';
 import { dateConvert } from '../helper';
+import { loadWatchlist } from '../store/user';
 import Message from './Message';
+import InputButton from './InputButton';
 
 const Profile = () => {
   const watchlistRef = useRef();
   const [profile, setProfile] = useState(null);
   const [watchlist, setWatchlist] = useState(null);
   const [message, setMessage] = useState(null);
+  const dispatch = useDispatch();
 
   const { data } = useSelector((state) => state.user.login);
+  // const { data: watchlistUser } = useSelector((state) => state.user.watchlist);
 
   const handleCreateWL = async () => {
     const name = watchlistRef.current.value;
@@ -26,7 +29,10 @@ const Profile = () => {
         .from('watchlist')
         .insert({ name, user_id: profile.user_id });
       if (watchlistError) console.log(watchlistError);
-      else setMessage('Watchlist successfully created.');
+      else {
+        setMessage('Watchlist successfully created.');
+        await dispatch(loadWatchlist(data.id));
+      }
     }
   };
 
@@ -36,11 +42,10 @@ const Profile = () => {
       .delete()
       .eq('id', id);
     if (deleteError) console.log(deleteError);
-    else setMessage('Watchlist successfully deleted.');
-  };
-
-  const loadWatchlist = async (id, name) => {
-    watchlistRef.current.value = name;
+    else {
+      setMessage('Watchlist successfully deleted.');
+      await dispatch(loadWatchlist(data.id));
+    }
   };
 
   const editWatchlist = async (id) => {
@@ -56,6 +61,9 @@ const Profile = () => {
       .update({ name, updated_at: new Date() })
       .eq('id', id);
     if (editError) console.log(editError);
+    else {
+      await dispatch(loadWatchlist(data.id));
+    }
   };
 
   const selectWatchlist = () => {
@@ -74,6 +82,7 @@ const Profile = () => {
         else {
           setProfile(profile);
         }
+        await dispatch(loadWatchlist(data.id));
       }
     })();
 
@@ -88,7 +97,7 @@ const Profile = () => {
         setWatchlist(watchlist);
       }
     })();
-  }, [data]);
+  }, [data, dispatch]);
 
   return (
     <div>
@@ -106,22 +115,21 @@ const Profile = () => {
       </div>
       <div className='App-watchlist p-4'>
         <h3 className='before'>Watchlist</h3>
-        <div className='row g-3 mt-2'>
-          <div className='mb-3 col-md-8'>
-            <Input
-              label='Watchlist Name'
+
+        {!!message && <Message data={message} type='alert-success' />}
+
+        <div className='row g-3'>
+          <div className='mb-3 col-md-12'>
+            <InputButton
+              label='name'
               type='text'
-              id='watchlist-name'
+              id='movie-name'
               refs={watchlistRef}
+              fn={handleCreateWL}
+              button='Create a new watchlist'
             />
           </div>
-          <div className='mb-3 col-md-4 flex flex-align-end'>
-            <button className='btn btn-primary mt-1' onClick={handleCreateWL}>
-              Add New Watchlist
-            </button>
-          </div>
         </div>
-        {!!message && <Message data={message} type='alert-success' />}
 
         <br />
         <h3 className='before'>Lists</h3>
@@ -159,7 +167,7 @@ const Profile = () => {
                     </button>
                     <button
                       className='btn-icon btn-secondary'
-                      onClick={() => loadWatchlist(w.id, w.name)}
+                      onClick={() => 1}
                     >
                       edit
                     </button>
@@ -168,17 +176,7 @@ const Profile = () => {
               ))}
           </tbody>
         </table>
-        <div className='App-watchlist-list'>
-          {watchlist && watchlist.items_id ? (
-            watchlist.items_id.map((i) => (
-              <div key={i.id}>
-                <p>{i.id}</p>
-              </div>
-            ))
-          ) : (
-            <Message data='Items not found.' type='alert-info' />
-          )}
-        </div>
+        <div className='App-watchlist-list'>null</div>
       </div>
     </div>
   );

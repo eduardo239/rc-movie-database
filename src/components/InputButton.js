@@ -1,14 +1,6 @@
 import React from 'react';
 
-const InputButton = ({
-  label,
-  type,
-  id,
-  refs,
-  searchTvMaze,
-  button,
-  ...props
-}) => {
+const InputButton = ({ label, type, id, refs, fn, button, ...props }) => {
   return (
     <div className='field-button'>
       <div className='flex-1'>
@@ -27,7 +19,7 @@ const InputButton = ({
       <div>
         <button
           className='btn-inline btn-secondary field-button--button'
-          onClick={searchTvMaze}
+          onClick={fn}
         >
           {`${!!button.length ? button : 'Click Here'}`}
         </button>

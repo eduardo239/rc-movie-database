@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMovie, pageViewInc } from '../store/movies';
-import { dateConvert, extractVideoId } from '../helper';
+import { extractVideoId } from '../helper';
 import { ReactComponent as Back } from '../assets/icons2/mdi_arrow-left.svg';
 import { ReactComponent as AddIcon } from '../assets/icons2/mdi_bookmark-plus-outline.svg';
 import { ReactComponent as WillIcon } from '../assets/icons2/mdi_calendar-clock.svg';
@@ -11,6 +11,7 @@ import { ReactComponent as FavIcon } from '../assets/icons2/mdi_star-outline.svg
 import { loadWatchlist, addToWatchlist } from '../store/user';
 import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
+import Message from './Message';
 
 const MoviePage = () => {
   let { id } = useParams();
@@ -19,15 +20,34 @@ const MoviePage = () => {
 
   const [showWatchlists, setShowWatchlists] = useState(false);
 
+  const [helperText, setHelperText] = useState({
+    error: null,
+    text: null,
+    type: null,
+  });
+
   const { data, loading } = useSelector((state) => state.movies.movie);
   const { data: loginData } = useSelector((state) => state.user.login);
   const { data: watchlistData } = useSelector((state) => state.user.watchlist);
 
   const back = () => history.goBack();
 
-  const handleAddWatchlist = (watchlist_id) => {
-    dispatch(addToWatchlist(loginData.id, data.id, watchlist_id));
-    return;
+  const handleAddWatchlist = async (watchlist_id) => {
+    const response = await dispatch(addToWatchlist(data.id, watchlist_id));
+    console.log(response);
+    if (response) {
+      setHelperText({
+        error: true,
+        text: response.message,
+        type: 'alert-error',
+      });
+    } else {
+      setHelperText({
+        error: false,
+        text: 'Item successfully added.',
+        type: 'alert-success',
+      });
+    }
   };
 
   const handleShowWatchlist = () => {
@@ -61,6 +81,9 @@ const MoviePage = () => {
             <p className='text-small'>
               Year: {data.year} - Views: {data.views || 0} - {data.year}
             </p>
+            {!!helperText.text && (
+              <Message data={helperText.text} type={helperText.type} />
+            )}
             <div className='flex'>
               <div>
                 <img
@@ -92,20 +115,20 @@ const MoviePage = () => {
                   watchlistData &&
                   watchlistData.map((w) => (
                     <button
-                      className='btn-inline'
+                      className='btn-inline btn-info mb-1'
                       key={w.id}
                       onClick={() => handleAddWatchlist(w.id)}
                     >
                       {w.name}
                     </button>
                   ))}
-                <button className='btn-inline mb-1'>
+                <button className='btn-inline btn-success mb-1'>
                   <WillIcon /> Will watch
                 </button>
-                <button className='btn-inline mb-1'>
+                <button className='btn-inline btn-error mb-1'>
                   <HaveIcon /> Watched
                 </button>
-                <button className='btn-inline mb-1'>
+                <button className='btn-inline btn-warning mb-1'>
                   <FavIcon /> Add to favorite
                 </button>
               </div>
