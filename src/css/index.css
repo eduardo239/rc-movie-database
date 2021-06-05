@@ -56,14 +56,7 @@ h2 {
 h3 {
   font-size: var(--lg);
 }
-.before::before {
-  content: '';
-  display: inline-block;
-  background-color: var(--primary);
-  height: 3px;
-  width: 36px;
-  margin-right: 23px;
-}
+
 h4 {
   font-size: var(--md);
 }
@@ -91,6 +84,15 @@ label {
   letter-spacing: 0.03rem;
 }
 
+.before::before {
+  content: '';
+  display: inline-block;
+  background-color: var(--primary);
+  height: 2px;
+  width: 2rem;
+  margin-right: 1rem;
+}
+
 /* - - - - - - links - - - - - - */
 
 a {
@@ -104,6 +106,11 @@ svg {
   display: block;
   max-width: 100%;
 }
+
+.poster-small {
+  height: 10rem;
+  transition: 0.1s ease-in-out;
+}
 /* - - - - - - input - - - - - - */
 
 input,
@@ -113,6 +120,7 @@ textarea {
   outline: none;
   border: none;
   font-size: var(--sm);
+  font-family: var(--font);
   letter-spacing: 0.02rem;
 }
 
@@ -129,7 +137,7 @@ a:hover {
 }
 input,
 textarea {
-  background-color: var(--color-neutral-80);
+  background-color: var(--color-neutral-70);
   border-bottom: 2px solid var(--secondary);
   color: var(--secondary);
   width: 100%;
@@ -147,7 +155,7 @@ textarea:active {
 
 input:disabled,
 textarea:disabled {
-  color: var(--color-neutral-20);
+  color: var(--color-neutral-60);
   cursor: no-drop;
   border-bottom: 2px solid var(--color-neutral-60);
 }

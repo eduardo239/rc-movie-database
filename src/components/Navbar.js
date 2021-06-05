@@ -38,9 +38,13 @@ const Navbar = () => {
         </div>
       )}
 
-      <div className='App-menu svg-hover' onClick={handleOpenMenu}>
+      <div
+        className='flex flex-align-center svg-hover'
+        onClick={handleOpenMenu}
+        style={{ cursor: 'pointer' }}
+      >
         <svg
-          style={{ cursor: 'pointer' }}
+          className='me-2'
           width='24'
           height='24'
           viewBox='0 0 24 24'
@@ -50,7 +54,8 @@ const Navbar = () => {
             d='M3 6H21V8H3V6ZM3 11H21V13H3V11ZM3 16H21V18H3V16Z'
             fill='#F7F7F9'
           />
-        </svg>
+        </svg>{' '}
+        <span>Menu</span>
       </div>
       <div>
         <button className='btn-icon btn-secondary' onClick={handleLogout}>

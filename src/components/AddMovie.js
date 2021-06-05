@@ -13,6 +13,7 @@ import {
   arrayToString,
   stringToArray,
   compactString,
+  removeHtmlTags,
 } from '../helper';
 import Input from './Input';
 import TextArea from './TextArea';
@@ -136,8 +137,9 @@ const AddMovie = () => {
     trailerRef.current.value = body.trailer;
     tagsRef.current.value = arrayToString(body.tags);
     castRef.current.value = arrayToString(body.cast);
-    storylineRef.current.value = body.storyline;
+    storylineRef.current.value = removeHtmlTags(body.storyline);
     setMovieCheck(body.type === 'movie' ? true : false);
+    setTvCheck(body.type === 'tv' ? true : false);
   };
 
   const handlerUpdateMovie = async () => {
@@ -252,7 +254,7 @@ const AddMovie = () => {
   };
 
   const loadMovieFromApi = (x) => {
-    // IdRef.current.value = x.show.id;
+    IdRef.current.value = '';
     nameRef.current.value = x.show.name;
     yearRef.current.value = x.show.premiered
       ? x.show.premiered.split('-')[0]
@@ -264,8 +266,13 @@ const AddMovie = () => {
     // trailerRef.current.value = x.show.trailer;
     tagsRef.current.value = arrayToString(x.show.genres) || 'undefined';
     // castRef.current.value = arrayToString(x.show.cast);
-    storylineRef.current.value = x.show.summary || 'undefined';
+    storylineRef.current.value = removeHtmlTags(x.show.summary) || 'undefined';
   };
+
+  // http://www.omdbapi.com/?i=tt3896198&apikey=f655bbbf
+
+  // https://api.themoviedb.org/3/movie/550?api_key=11c410a46a513551618853674c632213
+  // https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=Jack+Reacher
 
   return (
     <div>
@@ -417,7 +424,7 @@ const AddMovie = () => {
   </p>
    */}
 
-        <div className='mb-3 col-md-6 flex'>
+        <div className='mb-3 col-md-6 flex flex-align-end'>
           <div className='form-check'>
             <input
               type='radio'
@@ -427,7 +434,7 @@ const AddMovie = () => {
               ref={movieCheckRef}
               onChange={handleRadioChange}
             />
-            <label htmlFor='radio-tv'>Movie</label>
+            <label htmlFor='radio-movie'>Movie</label>
           </div>
 
           <div className='form-check'>
@@ -446,18 +453,21 @@ const AddMovie = () => {
 
       <div className='mb-3 col-12'>
         <div className='flex mt-3' id='buttons'>
-          <button className='btn-inline btn-success' onClick={handleAddMovie}>
+          <button
+            className='btn-inline btn-success me-2'
+            onClick={handleAddMovie}
+          >
             Add New Content
           </button>
 
           <button
-            className='btn-inline btn-warning'
+            className='btn-inline btn-warning me-2'
             onClick={handlerUpdateMovie}
           >
             Update Content
           </button>
 
-          <button className='btn-inline btn-error' onClick={handleClear}>
+          <button className='btn-inline btn-error me-2' onClick={handleClear}>
             Clear Fields
           </button>
         </div>
@@ -470,13 +480,15 @@ const AddMovie = () => {
       <section className='mt-5'>
         <div className='flex flex-align-center'>
           <button
-            className={`btn-inline ${tab1 ? 'btn-primary' : 'btn-secondary'}`}
+            className={`btn-inline me-2 ${
+              tab1 ? 'btn-primary' : 'btn-secondary'
+            }`}
             onClick={tabMovie}
           >
             <MovieIcon /> movie
           </button>
           <button
-            className={`btn-inline ${tab2 ? 'btn-primary' : 'btn-secondary'}`}
+            className={`btn-inline  ${tab2 ? 'btn-primary' : 'btn-secondary'}`}
             onClick={tabTv}
           >
             <TvIcon /> tv

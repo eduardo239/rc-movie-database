@@ -78,8 +78,8 @@ const AddMovieList = ({ loadMovie }) => {
                   <td>{i.name}</td>
                   <td>{i.year}</td>
                   <td>{i.storyline ? i.storyline.slice(0, 50) + '...' : ''}</td>
-                  <td>{i.cast && i.cast.join(',')}</td>
-                  <td>{i.tags}</td>
+                  <td>{i.cast}</td>
+                  <td>{i.tags && i.tags.join(', ')}</td>
                   <td>
                     <div className='flex justify-center'>
                       {i.trailer.length > 0 ? <OkIcon /> : <OkIcon2 />}

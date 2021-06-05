@@ -20,6 +20,7 @@
 
   --color-neutral-20: #cdcdcd;
   --color-neutral-60: #686868;
+  --color-neutral-70: #2c2c2c;
   --color-neutral-80: #282828;
 
   --xxxl: 4.5rem;
@@ -36,6 +37,7 @@
   --border-radius: 4px;
 }
 
+/*------------------- app menu -------------------*/
 .App-menu-modal {
   position: fixed;
   top: 0;
@@ -60,10 +62,6 @@
   margin: 0.5rem 0;
   background-color: var(--color-neutral-80);
 }
-.App-menu-content li a:hover {
-  background-color: var(--border-color);
-  color: var(--secondary);
-}
 
 .App-menu-button--close {
   position: absolute;
@@ -73,7 +71,7 @@
   margin: 0.5rem;
 }
 
-/* card */
+/*------------------- app card -------------------*/
 .App-card-container {
   width: 200px;
   background-color: var(--secondary);
@@ -125,7 +123,7 @@
   margin: 0;
   outline: none;
   width: 100%;
-  margin-bottom: 0.1rem;
+  margin-bottom: 2px;
   border-right: 4px solid var(--secondary);
 }
 .App-search-button:hover {
@@ -141,6 +139,7 @@
   z-index: 500;
   width: 100%;
   box-shadow: var(--shadow-1);
+  background-color: var(--color-neutral-80);
 }
 
 .App-search-result--body {

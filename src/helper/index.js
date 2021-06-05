@@ -15,6 +15,15 @@ export const helperFunction = (error, text, type, f, time) => {
   setTimeout(() => f({ error: false, text: '', type: '' }), time);
 };
 
+/**
+ *
+ * @param {String} x
+ * @returns
+ */
+export const removeHtmlTags = (x) => {
+  return x.replace(/<\/?[^>]+(>|$)/g, '');
+};
+
 export const stringToArray = (x) => {
   if (x === null || x === undefined) {
     return '';
