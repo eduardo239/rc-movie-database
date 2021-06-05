@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/rc-movie-database/static/css/main.a4d6f478.chunk.css",
-    "main.js": "/rc-movie-database/static/js/main.b2aa6024.chunk.js",
-    "main.js.map": "/rc-movie-database/static/js/main.b2aa6024.chunk.js.map",
+    "main.css": "/rc-movie-database/static/css/main.1dc33080.chunk.css",
+    "main.js": "/rc-movie-database/static/js/main.7ec52934.chunk.js",
+    "main.js.map": "/rc-movie-database/static/js/main.7ec52934.chunk.js.map",
     "runtime-main.js": "/rc-movie-database/static/js/runtime-main.0f225222.js",
     "runtime-main.js.map": "/rc-movie-database/static/js/runtime-main.0f225222.js.map",
     "static/css/2.0ccb862f.chunk.css": "/rc-movie-database/static/css/2.0ccb862f.chunk.css",
@@ -10,19 +10,24 @@
     "static/js/2.b180b0ea.chunk.js.map": "/rc-movie-database/static/js/2.b180b0ea.chunk.js.map",
     "index.html": "/rc-movie-database/index.html",
     "static/css/2.0ccb862f.chunk.css.map": "/rc-movie-database/static/css/2.0ccb862f.chunk.css.map",
-    "static/css/main.a4d6f478.chunk.css.map": "/rc-movie-database/static/css/main.a4d6f478.chunk.css.map",
+    "static/css/main.1dc33080.chunk.css.map": "/rc-movie-database/static/css/main.1dc33080.chunk.css.map",
     "static/js/2.b180b0ea.chunk.js.LICENSE.txt": "/rc-movie-database/static/js/2.b180b0ea.chunk.js.LICENSE.txt",
     "static/media/logo.36d4b45f.svg": "/rc-movie-database/static/media/logo.36d4b45f.svg",
     "static/media/mdi_alert-circle-outline.6973f8d8.svg": "/rc-movie-database/static/media/mdi_alert-circle-outline.6973f8d8.svg",
     "static/media/mdi_alert-outline.a8083910.svg": "/rc-movie-database/static/media/mdi_alert-outline.a8083910.svg",
     "static/media/mdi_arrow-left.311a1aa6.svg": "/rc-movie-database/static/media/mdi_arrow-left.311a1aa6.svg",
     "static/media/mdi_at.01a20215.svg": "/rc-movie-database/static/media/mdi_at.01a20215.svg",
+    "static/media/mdi_bookmark-plus-outline.29204c00.svg": "/rc-movie-database/static/media/mdi_bookmark-plus-outline.29204c00.svg",
+    "static/media/mdi_calendar-clock.31ef5ed0.svg": "/rc-movie-database/static/media/mdi_calendar-clock.31ef5ed0.svg",
     "static/media/mdi_check-circle-outline-gray.f99928ee.svg": "/rc-movie-database/static/media/mdi_check-circle-outline-gray.f99928ee.svg",
     "static/media/mdi_check-circle-outline.0c559222.svg": "/rc-movie-database/static/media/mdi_check-circle-outline.0c559222.svg",
+    "static/media/mdi_eye-plus-outline.94567639.svg": "/rc-movie-database/static/media/mdi_eye-plus-outline.94567639.svg",
     "static/media/mdi_facebook2.a67d96b1.svg": "/rc-movie-database/static/media/mdi_facebook2.a67d96b1.svg",
     "static/media/mdi_information-outline.a6fa84c7.svg": "/rc-movie-database/static/media/mdi_information-outline.a6fa84c7.svg",
     "static/media/mdi_instagram.1b2fd129.svg": "/rc-movie-database/static/media/mdi_instagram.1b2fd129.svg",
+    "static/media/mdi_logout.5c893b41.svg": "/rc-movie-database/static/media/mdi_logout.5c893b41.svg",
     "static/media/mdi_movie-open-outline.03fe346e.svg": "/rc-movie-database/static/media/mdi_movie-open-outline.03fe346e.svg",
+    "static/media/mdi_star-outline.7b851e2a.svg": "/rc-movie-database/static/media/mdi_star-outline.7b851e2a.svg",
     "static/media/mdi_television-classic.bf6c564d.svg": "/rc-movie-database/static/media/mdi_television-classic.bf6c564d.svg",
     "static/media/mdi_twitch.cd390355.svg": "/rc-movie-database/static/media/mdi_twitch.cd390355.svg",
     "static/media/mdi_twitter.fce2c6cc.svg": "/rc-movie-database/static/media/mdi_twitter.fce2c6cc.svg",
@@ -36,7 +41,7 @@
     "static/js/runtime-main.0f225222.js",
     "static/css/2.0ccb862f.chunk.css",
     "static/js/2.b180b0ea.chunk.js",
-    "static/css/main.a4d6f478.chunk.css",
-    "static/js/main.b2aa6024.chunk.js"
+    "static/css/main.1dc33080.chunk.css",
+    "static/js/main.7ec52934.chunk.js"
   ]
 }
