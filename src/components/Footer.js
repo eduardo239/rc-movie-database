@@ -11,7 +11,7 @@ const Footer = () => {
     <footer>
       <div className='mt-4'>
         <Logo />
-        <div className='flex gap-2 mt-4 justify-center'>
+        <div className='flex gap-2 mt-4 flex-justify-center'>
           <a href='#facebook'>
             <img className='App-footer-icon' src={fbIcon} alt='Facebook' />
           </a>
@@ -25,7 +25,7 @@ const Footer = () => {
             <img className='App-footer-icon' src={twIcon} alt='Twitch' />
           </a>
         </div>
-        <div className='flex gap-2 mt-4 justify-center App-footer--links'>
+        <div className='flex gap-2 mt-4 flex-justify-center App-footer--links'>
           <Link to='/'>HOME</Link>
           <Link to='/movies'>Movies</Link>
           <Link to='/tv'>Tv</Link>

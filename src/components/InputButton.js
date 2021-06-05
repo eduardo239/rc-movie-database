@@ -1,9 +1,17 @@
 import React from 'react';
 
-const InputButton = ({ label, type, id, refs, searchTvMaze, ...props }) => {
+const InputButton = ({
+  label,
+  type,
+  id,
+  refs,
+  searchTvMaze,
+  button,
+  ...props
+}) => {
   return (
-    <div className='field-input-button flex-align-end w-100'>
-      <div className='w-100'>
+    <div className='field-button'>
+      <div className='flex-1'>
         <label htmlFor={id} className='form-label'>
           {label.charAt(0).toUpperCase() + label.slice(1)}
         </label>
@@ -17,8 +25,11 @@ const InputButton = ({ label, type, id, refs, searchTvMaze, ...props }) => {
         />
       </div>
       <div>
-        <button className='btn-inline btn-secondary' onClick={searchTvMaze}>
-          api
+        <button
+          className='btn-inline btn-secondary field-button--button'
+          onClick={searchTvMaze}
+        >
+          {`${!!button.length ? button : 'Click Here'}`}
         </button>
       </div>
     </div>

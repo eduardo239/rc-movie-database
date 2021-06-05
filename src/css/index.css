@@ -163,6 +163,15 @@ textarea:disabled {
 textarea {
   resize: vertical;
 }
+.field-button {
+  display: flex;
+  align-items: flex-end;
+}
+
+.field-button--button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
 
 /* - - - - - - table - - - - - - */
 
@@ -211,11 +220,12 @@ td {
   align-items: center;
   height: 3rem;
   font-size: var(--sm);
-  font-weight: 600;
+  font-weight: 500;
   white-space: pre;
   padding: 0 1rem;
   border-radius: var(--border-radius);
 }
+
 .btn-a {
   display: flex;
   justify-content: center;
@@ -274,7 +284,7 @@ td {
 .flex-align-center {
   align-items: center;
 }
-.justify-center {
+.flex-justify-center {
   justify-content: center;
 }
 .flex-column {
@@ -339,6 +349,7 @@ td {
   align-items: flex-end;
   justify-content: flex-start;
   background-size: cover;
+  background-position-y: center;
   height: 350px;
 }
 

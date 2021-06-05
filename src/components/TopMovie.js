@@ -25,7 +25,7 @@ const Top = () => {
   return (
     <>
       <h2 className='mt-5'>Top 10</h2>
-      <div className='flex wrap gap-1 justify-center'>
+      <div className='flex wrap gap-1 flex-justify-center'>
         {loading ? (
           <Loading />
         ) : (

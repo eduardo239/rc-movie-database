@@ -292,7 +292,7 @@ const AddMovie = () => {
                 />
               </p>
               <p>{item.show.name}</p>
-              <div className='flex justify-center flex-align-center'>
+              <div className='flex flex-justify-center flex-align-center'>
                 <a
                   target='_blank'
                   href={`https://www.google.com/search?client=firefox-b-d&q=${item.show.name}+trailer`}
@@ -304,7 +304,7 @@ const AddMovie = () => {
               <p>{compactString(item.show.summary, 70)}</p>
               <p>{arrayToString(item.show.genres)}</p>
               <p>{item.show.premiered}</p>
-              <div className='flex justify-center flex-align-center'>
+              <div className='flex flex-justify-center flex-align-center'>
                 <button
                   className='btn-icon btn-primary'
                   onClick={() => loadMovieFromApi(item)}
@@ -315,19 +315,18 @@ const AddMovie = () => {
             </div>
           ))}
 
-        {apiLoading ? (
-          <Loading />
-        ) : (
-          <div className='mb-3 col-md-4 field-input-button'>
-            <InputButton
-              label='name'
-              type='text'
-              id='movie-name'
-              refs={nameRef}
-              searchTvMaze={searchTvMaze}
-            />
-          </div>
-        )}
+        {apiLoading && <Loading />}
+
+        <div className='mb-3 col-md-4'>
+          <InputButton
+            label='name'
+            type='text'
+            id='movie-name'
+            refs={nameRef}
+            searchTvMaze={searchTvMaze}
+            button='Api Maze'
+          />
+        </div>
 
         <div className='mb-3 col-md-4'>
           <Input label='year' type='text' id='movie-year' refs={yearRef} />
@@ -392,13 +391,17 @@ const AddMovie = () => {
         </div>
       </div>
 
-      <div className='form-group'>
-        <TextArea
-          label='storyline'
-          type='file'
-          id='movie-storyline'
-          refs={storylineRef}
-        />
+      <div className='row-g-3'>
+        <div className='mb-3 col-12'>
+          <div className='form-group'>
+            <TextArea
+              label='storyline'
+              type='file'
+              id='movie-storyline'
+              refs={storylineRef}
+            />
+          </div>
+        </div>
       </div>
 
       {/*  */}

@@ -7,7 +7,7 @@ import posterWide2 from '../assets/images/posterWide2.jpg';
 
 const Slide = ({ data }) => {
   return (
-    <div div className='flex wrap justify-center'>
+    <div div className='flex wrap flex-justify-center'>
       <div className='App-slide'>
         <SlideShow>
           <div className='each-slide'>

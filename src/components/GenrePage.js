@@ -33,7 +33,7 @@ const GenrePage = () => {
       </div>
       <h2>Movies</h2>
 
-      <div className='flex wrap gap-1 justify-center'>
+      <div className='flex wrap gap-1 flex-justify-center'>
         {movies &&
           movies.map((i) => (
             <Link

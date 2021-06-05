@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '../lib/api';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ReactComponent as EmailIcon } from '../assets/icons2/mdi_arrow-left.svg';
+import { ReactComponent as EmailIcon } from '../assets/icons2/mdi_logout.svg';
 import { ReactComponent as AtIcon } from '../assets/icons2/mdi_at.svg';
 
 import Search from './Search';
@@ -89,7 +89,6 @@ const Navbar = () => {
           <div>
             <h2>Menu</h2>
             <ul className='App-menu-content mt-3'>
-              <h3 className='my-4 before'>Movies</h3>
               <li>
                 <Link to='/' onClick={handleCloseMenu}>
                   Home

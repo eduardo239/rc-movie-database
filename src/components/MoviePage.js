@@ -4,6 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMovie, pageViewInc } from '../store/movies';
 import { dateConvert, extractVideoId } from '../helper';
 import { ReactComponent as Back } from '../assets/icons2/mdi_arrow-left.svg';
+import { ReactComponent as AddIcon } from '../assets/icons2/mdi_bookmark-plus-outline.svg';
+import { ReactComponent as WillIcon } from '../assets/icons2/mdi_calendar-clock.svg';
+import { ReactComponent as HaveIcon } from '../assets/icons2/mdi_eye-plus-outline.svg';
+import { ReactComponent as FavIcon } from '../assets/icons2/mdi_star-outline.svg';
 import { loadWatchlist, addToWatchlist } from '../store/user';
 import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
@@ -77,31 +81,33 @@ const MoviePage = () => {
                   ></iframe>
                 </div>
               </div>
-              <div className='flex-0'>
-                <div className='relative'>
-                  <button
-                    className='btn btn-inline m-1'
-                    onClick={handleShowWatchlist}
-                  >
-                    Add to watchlist
-                  </button>
-                  {showWatchlists &&
-                    watchlistData &&
-                    watchlistData.map((w) => (
-                      <button
-                        className='btn btn-inline btn-warning m-1'
-                        key={w.id}
-                        onClick={() => handleAddWatchlist(w.id)}
-                      >
-                        {w.name}
-                      </button>
-                    ))}
-                  <button className='btn btn-inline m-1'>Will watch</button>
-                  <button className='btn btn-inline m-1'>Watched</button>
-                  <button className='btn btn-inline m-1'>
-                    Add to favorite
-                  </button>
-                </div>
+              <div className='relative flex flex-column'>
+                <button
+                  className='btn-inline mb-1'
+                  onClick={handleShowWatchlist}
+                >
+                  <AddIcon /> Add to watchlist
+                </button>
+                {showWatchlists &&
+                  watchlistData &&
+                  watchlistData.map((w) => (
+                    <button
+                      className='btn-inline'
+                      key={w.id}
+                      onClick={() => handleAddWatchlist(w.id)}
+                    >
+                      {w.name}
+                    </button>
+                  ))}
+                <button className='btn-inline mb-1'>
+                  <WillIcon /> Will watch
+                </button>
+                <button className='btn-inline mb-1'>
+                  <HaveIcon /> Watched
+                </button>
+                <button className='btn-inline mb-1'>
+                  <FavIcon /> Add to favorite
+                </button>
               </div>
             </div>
             <div className='App-tags mt-3'>

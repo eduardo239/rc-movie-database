@@ -25,7 +25,7 @@ const TopTv = () => {
   return (
     <>
       <h2>Top 10 - Tv</h2>
-      <div className='flex wrap gap-1 justify-center'>
+      <div className='flex wrap gap-1 flex-justify-center'>
         {loading ? (
           <Loading />
         ) : (

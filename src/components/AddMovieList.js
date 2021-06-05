@@ -81,7 +81,7 @@ const AddMovieList = ({ loadMovie }) => {
                   <td>{i.cast}</td>
                   <td>{i.tags && i.tags.join(', ')}</td>
                   <td>
-                    <div className='flex justify-center'>
+                    <div className='flex flex-justify-center'>
                       {i.trailer.length > 0 ? <OkIcon /> : <OkIcon2 />}
                     </div>
                   </td>
