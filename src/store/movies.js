@@ -162,11 +162,11 @@ export const deleteMovie = (id) => async (dispatch) => {
   else dispatch(sucDelMovie());
 };
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export const searchMovie = (term, movieCheck) => async (dispatch) => {
+export const searchMovie = (term) => async (dispatch) => {
   await dispatch(reqSearchMovie());
 
   let { data, error } = await supabase
-    .from('tv')
+    .from('movies')
     .select('*')
     .ilike('name', `%${term}%`);
 

@@ -108,7 +108,7 @@ const AddMovieList = ({ loadMovie }) => {
                     <div className='flex'>
                       <a
                         href='#buttons'
-                        className='btn-a btn-error'
+                        className='btn-a btn-secondary me-1'
                         onClick={() => handleDelete(i.id)}
                       >
                         <svg
@@ -135,7 +135,7 @@ const AddMovieList = ({ loadMovie }) => {
                       </a>
                       <a
                         href='#content'
-                        className='btn-a btn-warning'
+                        className='btn-a btn-secondary me-1'
                         onClick={() => loadMovie(i, 'movie')}
                       >
                         <svg
@@ -160,7 +160,10 @@ const AddMovieList = ({ loadMovie }) => {
                           />
                         </svg>
                       </a>
-                      <Link to={`movies/${i.id}`} className='btn-a btn-info'>
+                      <Link
+                        to={`movies/${i.id}`}
+                        className='btn-a btn-secondary'
+                      >
                         <svg
                           width='24'
                           height='24'

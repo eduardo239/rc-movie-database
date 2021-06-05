@@ -53,11 +53,9 @@ const Search = () => {
       />
 
       <div
+        className='App-search-result'
         style={{
           display: `${data && term ? 'block' : 'none'}`,
-          position: 'absolute',
-          width: '100%',
-          zIndex: '1000',
         }}
       >
         {term.length >= 3 &&
@@ -65,19 +63,19 @@ const Search = () => {
           data.length > 0 &&
           data.map((i) => (
             <button
-              className='btn btn-secondary App-search'
+              className='App-search-button'
               onClick={() => handleClick(i.id)}
               key={Math.random()}
             >
-              <div className='flex gap-1'>
+              <div className='flex flex-align-center p-1 gap-1 text-left'>
                 <img
                   className='App-poster-mini'
                   src={i.poster || poster}
                   alt={i.name}
                 />
-                <div className='text-left'>
-                  <h6>{i.name}</h6>
-                  <p className='App-search--p'>
+                <div className='App-search-result--body'>
+                  <h5 className='mb-1'>{i.name}</h5>
+                  <p>
                     {(i.storyline && i.storyline.slice(0, 100) + '...') ||
                       'No storyline'}
                   </p>

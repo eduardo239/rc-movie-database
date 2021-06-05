@@ -55,8 +55,7 @@ const MoviePage = () => {
 
             <h2>{data.name}</h2>
             <p className='text-small'>
-              Year: {data.year} - Views: {data.views || 0} -{' '}
-              {dateConvert(data.created_at)}
+              Year: {data.year} - Views: {data.views || 0} - {data.year}
             </p>
             <div className='flex'>
               <div>

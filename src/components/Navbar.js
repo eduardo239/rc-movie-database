@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className='flex align-center my-3 gap-2'>
+    <div className='flex flex-align-center my-3 gap-2'>
       <Logo />
       <Search />
 
@@ -83,55 +83,29 @@ const Navbar = () => {
           {/*  */}
           <div>
             <h2>Menu</h2>
-            <div className='flex' style={{ gap: '1rem' }}>
-              <ul className='App-menu-content mt-3'>
-                <h3 className='mb-4'>Movies</h3>
-                <li>
-                  <Link to='/' onClick={handleCloseMenu}>
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/movies' onClick={handleCloseMenu}>
-                    Movies
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/tv' onClick={handleCloseMenu}>
-                    TV
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/add' onClick={handleCloseMenu}>
-                    Add
-                  </Link>
-                </li>
-              </ul>
-              {/*  */}
-              <ul className='App-menu-content mt-3'>
-                <h3 className='mb-4'>Tv</h3>
-                <li>
-                  <Link to='/' onClick={handleCloseMenu}>
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/movies' onClick={handleCloseMenu}>
-                    Movies
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/tv' onClick={handleCloseMenu}>
-                    TV
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/add' onClick={handleCloseMenu}>
-                    Add
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            <ul className='App-menu-content mt-3'>
+              <h3 className='my-4 before'>Movies</h3>
+              <li>
+                <Link to='/' onClick={handleCloseMenu}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to='/movies' onClick={handleCloseMenu}>
+                  Movies
+                </Link>
+              </li>
+              <li>
+                <Link to='/tv' onClick={handleCloseMenu}>
+                  TV
+                </Link>
+              </li>
+              <li>
+                <Link to='/add' onClick={handleCloseMenu}>
+                  Add
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       )}

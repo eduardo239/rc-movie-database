@@ -1,16 +1,15 @@
 :root {
   --primary: #bb86fc;
-  --white: #f7f0f5;
-  --black: #292929;
+  --secondary: #f1e6fe;
   --success: #06d6a0;
   --warning: #fdca40;
   --error: #e5625e;
   --info: #6f4bf1;
-  --light-white: #f7f7f9;
-  --gray: #363636;
+  --gray: #cdcdcd;
 
   --border: 4px;
-  --border-color: #373737;
+  --border-color: #505050;
+  --border-color-dark: #191919;
 
   --font: 'Open Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
@@ -18,13 +17,30 @@
   --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   --shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   --shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+  --color-neutral-20: #cdcdcd;
+  --color-neutral-60: #686868;
+  --color-neutral-80: #282828;
+
+  --xxxl: 4.5rem;
+  --xxl: 1.75rem;
+  --xl: 1.5rem;
+  --lg: 1.25rem;
+  --md: 1.125rem;
+  --sm: 1rem;
+  --xsm: 0.8rem;
+
+  --opacity-15: rgba(0, 0, 0, 0.15);
+  --opacity-90: rgba(0, 0, 0, 0.9);
+
+  --border-radius: 4px;
 }
 
 .App-menu-modal {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--opacity-90);
   width: 100vw;
   height: 100vh;
   z-index: 1000;
@@ -34,7 +50,7 @@
 }
 
 .App-menu-content {
-  width: 30vw;
+  width: 50vw;
 }
 
 .App-menu-content li a {
@@ -42,11 +58,11 @@
   display: block;
   padding: 1rem;
   margin: 0.5rem 0;
-  background-color: var(--black);
+  background-color: var(--color-neutral-80);
 }
 .App-menu-content li a:hover {
   background-color: var(--border-color);
-  color: var(--white);
+  color: var(--secondary);
 }
 
 .App-menu-button--close {
@@ -60,7 +76,7 @@
 /* card */
 .App-card-container {
   width: 200px;
-  background-color: var(--white);
+  background-color: var(--secondary);
   box-shadow: var(--shadow-2);
 }
 .App-card-container:hover {
@@ -68,7 +84,7 @@
   box-shadow: var(--shadow-4);
 }
 .App-card {
-  color: var(--black);
+  color: var(--color-neutral-80);
 }
 
 .App-card h5 {
@@ -102,58 +118,67 @@
 .App-search-container {
   position: relative;
 }
-.App-search {
-  display: block;
+
+.App-search-button {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  outline: none;
   width: 100%;
-  margin: 2px 0;
-  border-bottom: 1px solid var(--primary);
-  box-shadow: var(--shadow-2);
+  margin-bottom: 0.1rem;
+  border-right: 4px solid var(--secondary);
 }
-.App-search:hover {
-  border-right: 5px solid var(--primary);
+.App-search-button:hover {
+  border-right: 4px solid var(--primary);
 }
+
 .App-poster-mini {
   width: 50px;
   height: 65px;
 }
-.App-search--p {
-  font-size: 0.8rem;
-  font-weight: 300;
-  text-transform: initial;
-  margin-top: 0.25rem;
+.App-search-result {
+  position: absolute;
+  z-index: 500;
+  width: 100%;
+  box-shadow: var(--shadow-1);
 }
 
-.App-details p {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border-color);
+.App-search-result--body {
+  padding: 0.5rem;
+}
+.App-search-result--body p {
+  font-size: var(--xsm);
   margin: 0;
 }
-.App-details p:first-child {
-  border-top: 1px solid var(--border-color);
+/*------------------- app details -------------------*/
+.App-details p {
+  padding: 0.5rem 0;
+  margin: 0;
+  border-bottom: 1px solid var(--opacity-15);
 }
+.App-details p:first-child {
+  border-top: 1px solid var(--opacity-15);
+}
+
 .App-details b {
   font-weight: 700;
   margin-right: 0.75rem;
 }
+/*------------------- app maze -------------------*/
 
 .App-maze-list {
-  border: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color-dark);
   display: grid;
   font-size: 0.9rem;
   gap: 1rem;
-  grid-template-columns: auto 4fr 20px 4fr 2fr 1fr auto;
+  grid-template-columns: auto 3fr 20px 4fr 2fr 1fr auto;
   margin-top: 0.1rem !important;
 }
 .App-maze-list p {
-  align-items: center;
-  border-right: 1px solid var(--border-color);
   display: flex;
-  line-height: 1.2;
-  margin-bottom: 0;
-}
-
-.App-maze-list:nth-child(odd) {
-  background-color: var(--border-color);
+  align-items: center;
+  font-size: var(--sm);
+  font-weight: 300;
 }
 
 .App-footer-icon {
@@ -168,7 +193,7 @@
   text-transform: uppercase;
 }
 .App-footer--links a:hover {
-  color: var(--white);
+  color: var(--secondary);
 }
 
 .App-tags {
@@ -176,9 +201,9 @@
   gap: 0.5rem;
 }
 .App-tags span {
-  background: var(--border-color);
+  background: var(--color-neutral-20);
   border-radius: 4rem;
-  color: var(--white);
+  color: var(--color-neutral-80);
   display: inline-block;
   font-size: 0.75rem;
   letter-spacing: 0.03rem;
@@ -189,7 +214,7 @@
 /* App-profile--user */
 .App-profile--user {
   background-color: var(--primary);
-  color: var(--black);
+  color: var(--color-neutral-80);
 }
 
 /* App-card-watchlist */
@@ -197,4 +222,13 @@
   position: absolute;
   right: 0;
   top: 0;
+}
+
+footer {
+  background-color: #000;
+  color: var(--secondary);
+  padding: 2rem 0 4rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
 }

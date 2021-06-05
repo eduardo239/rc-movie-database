@@ -285,7 +285,7 @@ const AddMovie = () => {
                 />
               </p>
               <p>{item.show.name}</p>
-              <div className='flex justify-center align-center'>
+              <div className='flex justify-center flex-align-center'>
                 <a
                   target='_blank'
                   href={`https://www.google.com/search?client=firefox-b-d&q=${item.show.name}+trailer`}
@@ -297,13 +297,12 @@ const AddMovie = () => {
               <p>{compactString(item.show.summary, 70)}</p>
               <p>{arrayToString(item.show.genres)}</p>
               <p>{item.show.premiered}</p>
-              <div className='flex justify-center align-center'>
+              <div className='flex justify-center flex-align-center'>
                 <button
-                  style={{ width: 'auto', height: 'auto' }}
-                  className='btn-inline btn-primary'
+                  className='btn-icon btn-primary'
                   onClick={() => loadMovieFromApi(item)}
                 >
-                  load
+                  Select
                 </button>
               </div>
             </div>
@@ -469,7 +468,7 @@ const AddMovie = () => {
 
       {/* tab */}
       <section className='mt-5'>
-        <div className='flex align-center'>
+        <div className='flex flex-align-center'>
           <button
             className={`btn-inline ${tab1 ? 'btn-primary' : 'btn-secondary'}`}
             onClick={tabMovie}
