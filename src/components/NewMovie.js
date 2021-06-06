@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/api';
-import poster from '../assets/images/poster.jpg';
 import Loading from './Loading';
 import Card from './Card';
 

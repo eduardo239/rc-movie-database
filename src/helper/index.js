@@ -56,6 +56,12 @@ export const extractVideoId = (x) => {
   }
 };
 
+/**
+ *
+ * @param {String} x
+ * @param {number} len
+ * @returns
+ */
 export const compactString = (x, len) => {
   if (x === null) {
     return;
@@ -64,4 +70,20 @@ export const compactString = (x, len) => {
     return x.slice(0, len) + '...';
   }
   return x;
+};
+
+export const routingTo = (...args) => {
+  const id = args[0].id;
+  const history = args[0].history;
+  const to = args[0].to;
+
+  const path = history.location.pathname;
+  const arrayPath = path.split('/');
+  const lenPath = arrayPath.length;
+
+  if (lenPath < 3) {
+    history.push(`${to}/${id}`);
+  } else {
+    history.push(`${id}`);
+  }
 };

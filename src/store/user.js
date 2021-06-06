@@ -82,14 +82,17 @@ export const userLogin = (user) => async (dispatch) => {
   await dispatch(sucLoginUser(user));
 };
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-export const loadWatchlist = (user_id) => async (dispatch) => {
+export const getWatchlist = (user_id) => async (dispatch) => {
   await dispatch(reqWatchlist());
-  let { data: watchlist, error } = await supabase
-    .from('watchlist')
-    .select('*')
-    .eq('user_id', user_id);
+
+  let { data, error } = await supabase
+    .from('profile')
+    .select(`watchlist(*)`)
+    .eq('user_id', user_id)
+    .single();
+
   if (error) dispatch(errWatchlist(error));
-  else dispatch(sucWatchlist(watchlist));
+  else dispatch(sucWatchlist(data));
 };
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /**
@@ -101,32 +104,33 @@ export const loadWatchlist = (user_id) => async (dispatch) => {
 export const addToWatchlist = (item_id, watchlist_id) => async (dispatch) => {
   await dispatch(reqAddWatchlist());
 
-  let { data: watchlist } = await supabase
+  //create item
+  const { data: itemData, error: errorData } = await supabase
+    .from('items')
+    .insert([{ i_will_see: true }]);
+  if (errorData) dispatch(errWatchlist(errorData));
+
+  // select watchlist
+  let { data: watchlist, error: watchlistError } = await supabase
     .from('watchlist')
     .select('*')
-    .eq('id', watchlist_id)
-    .single();
+    .eq('id', watchlist_id);
+  if (watchlistError) dispatch(errWatchlist(watchlistError));
 
-  let array_items = watchlist.items;
-
-  if (array_items === null) {
-    array_items = [];
-  }
-
-  if (array_items.includes(item_id)) {
+  let array_items = watchlist[0].items;
+  if (!array_items) array_items = [];
+  if (array_items.includes(itemData[0].id)) {
     return { message: 'The item is already on your watchlist.' };
   }
+  array_items.push(itemData[0].id);
 
-  array_items.push(item_id);
-
-  const { data, error } = await supabase
+  const { data: push, error: errorPush } = await supabase
     .from('watchlist')
     .update([{ items: array_items }], { upsert: true })
     .eq('id', watchlist_id);
-  // WORKS
 
-  if (error) return error;
-  else console.log(data);
+  if (errorPush) dispatch(errWatchlist(errorPush));
+  else dispatch(sucAddWatchlist(push));
 };
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

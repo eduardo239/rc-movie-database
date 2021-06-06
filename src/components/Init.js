@@ -4,7 +4,6 @@ import { getMovies } from '../store/movies';
 import Feature from './Feature';
 import TopMovie from './TopMovie';
 import NewMovie from './NewMovie';
-import Card from './Card';
 
 const Init = () => {
   const dispatch = useDispatch();

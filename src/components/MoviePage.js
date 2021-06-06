@@ -8,7 +8,7 @@ import { ReactComponent as AddIcon } from '../assets/icons2/mdi_bookmark-plus-ou
 import { ReactComponent as WillIcon } from '../assets/icons2/mdi_calendar-clock.svg';
 import { ReactComponent as HaveIcon } from '../assets/icons2/mdi_eye-plus-outline.svg';
 import { ReactComponent as FavIcon } from '../assets/icons2/mdi_star-outline.svg';
-import { loadWatchlist, addToWatchlist } from '../store/user';
+import { getWatchlist, addToWatchlist } from '../store/user';
 import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
 import Message from './Message';
@@ -18,40 +18,26 @@ const MoviePage = () => {
   let history = useHistory();
   const dispatch = useDispatch();
 
-  const [showWatchlists, setShowWatchlists] = useState(false);
+  const back = () => history.goBack();
 
+  // eslint-disable-next-line
   const [helperText, setHelperText] = useState({
     error: null,
     text: null,
     type: null,
   });
 
-  const { data, loading } = useSelector((state) => state.movies.movie);
+  const { data: movieData, loading } = useSelector(
+    (state) => state.movies.movie
+  );
   const { data: loginData } = useSelector((state) => state.user.login);
   const { data: watchlistData } = useSelector((state) => state.user.watchlist);
 
-  const back = () => history.goBack();
+  const handleAddToWatchlist = (id) => {
+    const watchlist_id = watchlistData.watchlist.id;
 
-  const handleAddWatchlist = async (watchlist_id) => {
-    const response = await dispatch(addToWatchlist(data.id, watchlist_id));
-    console.log(response);
-    if (response) {
-      setHelperText({
-        error: true,
-        text: response.message,
-        type: 'alert-error',
-      });
-    } else {
-      setHelperText({
-        error: false,
-        text: 'Item successfully added.',
-        type: 'alert-success',
-      });
-    }
-  };
-
-  const handleShowWatchlist = () => {
-    setShowWatchlists(!showWatchlists);
+    dispatch(addToWatchlist(id, watchlist_id));
+    return;
   };
 
   useEffect(() => {
@@ -60,9 +46,7 @@ const MoviePage = () => {
         await dispatch(getMovie(id));
         await dispatch(pageViewInc(id));
       }
-      if (loginData) {
-        await dispatch(loadWatchlist(loginData.id));
-      }
+      if (loginData) await dispatch(getWatchlist(loginData.id));
     })();
   }, [dispatch, id, loginData]);
 
@@ -71,25 +55,28 @@ const MoviePage = () => {
       {loading ? (
         <Loading />
       ) : (
-        data && (
+        movieData && (
           <div>
             <button className='btn-inline' onClick={back}>
               <Back /> Back
             </button>
 
-            <h2>{data.name}</h2>
+            <h2>{movieData.name}</h2>
             <p className='text-small'>
-              Year: {data.year} - Views: {data.views || 0} - {data.year}
+              Year: {movieData.year} - Views: {movieData.views || 0} -{' '}
+              {movieData.year}
             </p>
+
             {!!helperText.text && (
               <Message data={helperText.text} type={helperText.type} />
             )}
+
             <div className='flex'>
               <div>
                 <img
                   className='poster'
-                  src={data.poster || poster}
-                  alt={data.name}
+                  src={movieData.poster || poster}
+                  alt={movieData.name}
                 />
               </div>
               <div style={{ display: 'none' }} className='videoContainer'>
@@ -100,28 +87,17 @@ const MoviePage = () => {
                     allowFullScreen
                     width='560'
                     height='349'
-                    src={extractVideoId(data.trailer || '')}
+                    src={extractVideoId(movieData.trailer || '')}
                   ></iframe>
                 </div>
               </div>
               <div className='relative flex flex-column'>
                 <button
                   className='btn-inline mb-1'
-                  onClick={handleShowWatchlist}
+                  onClick={() => handleAddToWatchlist(movieData.id)}
                 >
                   <AddIcon /> Add to watchlist
                 </button>
-                {showWatchlists &&
-                  watchlistData &&
-                  watchlistData.map((w) => (
-                    <button
-                      className='btn-inline btn-info mb-1'
-                      key={w.id}
-                      onClick={() => handleAddWatchlist(w.id)}
-                    >
-                      {w.name}
-                    </button>
-                  ))}
                 <button className='btn-inline btn-success mb-1'>
                   <WillIcon /> Will watch
                 </button>
@@ -134,8 +110,8 @@ const MoviePage = () => {
               </div>
             </div>
             <div className='App-tags mt-3'>
-              {data.tags &&
-                data.tags.map((x, i) => (
+              {movieData.tags &&
+                movieData.tags.map((x, i) => (
                   <Link to={`../genre/${x.trim()}`} key={i}>
                     <span>{x}</span>
                   </Link>
@@ -144,7 +120,7 @@ const MoviePage = () => {
             <h3 className='mt-4 pb-3 before'>Storyline</h3>
 
             <div className='App-details'>
-              <p>{data.storyline}</p>
+              <p>{movieData.storyline}</p>
             </div>
 
             <h3 className='mt-4 pb-3 before'>Details</h3>
@@ -152,17 +128,17 @@ const MoviePage = () => {
             <div className='App-details'>
               <p>
                 <b>Director:</b>
-                {data.director}
+                {movieData.director}
               </p>
 
               <p>
                 <b>Stars:</b>
-                {data.cast}
+                {movieData.cast}
               </p>
 
               <p>
                 <b>Year:</b>
-                {data.year}
+                {movieData.year}
               </p>
             </div>
           </div>

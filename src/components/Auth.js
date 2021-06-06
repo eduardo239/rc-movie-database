@@ -30,7 +30,7 @@ const Auth = () => {
         const { data: profileData, error: profileError } = await supabase
           .from('profile')
           .insert({ user_id: user.id, name: 'User' });
-        if (profileError) console.log(profileError);
+        if (profileError) console.error(profileError);
         else console.log(profileData);
       }
 
@@ -48,7 +48,7 @@ const Auth = () => {
     // You need to enable the third party auth you want in Authentication > Settings
     // Read more on: https://supabase.io/docs/guides/auth#third-party-logins
     let { error } = await supabase.auth.signIn({ provider });
-    if (error) console.log('Error: ', error.message);
+    if (error) console.error('Error: ', error.message);
   };
 
   // eslint-disable-next-line

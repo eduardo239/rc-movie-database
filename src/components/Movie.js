@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { getMovies } from '../store/movies';
 import Card from './Card';
 import Loading from './Loading';
-import MovieItem from './MovieItem';
 
 const Movie = () => {
   const dispatch = useDispatch();

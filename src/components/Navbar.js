@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import { supabase } from '../lib/api';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ReactComponent as EmailIcon } from '../assets/icons2/mdi_logout.svg';
-import { ReactComponent as AtIcon } from '../assets/icons2/mdi_at.svg';
-
+import { ReactComponent as LogoutIcon } from '../assets/icons2/mdi_logout.svg';
+import { ReactComponent as ProfileIcon } from '../assets/icons2/mdi_face-man-profile.svg';
+import { ReactComponent as MenuIcon } from '../assets/icons2/mdi_menu.svg';
+import { ReactComponent as CloseIcon } from '../assets/icons2/mdi_close.svg';
 import Search from './Search';
 import Logo from './Logo';
+// import { routingTo } from '../helper';
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
   const { data } = useSelector((state) => state.user.login);
+  // let history = useHistory();
 
   const handleLogout = async () => {
     setModal(false);
@@ -26,93 +29,76 @@ const Navbar = () => {
   };
 
   return (
-    <div className='flex flex-align-center my-3 gap-2'>
-      <Logo />
-      <Search />
-
-      {data && (
-        <div>
-          <Link to={`profile/${data.id}`}>
-            <AtIcon />
-          </Link>
+    <div className='container mt-3'>
+      <div class='row flex flex-align-center '>
+        <div class='col-lg-2 col-12 flex flex-justify-start'>
+          <Logo />
         </div>
-      )}
+        {/*  */}
+        <div class='col-lg-6 col-12'>
+          <Search />
+        </div>
+        {/*  */}
+        <div className='col-lg-4 col-12 flex flex-align-center flex-justify-end gap-2'>
+          <div
+            className='svg-hover flex flex-align-center'
+            onClick={handleOpenMenu}
+            style={{ cursor: 'pointer' }}
+          >
+            <MenuIcon />
+            Menu
+          </div>
 
-      <div
-        className='flex flex-align-center svg-hover'
-        onClick={handleOpenMenu}
-        style={{ cursor: 'pointer' }}
-      >
-        <svg
-          className='me-2'
-          width='24'
-          height='24'
-          viewBox='0 0 24 24'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <path
-            d='M3 6H21V8H3V6ZM3 11H21V13H3V11ZM3 16H21V18H3V16Z'
-            fill='#F7F7F9'
-          />
-        </svg>{' '}
-        <span>Menu</span>
-      </div>
-      <div>
-        <button className='btn-icon btn-secondary' onClick={handleLogout}>
-          <EmailIcon />
-        </button>
-      </div>
-      {/* --- */}
-      {modal && (
-        <div className='App-menu-modal '>
-          <div className='App-menu-button--close'>
-            <button className='btn' onClick={handleCloseMenu}>
-              <svg width='24' height='24' fill='none' viewBox='0 0 24 24'>
-                <path
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='1.5'
-                  d='M17.25 6.75L6.75 17.25'
-                />
-                <path
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='1.5'
-                  d='M6.75 6.75L17.25 17.25'
-                />
-              </svg>
+          {data && (
+            <Link className='btn-primary svg-icon' to={`/profile/${data.id}`}>
+              <ProfileIcon />
+            </Link>
+          )}
+
+          <div>
+            <button className='btn-icon btn-transparent' onClick={handleLogout}>
+              <LogoutIcon />
             </button>
           </div>
-          {/*  */}
-          <div>
-            <h2>Menu</h2>
-            <ul className='App-menu-content App-fadeIn mt-3'>
-              <li>
-                <Link to='/' onClick={handleCloseMenu}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to='/movies' onClick={handleCloseMenu}>
-                  Movies
-                </Link>
-              </li>
-              <li>
-                <Link to='/tv' onClick={handleCloseMenu}>
-                  TV
-                </Link>
-              </li>
-              <li>
-                <Link to='/add' onClick={handleCloseMenu}>
-                  Add
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* --- */}
+          {modal && (
+            <div className='App-menu-modal '>
+              <div className='App-menu-button--close'>
+                <button className='btn' onClick={handleCloseMenu}>
+                  <CloseIcon />
+                </button>
+              </div>
+              {/*  */}
+              <div>
+                <h2>Menu</h2>
+                <ul className='App-menu-content App-fadeIn mt-3'>
+                  <li>
+                    <Link to='/' onClick={handleCloseMenu}>
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to='/movies' onClick={handleCloseMenu}>
+                      Movies
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to='/tv' onClick={handleCloseMenu}>
+                      TV
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to='/add' onClick={handleCloseMenu}>
+                      Add
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
+      <br />
     </div>
   );
 };

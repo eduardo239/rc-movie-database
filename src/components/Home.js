@@ -13,6 +13,7 @@ import MoviePage from './MoviePage';
 import Footer from './Footer';
 import GenrePage from './GenrePage';
 import Profile from './Profile';
+import NotFound from './NotFound';
 // import RecoverPassword from "./RecoverPassword";
 
 const Home = () => {
@@ -38,6 +39,7 @@ const Home = () => {
           <Route exact path='/movies/:id' component={MoviePage} />
           <Route exact path='/genre/:term' component={GenrePage} />
           <Route exact path='/profile/:id' component={Profile} />
+          <Route path='*' component={NotFound} />
         </Switch>
       </div>
       <Footer />
