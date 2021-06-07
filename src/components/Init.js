@@ -4,6 +4,7 @@ import { getMovies } from '../store/movies';
 import Feature from './Feature';
 import TopMovie from './TopMovie';
 import NewMovie from './NewMovie';
+import Slide from './Slide';
 
 const Init = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,8 @@ const Init = () => {
 
   return (
     <>
-      <Feature />
+      {/* <Feature /> */}
+      <Slide />
       <TopMovie />
       <NewMovie />
     </>

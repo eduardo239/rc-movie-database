@@ -6,6 +6,9 @@ import { getWatchlist } from '../store/user';
 import Message from './Message';
 import InputButton from './InputButton';
 import Loading from './Loading';
+import { ReactComponent as EditIcon } from '../assets/icons2/mdi_file-edit-outline.svg';
+import { ReactComponent as SaveIcon } from '../assets/icons2/mdi_content-save-outline.svg';
+import { ReactComponent as DeleteIcon } from '../assets/icons2/mdi_delete-outline.svg';
 
 const Profile = () => {
   const watchlistRef = useRef();
@@ -85,7 +88,7 @@ const Profile = () => {
         <div className='p-4'>
           <div>{data?.id}</div>
           <div>
-            <h4>{data?.name || 'Anonymous_'}</h4>
+            <h4>{data?.email || 'Anonymous_'}</h4>
             <small>
               {data?.email} - Registration day {dateConvert(data?.created_at)}
             </small>
@@ -120,9 +123,9 @@ const Profile = () => {
                 key={watchlistData.watchlist.id}
                 className='flex flex-align-center'
               >
-                <div className='flex-1'>
+                <div className='flex-1 me-1'>
                   <button
-                    className='btn btn-primary'
+                    className='btn-transparent'
                     onClick={() => selectWatchlist(watchlistData.watchlist.id)}
                   >
                     {watchlistData.watchlist.name}
@@ -131,22 +134,19 @@ const Profile = () => {
 
                 <div>
                   <button
-                    className='btn-inline btn-error'
+                    className='btn-icon btn-info me-1'
                     onClick={() => deleteWatchlist(watchlistData.watchlist.id)}
                   >
-                    delete
+                    <EditIcon />
                   </button>
                   <button
-                    className='btn-inline btn-info'
+                    className='btn-icon btn-success me-1'
                     onClick={() => editWatchlist(watchlistData.watchlist.id)}
                   >
-                    save
+                    <SaveIcon />
                   </button>
-                  <button
-                    className='btn-inline btn-secondary'
-                    onClick={() => 1}
-                  >
-                    edit
+                  <button className='btn-icon btn-error me-1' onClick={() => 1}>
+                    <DeleteIcon />
                   </button>
                 </div>
               </div>

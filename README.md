@@ -1,15 +1,19 @@
-content --
-type movie/tv
-name
-year
-director
-cast
-rating
-trailer
-poster
-image
-storyline
-views
-runtime
-created_at
-updated_at
+### npm run deploy
+
+# close button na busca
+
+# component buttons/watchlist
+
+# export apiSearch
+
+# adicionar {tag} na página /by genre
+
+# criar outros components //blog//videos//trailers
+
+# profile getUserBy(data.id)
+
+# forEach watchlist.items
+
+# check if item already exists in the watchlist
+
+# fix stars/MoviePage capitalize,comma

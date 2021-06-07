@@ -30,16 +30,16 @@ const Navbar = () => {
 
   return (
     <div className='container mt-3'>
-      <div class='row flex flex-align-center '>
-        <div class='col-lg-2 col-12 flex flex-justify-start'>
+      <div className='row flex flex-align-center '>
+        <div className='col-lg-2 col-md-6 col-sm-6 flex flex-justify-start order-lg-0 order-0 flex-justify-center--sm'>
           <Logo />
         </div>
         {/*  */}
-        <div class='col-lg-6 col-12'>
+        <div className='col-lg-6 order-lg-1 order-2 mt-lg-0 mt-2'>
           <Search />
         </div>
         {/*  */}
-        <div className='col-lg-4 col-12 flex flex-align-center flex-justify-end gap-2'>
+        <div className='col-lg-4 col-md-6 col-sm-6 flex flex-align-center flex-justify-end order-lg-2 order-1 gap-2 flex-justify-center--sm mt-2 mt-sm-0'>
           <div
             className='svg-hover flex flex-align-center'
             onClick={handleOpenMenu}
@@ -62,7 +62,7 @@ const Navbar = () => {
           </div>
           {/* --- */}
           {modal && (
-            <div className='App-menu-modal '>
+            <div className='App-menu-modal'>
               <div className='App-menu-button--close'>
                 <button className='btn' onClick={handleCloseMenu}>
                   <CloseIcon />

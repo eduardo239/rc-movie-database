@@ -1,5 +1,5 @@
 import React from 'react';
-import Slide from './Slide';
+import Slide from './Slide2';
 import { useSelector } from 'react-redux';
 import Loading from './Loading';
 import Message from './Message';

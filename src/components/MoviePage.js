@@ -63,8 +63,7 @@ const MoviePage = () => {
 
             <h2>{movieData.name}</h2>
             <p className='text-small'>
-              Year: {movieData.year} - Views: {movieData.views || 0} -{' '}
-              {movieData.year}
+              Year: {movieData.year} - Views: {movieData.views || 0}
             </p>
 
             {!!helperText.text && (
@@ -99,10 +98,10 @@ const MoviePage = () => {
                   <AddIcon /> Add to watchlist
                 </button>
                 <button className='btn-inline btn-success mb-1'>
-                  <WillIcon /> Will watch
+                  <WillIcon /> I'll see
                 </button>
                 <button className='btn-inline btn-error mb-1'>
-                  <HaveIcon /> Watched
+                  <HaveIcon /> I already saw
                 </button>
                 <button className='btn-inline btn-warning mb-1'>
                   <FavIcon /> Add to favorite

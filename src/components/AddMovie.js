@@ -19,6 +19,7 @@ import Input from './Input';
 import TextArea from './TextArea';
 // import Radio from './Radio';
 import Loading from './Loading';
+import { getApiOMDB } from '../helper/api';
 
 const AddMovie = () => {
   const dispatch = useDispatch();
@@ -39,9 +40,15 @@ const AddMovie = () => {
   const [tab2, setTab2] = useState(false);
 
   const [apiMaze, setApiMaze] = useState(null);
+  const [apiTMDB, setApiTMDB] = useState(null);
+  const [apiOMDB, setApiOMDB] = useState(null);
 
   const IdRef = useRef();
   const nameRef = useRef();
+  const nameRef0 = useRef();
+  const nameRef1 = useRef();
+  const nameRef2 = useRef();
+  //
   const yearRef = useRef();
   const directorRef = useRef();
   const posterRef = useRef();
@@ -237,8 +244,9 @@ const AddMovie = () => {
   };
 
   const searchTvMaze = async () => {
+    resetApiSearch();
     setApiLoading(true);
-    const term = nameRef.current.value;
+    const term = nameRef0.current.value;
 
     try {
       const response = await fetch(
@@ -252,23 +260,80 @@ const AddMovie = () => {
     setApiLoading(false);
   };
 
-  const loadMovieFromApi = (x) => {
-    IdRef.current.value = '';
+  const loadMovieFromApiMaze = (x) => {
+    // IdRef.current.value = '';
     nameRef.current.value = x.show.name;
     yearRef.current.value = x.show.premiered
       ? x.show.premiered.split('-')[0]
       : 'undefined';
-    // directorRef.current.value = x.show.director;
+    directorRef.current.value = '';
     posterRef.current.value = x.show.image ? x.show.image.medium : 'undefined';
-    // imageRef.current.value = x.show.image.medium || x.show.image.original;
+    imageRef.current.value = '';
     ratingRef.current.value = x.show.rating.average || 0.0;
-    // trailerRef.current.value = x.show.trailer;
+    trailerRef.current.value = '';
     tagsRef.current.value = arrayToString(x.show.genres) || 'undefined';
-    // castRef.current.value = arrayToString(x.show.cast);
+    castRef.current.value = '';
     storylineRef.current.value = removeHtmlTags(x.show.summary) || 'undefined';
   };
 
+  const searchTMDB = async () => {
+    resetApiSearch();
+    // reset
+    setApiLoading(true);
+    const term = nameRef2.current.value;
+    const api_key = '11c410a46a513551618853674c632213';
+
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${term}`
+      );
+      const json = await response.json();
+      setApiTMDB(json.results);
+    } catch (error) {
+      helperFunction(true, error.message, 'alert-error', setHelperText, 5000);
+    }
+    setApiLoading(false);
+  };
+
+  const searchOMDB = async () => {
+    resetApiSearch();
+    setApiLoading(true);
+    const term = nameRef1.current.value;
+    const { response, error } = await getApiOMDB(
+      term,
+      helperFunction,
+      setHelperText
+    );
+    if (error) {
+      console.log(error);
+      helperFunction(true, error, 'alert-error', setHelperText, 5000);
+      setApiLoading(false);
+      return;
+    }
+    setApiOMDB(response);
+    setApiLoading(false);
+  };
+
+  const loadMovieFromApiOMDB = (x) => {
+    handleClear();
+    nameRef.current.value = x.Title || 'undefined';
+    yearRef.current.value = x.Year ? x.Year.split('-')[0] : 'undefined';
+    directorRef.current.value = x.Director || 'undefined';
+    posterRef.current.value = x.Poster ? x.Poster : 'undefined';
+    ratingRef.current.value = x.imdbRating || 0.0;
+    tagsRef.current.value = x.Genre || 'undefined';
+    castRef.current.value = x.Actors || 'undefined';
+    storylineRef.current.value = x.Plot || 'undefined';
+  };
+
+  const resetApiSearch = () => {
+    setApiTMDB(null);
+    setApiMaze(null);
+    setApiOMDB(null);
+  };
+
   // http://www.omdbapi.com/?i=tt3896198&apikey=f655bbbf
+  // http://www.omdbapi.com/?t=game+of+thrones&apikey=f655bbbf
 
   // https://api.themoviedb.org/3/movie/550?api_key=11c410a46a513551618853674c632213
   // https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=Jack+Reacher
@@ -280,51 +345,130 @@ const AddMovie = () => {
           Add Content
         </h2>
 
+        {/* tb api maze */}
+        {apiMaze && <h3 className='before'>Maze</h3>}
         {apiMaze &&
-          apiMaze.map((item) => (
-            <div className='App-maze-list' key={item.show.id}>
-              <p style={{ position: 'relative' }}>
-                <img
-                  className='poster-small'
-                  src={item.show.image ? item.show.image.medium : 'undefined'}
-                  alt='poster'
-                />
-              </p>
-              <p>{item.show.name}</p>
-              <div className='flex flex-justify-center flex-align-center'>
-                <a
-                  target='_blank'
-                  href={`https://www.google.com/search?client=firefox-b-d&q=${item.show.name}+trailer`}
-                  rel='noreferrer'
-                >
-                  <YtIcon />
-                </a>
+          apiMaze
+            .map((item) => (
+              <div className='App-maze-list' key={item.show.id}>
+                <div>
+                  <img
+                    className='poster'
+                    src={item.show.image ? item.show.image.medium : 'undefined'}
+                    alt='poster'
+                  />
+                </div>
+                <div>
+                  <p>{item.show.name}</p>
+                  <a
+                    target='_blank'
+                    href={`https://www.google.com/search?client=firefox-b-d&q=${item.show.name}+trailer`}
+                    rel='noreferrer'
+                  >
+                    <YtIcon />
+                  </a>
+                  <p>{compactString(item.show.summary, 70)}</p>
+                  <p>{arrayToString(item.show.genres)}</p>
+                  <p>{item.show.premiered}</p>
+
+                  <button
+                    className='btn-icon btn-primary'
+                    onClick={() => loadMovieFromApiMaze(item)}
+                  >
+                    Select
+                  </button>
+                </div>
               </div>
-              <p>{compactString(item.show.summary, 70)}</p>
-              <p>{arrayToString(item.show.genres)}</p>
-              <p>{item.show.premiered}</p>
-              <div className='flex flex-justify-center flex-align-center'>
-                <button
-                  className='btn-icon btn-primary'
-                  onClick={() => loadMovieFromApi(item)}
-                >
-                  Select
-                </button>
+            ))
+            .slice(0, 4)}
+        {/* tv tmdb */}
+        {apiTMDB && <h3 className='before'>TMDB</h3>}
+        <div className='flex flex-wrap'>
+          {apiTMDB &&
+            apiTMDB
+              .map((item) => (
+                <div className='App-tmdb-list' key={item.id}>
+                  <div>
+                    <p>{item.title}</p>
+                    <small>rating: {item.vote_average}</small> -{' '}
+                    <small>year: {item.release_date}</small>
+                  </div>
+                  <p>{item.overview}</p>
+                  <div>
+                    <button className='btn btn-primary'>Select</button>
+                  </div>
+                </div>
+              ))
+              .slice(0, 4)}
+        </div>
+
+        {/* tv omdb */}
+        {apiOMDB && <h3 className='before'>OMDB</h3>}
+        <div className='flex flex-wrap'>
+          {apiOMDB &&
+            apiOMDB.map((item, index) => (
+              <div className='App-omdb-list' key={index}>
+                <div>
+                  <img src={item.Poster} alt='' />
+                </div>
+                <div>
+                  <h4>{item.Title}</h4>
+                  <small>rating: {item.imdbRating}</small> -{' '}
+                  <small>year: {item.Released}</small>
+                  <p>{item.Plot}</p>
+                  <p>{item.Genre}</p>
+                  <p>{item.Actors}</p>
+                  <button
+                    className='btn-inline btn-primary'
+                    onClick={() => loadMovieFromApiOMDB(item)}
+                  >
+                    Select
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
 
         {apiLoading && <Loading />}
-
+      </div>
+      <div className='row g-3'>
         <div className='mb-3 col-md-4'>
           <InputButton
             label='name'
             type='text'
             id='movie-name'
-            refs={nameRef}
+            refs={nameRef0}
             fn={searchTvMaze}
-            button='Api Maze'
+            button='Maze'
           />
+        </div>
+
+        <div className='mb-3 col-md-4'>
+          <InputButton
+            label='name'
+            type='text'
+            id='movie-omdb'
+            refs={nameRef1}
+            fn={searchOMDB}
+            button='OMDB'
+          />
+        </div>
+
+        <div className='mb-3 col-md-4'>
+          <InputButton
+            label='name'
+            type='text'
+            id='movie-tmdb'
+            refs={nameRef2}
+            fn={searchTMDB}
+            button='TMDB'
+          />
+        </div>
+      </div>
+      {/* api search input */}
+      <div className='row g-3'>
+        <div className='mb-3 col-md-4'>
+          <Input label='name' type='text' id='movie-name' refs={nameRef} />
         </div>
 
         <div className='mb-3 col-md-4'>
@@ -452,6 +596,9 @@ const AddMovie = () => {
           </div>
         </div>
       </div>
+      {!!helperText.text && (
+        <Message data={helperText.text} type={helperText.type} />
+      )}
 
       <div className='mb-3 col-12'>
         <div className='flex mt-3' id='buttons'>
@@ -472,11 +619,15 @@ const AddMovie = () => {
           <button className='btn-inline btn-error me-2' onClick={handleClear}>
             Clear Fields
           </button>
+
+          <button
+            className='btn-inline btn-error me-2'
+            onClick={resetApiSearch}
+          >
+            Clear Search
+          </button>
         </div>
       </div>
-      {!!helperText.text && (
-        <Message data={helperText.text} type={helperText.type} />
-      )}
 
       {/* tab */}
       <section className='mt-5'>

@@ -61,9 +61,9 @@
   display: block;
   padding: 1rem;
   margin: 0.5rem 0;
-  background-color: var(--opacity-15);
+  background-color: var(--color-neutral-20);
   border: 1px solid var(--color-neutral-80);
-  color: var(--secondary);
+  color: var(--color-neutral-80);
 }
 
 .App-menu-button--close {
@@ -103,10 +103,17 @@
 
 /*------------------- app card 2 -------------------*/
 .App-card-2 {
-  width: 200px;
-  border-radius: var(--border-radius);
   color: var(--secondary);
-  border: 1px solid var(--opacity-50);
+  border: 1px solid var(--opacity-15);
+  border-radius: var(--border-radius);
+  transition: 0.2s ease-in-out;
+  width: 200px;
+}
+.App-card-2:active {
+  border: 1px solid var(--primary);
+}
+.App-card-2:hover {
+  box-shadow: var(--shadow-2);
 }
 .App-card-2 img {
   border-top-left-radius: var(--border-radius);
@@ -184,20 +191,28 @@
 /*------------------- app maze -------------------*/
 
 .App-maze-list {
-  border-bottom: 1px solid var(--border-color-dark);
   display: grid;
-  font-size: 0.9rem;
+  grid-template-columns: 200px 1fr;
   gap: 1rem;
-  grid-template-columns: auto 3fr 20px 4fr 2fr 1fr auto;
-  margin-top: 0.1rem !important;
-}
-.App-maze-list p {
-  display: flex;
-  align-items: center;
-  font-size: var(--sm);
-  font-weight: 300;
+  padding: 1rem;
+  border: 1px solid var(--primary);
 }
 
+/*------------------- app tmdb -------------------*/
+.App-tmdb-list {
+  max-width: 50%;
+  border: 1px solid var(--primary);
+  padding: 1rem;
+}
+/*------------------- app omdb -------------------*/
+.App-omdb-list {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--primary);
+}
+/*------------------- app footer -------------------*/
 .App-footer-icon {
   width: 2.5rem;
   padding: 0.25rem;

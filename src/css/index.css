@@ -76,14 +76,12 @@ small,
   letter-spacing: 0.06rem;
   color: var(--color-neutral-60);
 }
-
 label {
   display: block;
   font-size: var(--xsm);
   color: var(--secondary);
   letter-spacing: 0.03rem;
 }
-
 .before::before {
   content: '';
   display: inline-block;
@@ -94,7 +92,6 @@ label {
 }
 
 /* - - - - - - links - - - - - - */
-
 a {
   color: var(--primary);
   text-decoration: none;
@@ -115,8 +112,12 @@ svg {
   height: 10rem;
   transition: 0.1s ease-in-out;
 }
-/* - - - - - - input - - - - - - */
 
+.poster {
+  width: 200px;
+}
+
+/* - - - - - - input - - - - - - */
 input,
 button,
 textarea {
@@ -127,7 +128,6 @@ textarea {
   font-family: var(--font);
   letter-spacing: 0.02rem;
 }
-
 a,
 button,
 input,
@@ -147,7 +147,6 @@ textarea {
   width: 100%;
   display: block;
 }
-
 input:focus,
 input:active,
 textarea:focus,
@@ -156,18 +155,15 @@ textarea:active {
   filter: brightness(115%);
   border-bottom: 2px solid var(--primary);
 }
-
 input:disabled,
 textarea:disabled {
   color: var(--color-neutral-60);
   cursor: no-drop;
   border-bottom: 2px solid var(--color-neutral-60);
 }
-
 textarea {
   resize: vertical;
 }
-
 .field {
   background-color: var(--color-neutral-70);
   border-radius: var(--border-radius);
@@ -176,14 +172,12 @@ textarea {
   display: flex;
   align-items: flex-end;
 }
-
 .field-button--button {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
 }
 
 /* - - - - - - table - - - - - - */
-
 table {
   width: 100%;
   border: 2px solid var(--primary);
@@ -317,6 +311,12 @@ td {
 }
 .flex-column {
   flex-direction: column;
+}
+/* response */
+@media (max-width: 576px) {
+  .flex-justify-center--sm {
+    justify-content: center;
+  }
 }
 .gap-1 {
   gap: 0.5rem;

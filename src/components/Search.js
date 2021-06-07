@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { resetSearch, searchMovie } from '../store/movies';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { routingTo, compactString } from '../helper';
-import Loading from './Loading';
+import { Link } from 'react-router-dom';
+import { compactString } from '../helper';
+// import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   const [term, setTerm] = useState('');
 
-  const { data, loading } = useSelector((state) => state.movies.search);
+  const { data } = useSelector((state) => state.movies.search);
 
   const handleClick = async (id) => {
     // routingTo({ id, history, to: 'movies' });
@@ -49,28 +49,30 @@ const Search = () => {
         {term.length >= 3 &&
           data &&
           data.length > 0 &&
-          data.map((i) => (
-            <Link
-              className='link-search'
-              to={`/movies/${i.id}`}
-              onClick={handleClick}
-            >
-              <div className='flex flex-align-center p-1 gap-1 text-left'>
-                <img
-                  className='App-poster-mini'
-                  src={i.poster || poster}
-                  alt={i.name}
-                />
-                <div className='App-search-result--body'>
-                  <h5 className='mb-1'>{i.name}</h5>
-                  <p>
-                    {(i.storyline && compactString(i.storyline, 150)) ||
-                      'No storyline'}
-                  </p>
+          data
+            .map((i) => (
+              <Link
+                className='link-search'
+                to={`/movies/${i.id}`}
+                onClick={handleClick}
+              >
+                <div className='flex flex-align-center p-1 gap-1 text-left'>
+                  <img
+                    className='App-poster-mini'
+                    src={i.poster || poster}
+                    alt={i.name}
+                  />
+                  <div className='App-search-result--body'>
+                    <h5 className='mb-1'>{i.name}</h5>
+                    <p>
+                      {(i.storyline && compactString(i.storyline, 125)) ||
+                        'No storyline'}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+            .slice(0, 5)}
       </div>
     </div>
   );
