@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { SlideStories } from '../helper/slide';
+import { useSelector } from 'react-redux';
+import '../css/slide.css';
+import { ReactComponent as PrevIcon } from '../assets/icons2/mdi_arrow-left-big.svg';
+import { ReactComponent as NextIcon } from '../assets/icons2/mdi_arrow-right-big.svg';
 import image0 from '../assets/images/posterWide.jpg';
 import image1 from '../assets/images/posterWide1.jpg';
 import image2 from '../assets/images/posterWide2.jpg';
-import { SlideStories } from '../helper/slide';
-import '../css/slide.css';
-import { useSelector } from 'react-redux';
 
 const Slide = () => {
+  //eslint-disable-next-line
   const { data, loading } = useSelector((state) => state.movies.movies);
 
+  //eslint-disable-next-line
   const [items, setItems] = useState();
 
   const slideRef = useRef();
@@ -40,10 +44,10 @@ const Slide = () => {
       <div className='App-slide--nav'>
         <div className='App-slide--thumb' ref={thumbRef}></div>
         <button className='App-slide--button-prev' ref={prevButtonRef}>
-          Prev
+          <PrevIcon />
         </button>
         <button className='App-slide--button-next' ref={nextButtonRef}>
-          Next
+          <NextIcon />
         </button>
       </div>
     </div>

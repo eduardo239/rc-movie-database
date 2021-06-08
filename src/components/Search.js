@@ -4,7 +4,8 @@ import { resetSearch, searchMovie } from '../store/movies';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compactString } from '../helper';
-// import Loading from './Loading';
+import { ReactComponent as CloseIcon } from '../assets/icons2/mdi_close_w.svg';
+import Loading from './Loading';
 import poster from '../assets/images/poster.jpg';
 
 const Search = () => {
@@ -12,12 +13,15 @@ const Search = () => {
   // const history = useHistory();
   const [term, setTerm] = useState('');
 
-  const { data } = useSelector((state) => state.movies.search);
+  const { data, loading } = useSelector((state) => state.movies.search);
 
   const handleClick = async (id) => {
-    // routingTo({ id, history, to: 'movies' });
     setTerm('');
     await dispatch(resetSearch(''));
+  };
+
+  const handleReset = () => {
+    setTerm('');
   };
 
   useEffect(() => {
@@ -29,7 +33,7 @@ const Search = () => {
   }, [term, dispatch]);
 
   return (
-    <div className='flex-1 App-search-container'>
+    <div className='flex-1 App-search--container'>
       <input
         type='text'
         id='search'
@@ -39,6 +43,14 @@ const Search = () => {
         autoFocus
         className='w-100'
       />
+      {!!term.length && (
+        <button
+          className='App-search--button btn-icon btn-transparent'
+          onClick={handleReset}
+        >
+          <CloseIcon />
+        </button>
+      )}
 
       <div
         className='App-search-result'
@@ -46,7 +58,12 @@ const Search = () => {
           display: `${data && term ? 'block' : 'none'}`,
         }}
       >
-        {term.length >= 3 &&
+        {loading ? (
+          <div className='py-4'>
+            <Loading />
+          </div>
+        ) : (
+          term.length >= 3 &&
           data &&
           data.length > 0 &&
           data
@@ -55,6 +72,7 @@ const Search = () => {
                 className='link-search'
                 to={`/movies/${i.id}`}
                 onClick={handleClick}
+                key={i.id}
               >
                 <div className='flex flex-align-center p-1 gap-1 text-left'>
                   <img
@@ -72,7 +90,8 @@ const Search = () => {
                 </div>
               </Link>
             ))
-            .slice(0, 5)}
+            .slice(0, 5)
+        )}
       </div>
     </div>
   );

@@ -8,7 +8,6 @@ import { ReactComponent as MenuIcon } from '../assets/icons2/mdi_menu.svg';
 import { ReactComponent as CloseIcon } from '../assets/icons2/mdi_close.svg';
 import Search from './Search';
 import Logo from './Logo';
-// import { routingTo } from '../helper';
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
@@ -31,7 +30,7 @@ const Navbar = () => {
   return (
     <div className='container mt-3'>
       <div className='row flex flex-align-center '>
-        <div className='col-lg-2 col-md-6 col-sm-6 flex flex-justify-start order-lg-0 order-0 flex-justify-center--sm'>
+        <div className='col-lg-3 col-md-6 col-sm-6 flex flex-justify-start order-lg-0 order-0 flex-justify-center--sm'>
           <Logo />
         </div>
         {/*  */}
@@ -39,13 +38,13 @@ const Navbar = () => {
           <Search />
         </div>
         {/*  */}
-        <div className='col-lg-4 col-md-6 col-sm-6 flex flex-align-center flex-justify-end order-lg-2 order-1 gap-2 flex-justify-center--sm mt-2 mt-sm-0'>
+        <div className='col-lg-3 col-md-6 col-sm-6 flex flex-align-center flex-justify-end order-lg-2 order-1 gap-2 flex-justify-center--sm mt-2 mt-sm-0'>
           <div
             className='svg-hover flex flex-align-center'
             onClick={handleOpenMenu}
             style={{ cursor: 'pointer' }}
           >
-            <MenuIcon />
+            <MenuIcon className='me-2' />
             Menu
           </div>
 
@@ -62,7 +61,7 @@ const Navbar = () => {
           </div>
           {/* --- */}
           {modal && (
-            <div className='App-menu-modal'>
+            <div className='App-menu--modal'>
               <div className='App-menu-button--close'>
                 <button className='btn' onClick={handleCloseMenu}>
                   <CloseIcon />
@@ -71,7 +70,7 @@ const Navbar = () => {
               {/*  */}
               <div>
                 <h2>Menu</h2>
-                <ul className='App-menu-content App-fadeIn mt-3'>
+                <ul className='App-menu--content App-fadeIn mt-3'>
                   <li>
                     <Link to='/' onClick={handleCloseMenu}>
                       Home
@@ -80,11 +79,6 @@ const Navbar = () => {
                   <li>
                     <Link to='/movies' onClick={handleCloseMenu}>
                       Movies
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to='/tv' onClick={handleCloseMenu}>
-                      TV
                     </Link>
                   </li>
                   <li>

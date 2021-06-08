@@ -1,13 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { supabase } from '../lib/api';
-import { getMovies } from '../store/movies';
-import AddMovieList from './AddMovieList';
-import Message from './Message';
-import InputButton from './InputButton';
 import { ReactComponent as MovieIcon } from '../assets/icons2/mdi_movie-open-outline.svg';
 import { ReactComponent as TvIcon } from '../assets/icons2/mdi_television-classic.svg';
 import { ReactComponent as YtIcon } from '../assets/icons2/mdi_youtube.svg';
+import { getMovies } from '../store/movies';
+import { getApiMaze, getApiOMDB } from '../helper/api';
 import {
   helperFunction,
   arrayToString,
@@ -17,9 +15,10 @@ import {
 } from '../helper';
 import Input from './Input';
 import TextArea from './TextArea';
-// import Radio from './Radio';
+import InputButton from './InputButton';
+import AddMovieList from './AddMovieList';
 import Loading from './Loading';
-import { getApiOMDB } from '../helper/api';
+import Message from './Message';
 
 const AddMovie = () => {
   const dispatch = useDispatch();
@@ -36,19 +35,15 @@ const AddMovie = () => {
 
   // eslint-disable-next-line
   const [file, setFile] = useState('');
-  const [tab1, setTab1] = useState(true);
-  const [tab2, setTab2] = useState(false);
 
   const [apiMaze, setApiMaze] = useState(null);
-  const [apiTMDB, setApiTMDB] = useState(null);
   const [apiOMDB, setApiOMDB] = useState(null);
+
+  const nameRef0 = useRef();
+  const nameRef1 = useRef();
 
   const IdRef = useRef();
   const nameRef = useRef();
-  const nameRef0 = useRef();
-  const nameRef1 = useRef();
-  const nameRef2 = useRef();
-  //
   const yearRef = useRef();
   const directorRef = useRef();
   const posterRef = useRef();
@@ -59,12 +54,13 @@ const AddMovie = () => {
   const tagsRef = useRef();
   const storylineRef = useRef();
 
-  const movieListRef = useRef();
-  const tvListRef = useRef();
-
   const movieCheckRef = useRef();
   const tvCheckRef = useRef();
 
+  const movieListRef = useRef();
+  const tvListRef = useRef();
+
+  // - - - - - - - - - post new content - - - - - - - -
   const handleAddMovie = async () => {
     const movieChecked = movieCheckRef.current.checked;
     const tvChecked = tvCheckRef.current.checked;
@@ -83,19 +79,6 @@ const AddMovie = () => {
       type: movieChecked ? 'movie' : 'tv',
     };
 
-    // const formData = new FormData();
-    // formData.append('image', file);
-
-    // (async function () {
-    //   const response = await fetch('https://api.imgur.com/3/image/', {
-    //     method: 'post',
-    //     headers: {
-    //       Authorization: 'Client-ID 7fd98e30ccbeb65',
-    //     },
-    //     body: formData,
-    //   });
-    //   console.log(response);
-    // })();
     if (!movieChecked && !tvChecked) {
       helperFunction(
         true,
@@ -132,6 +115,7 @@ const AddMovie = () => {
     await dispatch(getMovies());
   };
 
+  // - - - - - - - - - load movie from table - - - - - - - -
   const loadMovie = (body, type) => {
     IdRef.current.value = body.id;
     nameRef.current.value = body.name;
@@ -148,6 +132,7 @@ const AddMovie = () => {
     setTvCheck(body.type === 'tv' ? true : false);
   };
 
+  // - - - - - - - - - update content - - - - - - - -
   const handlerUpdateMovie = async () => {
     let id = IdRef.current.value;
     let name = nameRef.current.value;
@@ -179,21 +164,7 @@ const AddMovie = () => {
       type,
     };
 
-    // const movieRadio = movieRadioRef.current.checked;
-    // const tvRadio = tvRadioRef.current.checked;
-
-    // if (!movieRadio && !tvRadio) {
-    //   helperFunction(
-    //     true,
-    //     'Please select Movie or Tv.',
-    //     'alert-warning',
-    //     setHelperText,
-    //     3000
-    //   );
-    // }
-
     const { error } = await supabase.from('movies').update(body).eq('id', id);
-
     if (error) {
       helperFunction(true, error.message, 'alert-error', setHelperText, 9000);
     } else {
@@ -204,11 +175,11 @@ const AddMovie = () => {
         setHelperText,
         3000
       );
-
       await dispatch(getMovies());
     }
   };
 
+  // - - - - - - - - - reset inputs - - - - - - - -
   const handleClear = () => {
     IdRef.current.value = '';
     nameRef.current.value = '';
@@ -224,77 +195,25 @@ const AddMovie = () => {
     storylineRef.current.value = '';
   };
 
-  const tabMovie = () => {
-    tvListRef.current.style.display = 'none';
-    movieListRef.current.style.display = 'block';
-    if (!tab1) setTab1(!tab1);
-    if (tab2) setTab2(!tab2);
-  };
-
-  const tabTv = () => {
-    tvListRef.current.style.display = 'block';
-    movieListRef.current.style.display = 'none';
-    if (tab1) setTab2(!tab2);
-    if (!tab2) setTab1(!tab1);
-  };
-
+  // - - - - - - - - - toggle between radio input - - - - - - - -
   const handleRadioChange = () => {
     setMovieCheck(!movieCheck);
     setTvCheck(!tvCheck);
   };
 
+  // - - - - - - - - - get content from api - - - - - - - -
   const searchTvMaze = async () => {
     resetApiSearch();
     setApiLoading(true);
     const term = nameRef0.current.value;
-
-    try {
-      const response = await fetch(
-        `http://api.tvmaze.com/search/shows?q=${term}`
-      );
-      const json = await response.json();
-      setApiMaze(json);
-    } catch (error) {
+    const { data, error } = await getApiMaze(term);
+    if (error)
       helperFunction(true, error.message, 'alert-error', setHelperText, 5000);
-    }
+    setApiMaze(data);
     setApiLoading(false);
   };
 
-  const loadMovieFromApiMaze = (x) => {
-    // IdRef.current.value = '';
-    nameRef.current.value = x.show.name;
-    yearRef.current.value = x.show.premiered
-      ? x.show.premiered.split('-')[0]
-      : 'undefined';
-    directorRef.current.value = '';
-    posterRef.current.value = x.show.image ? x.show.image.medium : 'undefined';
-    imageRef.current.value = '';
-    ratingRef.current.value = x.show.rating.average || 0.0;
-    trailerRef.current.value = '';
-    tagsRef.current.value = arrayToString(x.show.genres) || 'undefined';
-    castRef.current.value = '';
-    storylineRef.current.value = removeHtmlTags(x.show.summary) || 'undefined';
-  };
-
-  const searchTMDB = async () => {
-    resetApiSearch();
-    // reset
-    setApiLoading(true);
-    const term = nameRef2.current.value;
-    const api_key = '11c410a46a513551618853674c632213';
-
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${term}`
-      );
-      const json = await response.json();
-      setApiTMDB(json.results);
-    } catch (error) {
-      helperFunction(true, error.message, 'alert-error', setHelperText, 5000);
-    }
-    setApiLoading(false);
-  };
-
+  // - - - - - - - - - get content from api - - - - - - - -
   const searchOMDB = async () => {
     resetApiSearch();
     setApiLoading(true);
@@ -314,8 +233,10 @@ const AddMovie = () => {
     setApiLoading(false);
   };
 
+  // - - - - - - - - - load in the fields - - - - - - - -
   const loadMovieFromApiOMDB = (x) => {
     handleClear();
+    console.log(x);
     nameRef.current.value = x.Title || 'undefined';
     yearRef.current.value = x.Year ? x.Year.split('-')[0] : 'undefined';
     directorRef.current.value = x.Director || 'undefined';
@@ -326,8 +247,26 @@ const AddMovie = () => {
     storylineRef.current.value = x.Plot || 'undefined';
   };
 
+  // - - - - - - - - - load in the fields - - - - - - - -
+  const loadMovieFromApiMaze = (x) => {
+    handleClear();
+    // IdRef.current.value = '';
+    console.log(x);
+    nameRef.current.value = x.show.name;
+    yearRef.current.value = x.show.premiered
+      ? x.show.premiered.split('-')[0]
+      : 'undefined';
+    directorRef.current.value = '';
+    posterRef.current.value = x.show.image ? x.show.image.medium : 'undefined';
+    imageRef.current.value = '';
+    ratingRef.current.value = x.show.rating.average || 0.0;
+    trailerRef.current.value = '';
+    tagsRef.current.value = arrayToString(x.show.genres) || 'undefined';
+    castRef.current.value = '';
+    storylineRef.current.value = removeHtmlTags(x.show.summary) || 'undefined';
+  };
+
   const resetApiSearch = () => {
-    setApiTMDB(null);
     setApiMaze(null);
     setApiOMDB(null);
   };
@@ -341,9 +280,7 @@ const AddMovie = () => {
   return (
     <div>
       <div className='row g-3'>
-        <h2 id='content' className='px-4'>
-          Add Content
-        </h2>
+        <h2 className='px-4'>Add Content</h2>
 
         {/* tb api maze */}
         {apiMaze && <h3 className='before'>Maze</h3>}
@@ -381,26 +318,6 @@ const AddMovie = () => {
               </div>
             ))
             .slice(0, 4)}
-        {/* tv tmdb */}
-        {apiTMDB && <h3 className='before'>TMDB</h3>}
-        <div className='flex flex-wrap'>
-          {apiTMDB &&
-            apiTMDB
-              .map((item) => (
-                <div className='App-tmdb-list' key={item.id}>
-                  <div>
-                    <p>{item.title}</p>
-                    <small>rating: {item.vote_average}</small> -{' '}
-                    <small>year: {item.release_date}</small>
-                  </div>
-                  <p>{item.overview}</p>
-                  <div>
-                    <button className='btn btn-primary'>Select</button>
-                  </div>
-                </div>
-              ))
-              .slice(0, 4)}
-        </div>
 
         {/* tv omdb */}
         {apiOMDB && <h3 className='before'>OMDB</h3>}
@@ -431,6 +348,7 @@ const AddMovie = () => {
 
         {apiLoading && <Loading />}
       </div>
+      <span id='content'></span>
       <div className='row g-3'>
         <div className='mb-3 col-md-4'>
           <InputButton
@@ -451,17 +369,6 @@ const AddMovie = () => {
             refs={nameRef1}
             fn={searchOMDB}
             button='OMDB'
-          />
-        </div>
-
-        <div className='mb-3 col-md-4'>
-          <InputButton
-            label='name'
-            type='text'
-            id='movie-tmdb'
-            refs={nameRef2}
-            fn={searchTMDB}
-            button='TMDB'
           />
         </div>
       </div>
@@ -601,29 +508,26 @@ const AddMovie = () => {
       )}
 
       <div className='mb-3 col-12'>
-        <div className='flex mt-3' id='buttons'>
+        <div className='flex mt-2 flex-wrap' id='buttons'>
           <button
-            className='btn-inline btn-success me-2'
+            className='btn-inline btn-success me-2 mb-2'
             onClick={handleAddMovie}
           >
             Add New Content
           </button>
 
           <button
-            className='btn-inline btn-warning me-2'
+            className='btn-inline btn-info me-2 mb-2'
             onClick={handlerUpdateMovie}
           >
             Update Content
           </button>
 
-          <button className='btn-inline btn-error me-2' onClick={handleClear}>
+          <button className='btn-inline me-2 mb-2' onClick={handleClear}>
             Clear Fields
           </button>
 
-          <button
-            className='btn-inline btn-error me-2'
-            onClick={resetApiSearch}
-          >
+          <button className='btn-inline me-2 mb-2' onClick={resetApiSearch}>
             Clear Search
           </button>
         </div>
@@ -632,18 +536,10 @@ const AddMovie = () => {
       {/* tab */}
       <section className='mt-5'>
         <div className='flex flex-align-center'>
-          <button
-            className={`btn-inline me-2 ${
-              tab1 ? 'btn-primary' : 'btn-secondary'
-            }`}
-            onClick={tabMovie}
-          >
+          <button className={`btn-inline me-2 btn-secondary`}>
             <MovieIcon /> movie
           </button>
-          <button
-            className={`btn-inline  ${tab2 ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={tabTv}
-          >
+          <button className={`btn-inline  btn-primary`}>
             <TvIcon /> tv
           </button>
         </div>

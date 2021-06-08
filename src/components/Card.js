@@ -1,10 +1,10 @@
 import React from 'react';
-import poster2 from '../assets/images/poster.jpg';
+import poster_default from '../assets/images/poster.jpg';
 
 const Card = ({ name, storyline, date, poster }) => {
   return (
     <div className='App-card-2'>
-      <img className='poster' src={poster || poster2} alt={name} />
+      <img className='poster' src={poster || poster_default} alt={name} />
       <section>
         <h4>{name}</h4>
         <p>{storyline?.slice(0, 40) + '...' || 'No storyline'}</p>
@@ -15,4 +15,3 @@ const Card = ({ name, storyline, date, poster }) => {
 };
 
 export default Card;
-// TODO:

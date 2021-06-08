@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Back } from '../assets/icons2/mdi_arrow-left.svg';
 import { supabase } from '../lib/api';
 import poster from '../assets/images/poster.jpg';
+import Card from './Card';
 
 const GenrePage = () => {
   let { term } = useParams();
@@ -36,20 +37,13 @@ const GenrePage = () => {
       <div className='flex wrap gap-1 flex-justify-center'>
         {movies &&
           movies.map((i) => (
-            <Link
-              to={`../movies/${i.id}`}
-              key={i.id}
-              className='App-card-container'
-            >
-              <div className='App-card'>
-                <img className='poster' src={i.poster || poster} alt={i.name} />
-                <div className='p-2'>
-                  <h5>{i.name}</h5>
-                  <p className='App-card--p text-small mt-2'>
-                    {i.storyline.slice(0, 60) + '...' || 'No storyline'}
-                  </p>
-                </div>
-              </div>
+            <Link to={`../movies/${i.id}`} key={i.id} className='flex'>
+              <Card
+                name={i.name}
+                storyline={i.storyline}
+                date={i.year}
+                poster={i.poster}
+              />
             </Link>
           ))}
       </div>

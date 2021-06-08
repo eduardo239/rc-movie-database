@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMovie, pageViewInc } from '../store/movies';
-import { extractVideoId } from '../helper';
+import { arrayToString, extractVideoId } from '../helper';
 import { ReactComponent as Back } from '../assets/icons2/mdi_arrow-left.svg';
 import { ReactComponent as AddIcon } from '../assets/icons2/mdi_bookmark-plus-outline.svg';
 import { ReactComponent as WillIcon } from '../assets/icons2/mdi_calendar-clock.svg';
@@ -90,20 +90,20 @@ const MoviePage = () => {
                   ></iframe>
                 </div>
               </div>
-              <div className='relative flex flex-column'>
+              <div className='relative flex flex-column mx-2'>
                 <button
-                  className='btn-inline mb-1'
+                  className='btn-inline mb-2'
                   onClick={() => handleAddToWatchlist(movieData.id)}
                 >
                   <AddIcon /> Add to watchlist
                 </button>
-                <button className='btn-inline btn-success mb-1'>
+                <button className='btn-inline mb-2'>
                   <WillIcon /> I'll see
                 </button>
-                <button className='btn-inline btn-error mb-1'>
+                <button className='btn-inline mb-2'>
                   <HaveIcon /> I already saw
                 </button>
-                <button className='btn-inline btn-warning mb-1'>
+                <button className='btn-inline mb-2'>
                   <FavIcon /> Add to favorite
                 </button>
               </div>
@@ -132,7 +132,7 @@ const MoviePage = () => {
 
               <p>
                 <b>Stars:</b>
-                {movieData.cast}
+                {arrayToString(movieData.cast)}
               </p>
 
               <p>

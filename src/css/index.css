@@ -371,22 +371,6 @@ td {
   color: rgb(166, 213, 250);
   background-color: var(--opacity-15);
 }
-/* slide */
-.each-slide > div {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  background-size: cover;
-  background-position-y: center;
-  height: 350px;
-}
-
-.each-slide span {
-  padding: 1rem 2rem;
-  font-size: var(--xl);
-  background: var(--opacity-15);
-  text-align: center;
-}
 
 .svg-hover:hover svg path {
   padding: 0.65rem 0.75rem;

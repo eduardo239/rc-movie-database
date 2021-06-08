@@ -1,10 +1,12 @@
 ### npm run deploy
 
-# close button na busca
+<!-- # slide -->
+
+<!-- # close button na busca -->
+
+<!-- # export apiSearch -->
 
 # component buttons/watchlist
-
-# export apiSearch
 
 # adicionar {tag} na página /by genre
 

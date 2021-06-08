@@ -38,6 +38,12 @@ export const arrayToString = (x) => {
   return x.map((y) => y.trim().charAt(0).toUpperCase() + y.slice(1)).join(', ');
 };
 
+/**
+ * Date converter
+ *
+ * @param {*} x date
+ * @returns date formatted
+ */
 export const dateConvert = (x) => {
   let date = new Date(x);
   let y = date.getFullYear();
@@ -46,6 +52,11 @@ export const dateConvert = (x) => {
   return `${d < 10 ? '0' + d : d}/${m < 10 ? '0' + (m + 1) : m + 1}/${y}`;
 };
 
+/**
+ * Extract youtube id from url
+ * @param {*} x youtube URL
+ * @returns youtube embed link
+ */
 export const extractVideoId = (x) => {
   if (x === 'http' || x === '') {
     return;
@@ -57,10 +68,10 @@ export const extractVideoId = (x) => {
 };
 
 /**
- *
- * @param {String} x
- * @param {number} len
- * @returns
+ * Cut part of the string
+ * @param {String} x String
+ * @param {number} len Size of the new String
+ * @returns new String
  */
 export const compactString = (x, len) => {
   if (x === null) {
@@ -70,20 +81,4 @@ export const compactString = (x, len) => {
     return x.slice(0, len) + '...';
   }
   return x;
-};
-
-export const routingTo = (...args) => {
-  const id = args[0].id;
-  const history = args[0].history;
-  const to = args[0].to;
-
-  const path = history.location.pathname;
-  const arrayPath = path.split('/');
-  const lenPath = arrayPath.length;
-
-  if (lenPath < 3) {
-    history.push(`${to}/${id}`);
-  } else {
-    history.push(`${id}`);
-  }
 };

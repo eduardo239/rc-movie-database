@@ -76,6 +76,15 @@ const Profile = () => {
       if (data) {
         await dispatch(getWatchlist(data.id));
       }
+
+      // let { data: movies, error } = await supabase
+      //   .from('watchlist')
+      //   .select('*')
+      //   // .cs('array_column', ['array', 'contains'])
+      //   .cs('items', watchlistData.watchlist.items);
+      // // console.log(watchlistData.watchlist.items);
+
+      // console.log(movies);
     })();
 
     // TODO: get user profile

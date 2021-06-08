@@ -6,7 +6,6 @@ export class SlideStories {
     this.prevButton = prevButton;
     this.thumb = thumb;
     this.active = 0;
-    console.log(slide.childNodes);
     this.init();
   }
 
@@ -59,7 +58,6 @@ export class SlideStories {
   init() {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
-    console.log(this.items);
     // this.items = this.slide.querySelectorAll('.App-slide--items > *');
     // this.t = this.thumb;
     this.addThumbItems();

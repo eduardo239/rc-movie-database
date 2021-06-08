@@ -34,16 +34,17 @@
   --opacity-15: rgba(0, 0, 0, 0.15);
   --opacity-50: rgba(0, 0, 0, 0.5);
   --opacity-90: rgba(0, 0, 0, 0.9);
+  --opacity-98: rgba(0, 0, 0, 0.98);
 
   --border-radius: 4px;
 }
 
 /*------------------- app menu -------------------*/
-.App-menu-modal {
+.App-menu--modal {
   position: fixed;
   top: 0;
   left: 0;
-  background: var(--opacity-90);
+  background: var(--opacity-98);
   width: 100vw;
   height: 100vh;
   z-index: 1000;
@@ -51,21 +52,21 @@
   justify-content: center;
   align-items: flex-start;
 }
-
-.App-menu-content {
-  width: 50vw;
+.App-menu--content {
+  width: 55vw;
 }
-
-.App-menu-content li a {
+.App-menu--content li a {
   font-size: 1.25rem;
   display: block;
   padding: 1rem;
   margin: 0.5rem 0;
-  background-color: var(--color-neutral-20);
-  border: 1px solid var(--color-neutral-80);
-  color: var(--color-neutral-80);
+  border-bottom: 1px solid var(--color-neutral-60);
+  color: var(--color-neutral-60);
 }
-
+.App-menu--content li a:hover {
+  color: var(--primary);
+  border-bottom: 1px solid var(--primary);
+}
 .App-menu-button--close {
   position: absolute;
   top: 0;
@@ -74,40 +75,15 @@
   margin: 0.5rem;
 }
 
-/*------------------- app card -------------------*/
-.App-card-container {
-  width: 200px;
-  background-color: var(--secondary);
-  box-shadow: var(--shadow-2);
-}
-.App-card-container:hover {
-  transform: scale(1.02);
-  box-shadow: var(--shadow-4);
-}
-.App-card {
-  color: var(--color-neutral-80);
-}
-
-.App-card h5 {
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.App-card--p {
-  display: inline-block;
-  line-height: 1.5;
-  font-weight: 400;
-  font-size: 0.75rem;
-}
-
 /*------------------- app card 2 -------------------*/
 .App-card-2 {
   color: var(--secondary);
   border: 1px solid var(--opacity-15);
   border-radius: var(--border-radius);
   transition: 0.2s ease-in-out;
-  width: 200px;
+  width: 179px;
+  display: flex;
+  flex-direction: column;
 }
 .App-card-2:active {
   border: 1px solid var(--primary);
@@ -115,49 +91,45 @@
 .App-card-2:hover {
   box-shadow: var(--shadow-2);
 }
+/* .App-card--image-container {
+  height: 248px;
+  overflow: hidden;
+} */
 .App-card-2 img {
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
 }
-
 .App-card-2 section {
   padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 .App-card-2 h4 {
+  font-size: var(--sm);
+  letter-spacing: 0.03rem;
+
   margin-top: 0.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
 }
-
 .App-card-2 p {
   line-height: 1.5;
+  font-size: 0.9rem;
   font-weight: 400;
   color: var(--color-neutral-20);
+  flex: 1;
 }
-/* slide */
 
-.App-slide {
-  width: 800px;
-}
-.App-slide-side {
-  display: flex;
-  flex-direction: column;
-  max-height: 350px;
-  overflow: hidden;
-}
-@media (max-width: 1200px) {
-  .App-slide-side {
-    flex-direction: row;
-  }
-}
-.App-slide--img {
-  height: 120px;
-}
-/* search */
-.App-search-container {
+/*------------------- search -------------------*/
+.App-search--container {
   position: relative;
 }
-
+.App-search--button {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+}
 .App-poster-mini {
   /* width: 50px; */
   height: 65px;
@@ -169,7 +141,6 @@
   width: 100%;
   box-shadow: var(--shadow-1);
 }
-
 .App-search-result--body p {
   font-size: var(--xsm);
   margin: 0;
@@ -189,7 +160,6 @@
   margin-right: 0.75rem;
 }
 /*------------------- app maze -------------------*/
-
 .App-maze-list {
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -204,6 +174,7 @@
   border: 1px solid var(--primary);
   padding: 1rem;
 }
+
 /*------------------- app omdb -------------------*/
 .App-omdb-list {
   display: grid;
@@ -228,6 +199,7 @@
   color: var(--secondary);
 }
 
+/*------------------- app tags -------------------*/
 .App-tags {
   display: flex;
   gap: 0.5rem;
@@ -243,29 +215,13 @@
   box-shadow: var(--shadow-1);
 }
 
-/* App-profile--user */
+/*------------------- app profile -------------------*/
 .App-profile--user {
   background-color: var(--primary);
   color: var(--color-neutral-80);
 }
 
-/* App-card-watchlist */
-.App-card-watchlist {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-footer {
-  background-color: #000;
-  color: var(--secondary);
-  padding: 2rem 0 4rem;
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-/*------------------- app animation -------------------*/
+/*------------------- app menu animation -------------------*/
 .App-fadeIn li:nth-child(1) {
   animation: fadeIn 0.1s ease-in-out;
 }
@@ -291,4 +247,14 @@ footer {
     transform: initial;
     opacity: 1;
   }
+}
+
+/*------------------- app footer -------------------*/
+footer {
+  background-color: #000;
+  color: var(--secondary);
+  padding: 2rem 0 4rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
 }

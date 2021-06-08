@@ -1,4 +1,9 @@
-export const getApiOMDB = async (term, helperFunction, setHelperText) => {
+/**
+ * Api search OMDB
+ * @param {String} term
+ * @returns
+ */
+export const getApiOMDB = async (term) => {
   const api_key = 'f655bbbf';
 
   try {
@@ -13,5 +18,23 @@ export const getApiOMDB = async (term, helperFunction, setHelperText) => {
     return { response: [json] };
   } catch (error) {
     return error;
+  }
+};
+
+/**
+ * Api search Maze
+ *
+ * @param {String} term
+ * @returns
+ */
+export const getApiMaze = async (term) => {
+  try {
+    const response = await fetch(
+      `http://api.tvmaze.com/search/shows?q=${term}`
+    );
+    const json = await response.json();
+    return { data: json };
+  } catch (error) {
+    return { error };
   }
 };

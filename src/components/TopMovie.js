@@ -14,7 +14,7 @@ const Top = () => {
       const { data, error } = await supabase
         .from('movies')
         .select('*')
-        .limit(5)
+        .limit(6)
         .order('views', { ascending: false });
       if (error) console.error(error);
       else setData(data);

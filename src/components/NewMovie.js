@@ -14,7 +14,7 @@ const NewMovie = () => {
       const { data, error } = await supabase
         .from('movies')
         .select('*')
-        .limit(5)
+        .limit(6)
         .order('created_at', { ascending: false });
       if (error) console.error(error);
       else setData(data);

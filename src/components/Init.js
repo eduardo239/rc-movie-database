@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getMovies } from '../store/movies';
-import Feature from './Feature';
 import TopMovie from './TopMovie';
 import NewMovie from './NewMovie';
 import Slide from './Slide';
@@ -16,7 +15,6 @@ const Init = () => {
 
   return (
     <>
-      {/* <Feature /> */}
       <Slide />
       <TopMovie />
       <NewMovie />
