@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/rc-movie-database/static/css/main.ad07c70b.chunk.css",
+    "main.css": "/rc-movie-database/static/css/main.f75610f0.chunk.css",
     "main.js": "/rc-movie-database/static/js/main.701c58fa.chunk.js",
     "main.js.map": "/rc-movie-database/static/js/main.701c58fa.chunk.js.map",
     "runtime-main.js": "/rc-movie-database/static/js/runtime-main.0f225222.js",
@@ -8,7 +8,7 @@
     "static/js/2.e3262a27.chunk.js": "/rc-movie-database/static/js/2.e3262a27.chunk.js",
     "static/js/2.e3262a27.chunk.js.map": "/rc-movie-database/static/js/2.e3262a27.chunk.js.map",
     "index.html": "/rc-movie-database/index.html",
-    "static/css/main.ad07c70b.chunk.css.map": "/rc-movie-database/static/css/main.ad07c70b.chunk.css.map",
+    "static/css/main.f75610f0.chunk.css.map": "/rc-movie-database/static/css/main.f75610f0.chunk.css.map",
     "static/js/2.e3262a27.chunk.js.LICENSE.txt": "/rc-movie-database/static/js/2.e3262a27.chunk.js.LICENSE.txt",
     "static/media/logo.36d4b45f.svg": "/rc-movie-database/static/media/logo.36d4b45f.svg",
     "static/media/mdi_account-plus-outline.1f293ef7.svg": "/rc-movie-database/static/media/mdi_account-plus-outline.1f293ef7.svg",
@@ -58,7 +58,7 @@
   "entrypoints": [
     "static/js/runtime-main.0f225222.js",
     "static/js/2.e3262a27.chunk.js",
-    "static/css/main.ad07c70b.chunk.css",
+    "static/css/main.f75610f0.chunk.css",
     "static/js/main.701c58fa.chunk.js"
   ]
 }
